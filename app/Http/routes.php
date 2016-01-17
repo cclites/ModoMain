@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Session;
+
+
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -12,8 +15,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //load splash
 });
+
+Route::get('/routetest', function(){
+	return view('routetest');
+});
+
+Route::get('/ticker', 'Ticker@getTicker');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +38,9 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+	
+    Route::post('/account', 'Auth\ModoAuth@validateLogin');
+    Route::post('/state', 'Bot@getBotState');
+	//Route::post('/balance', 'Balance@getBalance');
+    Route::post('/history', 'History@getHistory');
 });
