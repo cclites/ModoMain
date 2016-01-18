@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     //load splash
+    return view("main");
 });
 
 Route::get('/routetest', function(){

@@ -149,6 +149,7 @@ function testGetTicker(){
 	
 }
 
+
 function testGetHistory(){
 	var data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id},
 	    url = "http://localhost/ModoMain/public/history";

@@ -23,21 +23,29 @@ class AuthenticateHandler extends Controller {
 
 		$this -> uPass = $request -> uname;
 		$this -> uName = $request -> upass;
-
+		
+		//LOG::info("upass is " . $this -> uPass);
+		//LOG::info("uname is " . $this -> uName);
+ 
 	}
 
 	function authenticate() {
+		
 		//Server side sanity check
 		if (!$this -> uName || !$this -> uPass)
-			return false;
+			return json_encode( array('uname'=> $this -> uName, 'upass'=>$this -> uPass) );
 
 		$token = "";
 		$token = $this -> createToken();
 		$this -> token = $token;
 		
+		//LOG::info("token is " . $this -> token);
+		
 		//
 		$member = new Member();
 		$record = $member -> getMemberInfo($token);
+		
+		//LOG::info("Record type is " . gettype($record));
 
 		if ( gettype($record) === "object" ) {
 			//writeLog("Member exists", AUTHENTICATE);
@@ -64,7 +72,7 @@ class AuthenticateHandler extends Controller {
 			return json_encode( array('token'=>$this->token, 'session'=>Session::get('session') ) );
 		} else {
 			//writeLog("Member does not exist", AUTHENTICATE);
-			return json_encode( array('status'=>false) );
+			return json_encode( array('status'=>0) );
 		}
 	}
 

@@ -1,0 +1,302 @@
+#features {
+	margin-top: 5px;
+}
+
+#calculator {
+	width: 760px;
+	margin-bottom: 15px;
+	/*margin-top: 5px;*/
+}
+
+#calculateSubmit {
+	width: 360px;
+}
+
+#calculator td, #calculator th {
+	width: 180px;
+}
+
+#calculator td input {
+	height: 35px;
+	width: 75%;
+	line-height: 35px;
+	padding-left: 5px;
+	font-size: 18px;
+}
+
+#warped span {
+	color: #f47522;
+}
+
+.label {
+	width: 100px;
+	font-weight: bold;
+	color: #f47522;
+	height: 22px;
+	/*margin-left: 10px;*/
+	/*font-family:"Trebuchet MS";*/
+	/*text-shadow:#fff 0px 1px 0, #000 0 -1px 0;*/
+
+	font-family: 'Allura', cursive;
+}
+
+#ops, #priv, #features {
+	font-size: 54px;
+	margin-bottom: 10px;
+}
+
+.flickerOn {
+	text-shadow: 1px 1px 3px #f47522;
+}
+
+.flickerOff {
+	text-shadow: 2px 2px 3px #000000;
+}
+
+#calculator th {
+	background-color: #044a76;
+	color: #c7c8c9;
+	border-radius: 3px;
+	line-height: 22px;
+	height: 50px;
+}
+#calculator {
+	/*
+	 font-size: 17px;
+	 font-weight: bold;
+	 */
+}
+#calculateSubmit {
+	margin: 0 auto;
+	border: none;
+	border-radius: 4px;
+	height: 100px !important;
+	margin-bottom: 6px;
+	background-color: #044a76;
+	color: #c7c8c9;
+	width: 190px;
+	float: right;
+	font-size: 25px;
+}
+#calculateSubmit:hover {
+	cursor: pointer;
+}
+
+#calculatorText, #docs {
+	color: #8A8C8F;
+	font-size: 17px;
+}
+/*
+ color: #8A8C8F;
+ font-size: 15px;
+ margin-top: 30px;*/
+#box1 {
+	background-color: black;
+	height: 66px;
+	width: 689px;
+	margin: auto auto;
+	border-radius: 12px 12px 0 0;
+	border-top: 5px ridge gray;
+	text-align: center;
+	padding-top: 5px;
+}
+
+.dim {
+	/* Safari 4-5, Chrome 1-9 */ /* Can't specify a percentage size? Laaaaaame. */
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#fafafa), to(#fafafa));
+	/* Safari 5.1+, Chrome 10+ */
+	background: -webkit-radial-gradient(circle, #fafafa, #fafafa);
+	/* Firefox 3.6+ */
+	background: -moz-radial-gradient(circle, #fafafa, #fafafa);
+	/* IE 10 */
+	background: -ms-radial-gradient(circle, #fafafa, #fafafa);
+	color: #999;
+}
+
+.brighten {
+	/* Safari 4-5, Chrome 1-9 */ /* Can't specify a percentage size? Laaaaaame. */
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#fffcdd), to(#fafafa));
+	/* Safari 5.1+, Chrome 10+ */
+	background: -webkit-radial-gradient(circle, #fffcdd, #fafafa);
+	/* Firefox 3.6+ */
+	background: -moz-radial-gradient(circle, #fffcdd, #fafafa);
+	/* IE 10 */
+	background: -ms-radial-gradient(circle, #fffcdd, #fafafa);
+}
+
+#box2 {
+	height: 20px;
+	width: 718px;
+}
+
+#box3 {
+	background-color: transparent;
+    border-radius: 12px 12px 0 0;
+    border-top: 5px ridge gray;
+    height: 20px;
+    left: 153px;
+    
+    position: relative;
+    width: 692px;
+    
+    bottom: 0;
+}
+
+.quarter-circle-left {
+	-moz-border-radius: 10px 0 0;
+	border-radius: 10px 0 0 0;
+}
+
+.quarter-circle-right {
+	-moz-border-radius: 0 10px 0 0 0;
+	border-radius: 0 10px 0 0;
+}
+
+.quarter-circle-left, .quarter-circle-right {
+	border-top: 1px solid gray;
+	height: 10px !important;
+	width: 10px !important;
+	float: left;
+}
+
+.marquee_band {
+	border: 0;
+	border-top: 1px solid gray;
+	width: 669px !important;
+	float: left;
+}
+
+#accent1, #accent2, #accent3 {
+	position: relative;
+	top: 15px;
+}
+
+#neon {
+	width: 380px;
+	font-size: 51px;
+	margin: 0 auto 0;
+	height: 40px;
+	z-index: 2;
+	position: relative;
+	top: -32px;
+}
+
+.splash {
+
+}
+
+.splashContent {
+	font-size: 20px;
+    margin: 8px auto;
+    text-align: center;
+    width: 800px;
+}
+
+.opsContent {
+	width: 600px;
+	font-size: 25px;
+	text-align: justify;
+	margin: 15px auto 15px;
+}
+
+.navBox {
+	float: left;
+	margin: 0 5px 0 5px;
+	width: 225px;
+}
+
+.navs {
+	margin: 0 auto;
+	width: 940px;
+	/*height: 220px;*/
+	height: 80px;
+}
+
+.navExpand {
+	width: 250px;
+	margin-top: 6px;
+}
+
+.navText {
+
+	height: 120px;
+	background-color: gray;
+	width: 198px;
+	color: white;
+	padding: 5px 5px 5px 5px;
+	font-size: 18px;
+	text-shadow: 2px 3px 3px #292929;
+	text-align: center;
+}
+
+.buttonTop {
+
+	height: 50px;
+	background-color: #004976;
+	border-radius: 8px 8px 0 0;
+	border-top: 8px ridge #808080;
+	width: 198px;
+	text-align: center;
+	margin-top: 4px;
+	color: white;
+	font-size: 22px;
+	text-shadow: 2px 3px 3px #292929;
+}
+
+.buttonBottom {
+	width: 0;
+	height: 0;
+	border-top: 25px solid #004976;
+	border-left: 99px solid transparent;
+	border-right: 99px solid transparent;
+	border-radius-top: 8px;
+	cursor: pointer;
+}
+
+.arrow {
+	color: white;
+	width: 10px;
+	height: 18px;
+	position: relative;
+	top: -30px;
+	left: -8px;
+	font-size: 25px;
+}
+
+.hilight {
+	background: yellow;
+}
+
+.carousel-label {
+	font-size: 22px;
+	color: white;
+	height: 45px;
+	width: 600px;
+	margin: 0 auto;
+	padding: 8px;
+	background: #044a76;
+}
+
+.carousel-text {
+	font-size: 16px;
+	background-image: none;
+}
+
+.left, .right, .btn-lg {
+	font-family: Glyphicons Halflings;
+	width: 36px;
+	height: 36px;
+	font-size: 28px;
+	cursor: pointer;
+}
+
+.left, .right, .carousel {
+	float: left;
+	margin: 0 auto;
+}
+
+.carousel-div {
+	width: 680px;
+	height: 80px;
+	margin: 0 auto;
+}
