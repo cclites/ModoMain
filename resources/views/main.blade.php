@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>MoDo V1</title>
+		<title>MoDoBot</title>
 
 		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 		<link href="{{ asset('css/site.css') }}" rel="stylesheet" type="text/css" >
@@ -25,8 +25,8 @@
 			<div class="bannerContent">
 				<div id="bannerLeft">
 					<div class="form">
-						<input id="banner_uname" type="text" required="required" autofocus="" placeholder="Username" data-bind="value: uName" value="ModoBot">
-						<input id="banner_upass" type="password" required="required" placeholder="Password" data-bind="value: uPass" value="modobot_demo">
+						<input id="banner_uname" type="text" required="required" autofocus="" placeholder="Username" value="ModoBot">
+						<input id="banner_upass" type="password" required="required" placeholder="Password" value="modobot_demo">
 						<button id="logIn" type="submit">
 							⋅ Log In
 						</button>
@@ -39,31 +39,39 @@
 			</div>
 		</div>
 		<br>
+		
+		
 		<div id="frame">
-			<div id="statusLogContainer"></div>
-			<div id="botContainer">
-
-				@include('splash')
-
-				<div id="tickerContainer"></div>
-				<br>
-				<div id="ledgerContainer"></div>
-				<div id="configsContainer"></div>
-				<div id="calculatorContainer"></div>
-				<div id="historyContainer"></div>
-				<div id="footerContainer"></div>
+			
+			@include('splash')
+			
+			<div>
+				<div id="statusLogContainer"></div>
+				<div>
+					<div id="tickerContainer"></div>
+					<div id="ledgerContainer"></div>
+				    <div id="configsContainer"></div>
+				</div>
+				
+				<div style="float: left;">
+					<div id="historyContainer"></div>
+				    <div id="actionButtonContainer"></div>
+				</div>
+				
+				
+				
 			</div>
-
+			<br><br><br>
 			<footer>
-				All rights reserved - modobot & modobot.com (2013-<?php echo date('Y'); ?>)
-				<br/>
-				ModoBot logo is the property of modobot.com, and may not be reproduced without permission.
-				<br/>
+				<div>All rights reserved - modobot & modobot.com (2013-<?php echo date('Y'); ?>)</div>
+				<div>ModoBot logo is the property of modobot.com, and may not be reproduced without permission.</div>
 			</footer>
 
 		</div>
-
-		<!--div id="footer_background"></div-->
+		
+		
+		
+		
 
 		<div id="modals"></div>
 		<div id="waitModal"></div>
@@ -83,8 +91,24 @@
 		<script type="text/javascript" src="{{ asset('js/modobot.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/listener.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/callback.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/view.js') }}"></script>
+		<!--script type="text/javascript" src="{{ asset('js/calculator.js') }}"></script-->
+		
 		<script type="text/javascript" src="{{ asset('js/templates.js') }}"></script>
 		
+		<script type="text/javascript" src="{{ asset('js/ViewModels/Account.js') }}"></script>
+		<!--script type="text/javascript" src="{{ asset('js/ViewModels/Banner.js') }}"></script-->
+		<script type="text/javascript" src="{{ asset('js/ViewModels/Calculator.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/ViewModels/Configs.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/ViewModels/Contact.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/ViewModels/Action.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/ViewModels/History.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/ViewModels/Ledger.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/ViewModels/NewAccount.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/ViewModels/StatusLog.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/ViewModels/Ticker.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/ViewModels/Transact.js') }}"></script>
+
 
 		<script>
 			/*

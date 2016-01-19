@@ -102,10 +102,12 @@ article div{
 #bannerLeft
 {
 	float: left;
-    left: 2px;
+    left: 0px;
     position: relative;
+    right: 50px;
+    text-align: right;
     top: 68px;
-    width: 450px;
+    width: 394px;
 }
 
 #logIn
@@ -128,21 +130,25 @@ article div{
     margin-right: 10px;
 }
 
-#logOut{
-	float:left;
-	color: #fff;
-}
 
 #bannerRight
 {
 	color: #fff;
-    left: 260px;
+    left: 309px;
     position: relative;
     top: 68px;
     width: 200px;
 }
 
-#logOut, #account{
+#logOut{
+	cursor: pointer;
+	font-family: 'Allura', cursive;
+	font-size: 25px;
+	float:right;
+	color: #fff;
+}
+
+#account{
 	float:left;
 	cursor: pointer;
 	font-family: 'Allura', cursive;
@@ -176,8 +182,8 @@ article div{
 
 #statusLogContainer
 {
-	float:left;
-	display: none;
+    display: none;
+    margin-right: 20px;
 }
 
 .statusLog div
@@ -187,31 +193,64 @@ article div{
 
 footer
 {
-    margin: 50px;
-	text-align: center;
-	font-size: 10px;
-	font-weight: lighter;
-	width: 1000px;
-	float: left;
-	color: #8a8c8f;
+    color: #8a8c8f;
+    float: left;
+    font-size: 10px;
+    font-weight: lighter;
+    text-align: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+footer div{
+	
 }
 
 #statusLogContent
 { 
-	width: 300px;
-	border: 3px solid #f47521;
-	border-radius: 6px;
-	height: 356px;
-	font-size: 16px;
-	color: #8a8c8f;
-	resize: none;
 	background-color: white;
+    border: 3px solid #f47521;
+    border-radius: 6px;
+    color: #8a8c8f;
+    font-size: 16px;
+    height: 406px;
+    resize: none;
+    width: 300px;
+}
+
+#historyContainer{
+	margin-top: 25px;
+    width: 1034px;
 }
 
 
 #botContainer {
-    width: 1000px;
     margin: 0 auto;
+    width: 800px;
+}
+
+
+#ledgerContainer{
+
+    width: 700px;
+}
+
+
+#configsContainer{
+
+    width: 700px;
+}
+
+#tickerContainer{
+    margin: 26px 0;
+    width: 700px;
+}
+
+#statusLogContainer,
+#tickerContainer,
+#configsContainer,
+#ledgerContainer{
+	float: left;
 }
 
 #botContainer div
@@ -639,7 +678,7 @@ table.historyTable tbody tr td
 }
 
 .divAsButton{
-  width: 120px;
+    width: 120px;
 	margin: 0 auto;
 	cursor: pointer;
 }
@@ -653,4 +692,17 @@ table.historyTable tbody tr td
 	right: 20px !important;
 	top:10px !important;
 	z-index: 3;
+}
+
+.tickerTable{}
+
+
+#actionButtonContainer{
+	margin-top: 15px;
+    text-align: center;
+    width: 1028px;
+}
+
+#configSummary{
+
 }

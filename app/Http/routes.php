@@ -25,7 +25,7 @@ Route::get('/routetest', function(){
 
 Route::get('/ticker', 'Ticker@getTicker');
 
-
+Route::post('/update', 'Bot@updateConfigs');
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +42,8 @@ Route::group(['middleware' => ['web']], function () {
 	
     Route::post('/account', 'Auth\ModoAuth@validateLogin');
     Route::post('/state', 'Bot@getBotState');
-	//Route::post('/balance', 'Balance@getBalance');
     Route::post('/history', 'History@getHistory');
+	Route::post('/update', 'Bot@updateConfigs');
+	Route::post('/update', 'Ledger@updateTestLedger');
+	
 });

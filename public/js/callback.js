@@ -24,9 +24,7 @@ var ca = {
 		}
 	},
 	
-	loginFailure: function(xhr, type, exception){
-		
-	},
+	loginFailure: function(xhr, type, exception){},
 	
 	getBotStateSuccess: function(data){
 		
@@ -37,7 +35,9 @@ var ca = {
 			model.id = data.bot[0].id;
 			model.owner_id = data.bot[0].owner_id;
 			
-			ko_models.bot = ko.mapping.fromJS(data);  //save model
+			//ko_models.bot = ko.mapping.fromJS(data);  //save model
+			
+			ko_models.bot = data;
 				
 			mo.getTicker();  //get the ticker
 			
@@ -49,20 +49,29 @@ var ca = {
 		
 	},
 	
-	getBotStateFailure: function(xhr, type, exception){
-		alert("getBotStateFailure");
-	},
+	getBotStateFailure: function(xhr, type, exception){},
 	
 	getTickerSuccess: function(data){
-		ko_models.ticker = ko.mapping.fromJS(data);
+		//ko_models.ticker = ko.mapping.fromJS(data);
+		ko_models.ticker = data;
 	},
+	
 	getTickerFailure: function(xhr, type, exception){},
 	
-	getBotHistorySuccess: function(data){
-		ko_models.history = ko.mapping.fromJS(data);
+	getHistorySuccess: function(data){
+		
+		//ko_models.history = ko.mapping.fromJS(data);
+		ko_models.history = data;
+		
 		view.buildBotView();
 	},
 	
-	getBotHistoryFailure: function(xhr, type, exception){},
+	getHistoryFailure: function(xhr, type, exception){},
+	
+	updateConfigsSuccess: function(data){
+		console.log(data);
+	},
+	
+	updateConfigsFailure: function (xhr, type, exception){},
 	
 };

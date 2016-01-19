@@ -6,9 +6,9 @@ var model = {
 
 var ko_models = {
 	
-	bot: {},
-	history: {},
-	ticker: {}
+	//bot: {},
+	//history: {},
+	//ticker: {}
 	
 };
 

@@ -24,16 +24,19 @@ class Bot extends Controller{
 		    Session::get('token') == $this->token &&
 			Session::get('authenticated') ){  //valid. Get the associated bot.
 			
-			//Need the owner ID.
 			$id = DB::table('member')->where('token', $this->token)->pluck("id");
-			
-			//get bots by owner ID
 			$bot = DB::table('bot')->where('owner_id', $id)->get();
 			
 			//before I send this back, I want to encode the owner id and id.
-			
 			$bot[0]->id = Crypt::encrypt($bot[0]->id);
 			$bot[0]->owner_id = Crypt::encrypt($bot[0]->owner_id);
+			
+			
+			$balance = DB::table('member')->where('id', $id[0])->pluck("balance");
+			$balance = $balance[0];
+	
+			//TODO remove hard coded trade divisor
+			$bot[0]->trades = $balance/100000;
 			
 			return json_encode( array("bot"=>$bot) );
 					
@@ -44,5 +47,59 @@ class Bot extends Controller{
 		
 		
 	}
-	
+
+	public function updateConfigs(Request $request){
+		
+	    $token = $request -> token;
+		$session = $request -> session;
+		
+		if( Session::get('session') == $session &&
+		    Session::get('token') == $token &&
+			Session::get('authenticated') ){
+				
+			LOG::info(">" . $token . "<");
+				
+			$id = DB::table('member')->where('token', $request -> token )->pluck("id");
+			$id = $id[0];
+			
+				
+            $configs = array();
+
+			$configs["is_active"] = ($request->is_active == "true") ? 1 : 0;
+			$configs["testing_mode"] = ($request->testing_mode == "true") ? 1 : 0;
+			$configs["buying"] = ($request->buying == "true") ? 1 : 0;
+			$configs["selling"] = ($request->selling == "true") ? 1 : 0;
+			$configs["fixed_sell"] = ($request->fixed_sell == "true") ? 1 : 0;
+			$configs["fixed_buy"] = ($request->fixed_buy == "true") ? 1 : 0;
+			
+			
+			$configs["fixed_sell_amount"] = str_replace(",", "", $request->fixed_sell_amount);
+			$configs["fixed_buy_amount"] = str_replace(",", "", $request->fixed_buy_amount);
+			
+			$configs["base"] = str_replace(",", "", $request->base);
+			
+			if($id == 38){ //hard coded public test model
+			  $configs["testing_mode"] = 1;
+			}
+			
+			$s = print_r($configs, true);
+			LOG::info("CONFIGS: " . $s);
+			
+			$response = DB::table('bot')
+            ->where('owner_id', $id)
+            ->update(array(
+                        'base' => $configs["base"],
+                        'is_active' => $configs["is_active"],
+                        'testing_mode' => $configs["testing_mode"],
+                        'can_buy' => $configs["buying"],
+                        'can_sell' => $configs["selling"],
+                        'fixed_sell' =>$configs["fixed_sell"],
+                        'fixed_buy' => $configs['fixed_buy'],
+						'fixed_sell_amount' => $configs["fixed_sell_amount"],
+						'fixed_buy_amount' => $configs["fixed_buy_amount"]
+					));
+			
+	        return json_encode( array('status'=>$response) );
+		}
+	}
 }

@@ -1,5 +1,8 @@
 var mo = {
 	
+	botTimer: null,
+	tickerTimer: null,
+	
 	asynch: function(request) {
 	
 		var typeFlag = request.type;
@@ -26,10 +29,10 @@ var mo = {
 				}
 			}
 		}).always(function() {
-		}).error(function(xhr, type, exception) {
+		})/*.error(function(xhr, type, exception) {
 			console.log("Asynch error\n");
-			console.log(exception);
-		});
+			console.log(xhr);
+		})*/;
 	},
 	
 	requestObject: function(url, type, success, failure, data) {
@@ -79,6 +82,37 @@ var mo = {
 		    request = new mo.requestObject(url, "GET", ca.getTickerSuccess, ca.getTickerFailure, data);
 		    
 		mo.asynch(request);
+    },
+    
+    setUpdateTimers: function(){
+    	
+    	return;
+    	
+    	if( mo.tickerTimer === null){
+	    	mo.tickerTimer = setInterval(function(){
+	    		mo.getBotState();
+	    	}, 60000);
+	    }
+    },
+    
+    updateMargins: function(){
+    	
+    	var base = $("#base").val(),
+    	    increase = $("#increase").val(),
+    	    decrease = $("#decrease").val();
+    	    
+    	base = base.replace("$", "");
+    	//base = base*100;
+    	increase = increase/100;
+    	decrease = decrease/100;
+    	
+    	console.log(increase);
+    	console.log(decrease);
+    	console.log(base);
+    	
+   
+    	$("#marginSalePrice").html( "$" + ( base * (1 + increase) ).toFixed(2) );
+    	$("#marginPurchasePrice").html( "$" + ( base * (1 - decrease) ).toFixed(2) );
     }
 };
 
@@ -87,6 +121,9 @@ $(function() {
 	
     //ko.applyBindings(ko_models.loginForm);
     li.initLogin();
+    
+    //apply bindings to the model here.
+    ko.applyBindings(ko_models);
     
 });
 
