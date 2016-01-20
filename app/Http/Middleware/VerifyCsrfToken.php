@@ -16,7 +16,8 @@ class VerifyCsrfToken extends BaseVerifier
         '/state',
         '/history',
         '/update',
-        '/testbalance',
-        '/historyreset'
+        '/resetbalance',
+        '/resethistory',
+        '/transactions'
     ];
 }

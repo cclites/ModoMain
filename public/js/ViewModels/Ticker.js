@@ -3,7 +3,8 @@ function buildTickerView()
 
     //console.log( JSON.stringify(ko_models.bot) );
     
-    //console.log(Object.keys(ko_models.ticker.ticker[0]));
+    console.log(Object.keys(ko_models.ticker.ticker[0]));
+    console.log(ko_models.ticker.ticker[0].direction);
     
     //return;
 
@@ -13,12 +14,7 @@ function buildTickerView()
 	    myB = b,
 	    id = myB.id;  //not actually used
 	
-	//addMessage("Last is " + myB.ticker.last);
 
-    /*
-    var ticker = myB.ticker(),
-	    id = model["bots"][0]["id"];
-		*/
 
 	str = "";
 	str += "              <table class='tickerTable'>\n";
@@ -43,7 +39,8 @@ function buildTickerView()
 	str += "                  <td>$" + myB.ask + "</td>\n";
 	
 	var trend = "Rising";
-	if(myB.direction < 0) trend = "Falling";
+	if(myB.direction == -1) trend = "Falling";
+	if(myB.direction == 0) trend = "Even";
 	
 	str += "                  <td>" + trend + "</td>\n";
 	str += "                </tr>\n";

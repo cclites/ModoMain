@@ -86,7 +86,7 @@ var mo = {
     
     setUpdateTimers: function(){
     	
-    	return;
+    	//return;
     	
     	if( mo.tickerTimer === null){
 	    	mo.tickerTimer = setInterval(function(){
@@ -105,11 +105,7 @@ var mo = {
     	//base = base*100;
     	increase = increase/100;
     	decrease = decrease/100;
-    	
-    	console.log(increase);
-    	console.log(decrease);
-    	console.log(base);
-    	
+
    
     	$("#marginSalePrice").html( "$" + ( base * (1 + increase) ).toFixed(2) );
     	$("#marginPurchasePrice").html( "$" + ( base * (1 - decrease) ).toFixed(2) );

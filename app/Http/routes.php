@@ -24,8 +24,7 @@ Route::get('/routetest', function(){
 });
 
 Route::get('/ticker', 'Ticker@getTicker');
-
-Route::post('/update', 'Bot@updateConfigs');
+Route::get('/daemon', 'Daemon\Daemon@main');
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +43,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/state', 'Bot@getBotState');
     Route::post('/history', 'History@getHistory');
 	Route::post('/update', 'Bot@updateConfigs');
-	Route::post('/update', 'Ledger@updateTestLedger');
-	
+	Route::post('/resetbalance', 'Ledger@resetTestBalance');
+	Route::post('/resethistory', 'History@resetBotHistory');
+	Route::post('/transactions', 'Transactions@getTransaction');
 });

@@ -102,12 +102,15 @@ article div{
 #bannerLeft
 {
 	float: left;
-    left: 0px;
     position: relative;
     right: 50px;
     text-align: right;
     top: 68px;
-    width: 394px;
+    width: 450px;
+}
+
+#bannerLeft .form{
+	width: 438px;
 }
 
 #logIn
@@ -134,18 +137,20 @@ article div{
 #bannerRight
 {
 	color: #fff;
-    left: 309px;
+    left: 260px;
     position: relative;
     top: 68px;
     width: 200px;
 }
 
 #logOut{
-	cursor: pointer;
-	font-family: 'Allura', cursive;
-	font-size: 25px;
-	float:right;
 	color: #fff;
+    cursor: pointer;
+    float: right;
+    font-family: "Allura",cursive;
+    font-size: 25px;
+    position: relative;
+    right: 20px;
 }
 
 #account{

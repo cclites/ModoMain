@@ -27,6 +27,8 @@ class Bot extends Controller{
 			$id = DB::table('member')->where('token', $this->token)->pluck("id");
 			$bot = DB::table('bot')->where('owner_id', $id)->get();
 			
+			$botId = $bot[0]->id;
+			
 			//before I send this back, I want to encode the owner id and id.
 			$bot[0]->id = Crypt::encrypt($bot[0]->id);
 			$bot[0]->owner_id = Crypt::encrypt($bot[0]->owner_id);
@@ -37,6 +39,25 @@ class Bot extends Controller{
 	
 			//TODO remove hard coded trade divisor
 			$bot[0]->trades = $balance/100000;
+			
+			//LOG::info("id is " . $id[0]);
+			
+			//LOG::info($bot[0]->testing_mode);
+			if($id[0] == 64){
+				$bot[0]->testing_mode = 1;
+			}
+			
+			//if the bot is in test mode, then need to get 
+			//values from test_ledger table
+			if($bot[0]->testing_mode){
+				
+				$result = DB::table('test_ledger')->where('owner_id', $botId)->get();
+				
+				$bot[0]->usd = $result[0]->usd;
+				$bot[0]->btc = $result[0]->btc;
+				
+			}
+			
 			
 			return json_encode( array("bot"=>$bot) );
 					
@@ -62,6 +83,12 @@ class Bot extends Controller{
 			$id = DB::table('member')->where('token', $request -> token )->pluck("id");
 			$id = $id[0];
 			
+			LOG::info($request->is_active);
+			LOG::info($request->testing_mode);
+			LOG::info($request->buying);
+			LOG::info($request->selling);
+			LOG::info($request->fixed_sell);
+			LOG::info($request->fixed_buy);
 				
             $configs = array();
 
@@ -102,4 +129,6 @@ class Bot extends Controller{
 	        return json_encode( array('status'=>$response) );
 		}
 	}
+	
+	
 }

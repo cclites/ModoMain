@@ -12,10 +12,6 @@ var ca = {
 			//remove all of the splash screen stuff.
 			$(".splash, .form, #newAccount").hide();
 			
-			//console.log( $(".logo_wrap").css("left") );
-			var xPos = $(".logo_wrap").css("left");
-			
-			$(".logo_wrap").css( 'right', "40" );
 			
 			//TODO: show waiting modal
 			
@@ -73,5 +69,24 @@ var ca = {
 	},
 	
 	updateConfigsFailure: function (xhr, type, exception){},
+	
+	resetBalanceSuccess: function(data){
+		
+		//refresh bot
+		mo.getBotState();
+	},
+	
+	resetBalanceFailure: function(xhr, type, exception){},
+	
+	resetHistorySuccess: function(data){
+		console.log("SUCCESS" + data);
+		mo.getBotState();
+	},
+	
+	
+	resetHistoryFailure: function(xsr, type, exception){
+		console.log(xsr);
+		mo.getBotState();
+	},
 	
 };

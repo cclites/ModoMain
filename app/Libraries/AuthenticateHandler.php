@@ -41,7 +41,6 @@ class AuthenticateHandler extends Controller {
 		
 		//LOG::info("token is " . $this -> token);
 		
-		//
 		$member = new Member();
 		$record = $member -> getMemberInfo($token);
 		

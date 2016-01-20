@@ -56,7 +56,7 @@ function buildConfigView(){
 	
 	str += "                     <td><input id='base' onkeyup='mo.updateMargins()' value='" + temp +"' size='8' type='text'></td>\n";
 
-	str += "                      <td class='configLabel'>Margin Sale Price</td>\n";
+	str += "                      <td class='configLabel' colspan='2'>Margin Sale Price</td>\n";
 	str += "                      <td id='marginSalePrice'>$0</td>\n";
 	
 	str += "                 </tr>\n"; 
@@ -80,7 +80,7 @@ function buildConfigView(){
 	      
 	
 	 str +=      "                     <td><input id='increase' onkeyup='mo.updateMargins()' size='8' value='" + parseFloat(temp*10) + "'  type='text'></td>\n" +
-	 "                      <td class='configLabel'>Margin Buy Price</td>\n" +
+	 "                      <td class='configLabel' colspan='2'>Margin Buy Price</td>\n" +
 	       "                      <td id='marginPurchasePrice'>$0</td>\n" +
 	       "                     <td>&nbsp;</td>\n" +
 	       "                     <td id='sellLimitUsd'>&nbsp;</td>\n" + 

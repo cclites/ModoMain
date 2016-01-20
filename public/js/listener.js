@@ -19,8 +19,8 @@ var li = {
 		     	id: model.id, 
 		     	owner_id: model.owner_id,
 		     	base: document.getElementById("base").value,
-		        isActive : document.getElementById("isActive").checked, 
-				testingMode : document.getElementById("isTesting").checked, 
+		        is_active : document.getElementById("isActive").checked, 
+				testing_mode : document.getElementById("isTesting").checked, 
 				buying : document.getElementById("isBuying").checked, 
 				selling : document.getElementById("isSelling").checked, 
 				increase : document.getElementById("increase").value, 
@@ -41,11 +41,21 @@ var li = {
 	
 	resetBalance: function(){
 		
-		
+		var data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id},
+		    url = "resetbalance",
+		    request = new mo.requestObject(url, "POST", ca.resetBalanceSuccess, ca.resetBalanceFailure, data);
+		    
+		mo.asynch(request);
 		
 	},
 	
-	resetHistory: function(){},
+	resetHistory: function(){
+		var data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id},
+		    url = "resethistory",
+		    request = new mo.requestObject(url, "POST", ca.resetHistorySuccess, ca.resetHistoryFailure, data);
+		    
+		mo.asynch(request);
+	},
 	
 	getTransactions: function(){},
 	

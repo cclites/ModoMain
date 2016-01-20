@@ -22,6 +22,8 @@ var view = {
 		//this listener sets a flag so that configs are not overwritten when 
 		//the page refreshes.
 		li.initDirtyFlag();
+		
+		mo.updateMargins();
 	},
 	
 	addAuthMenuItems: function(){

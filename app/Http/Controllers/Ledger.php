@@ -1,5 +1,15 @@
 <?php
 
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Libraries\Member;
+use Log;
+use DB;
+use Crypt;
+use Illuminate\Support\Facades\Session;
+
 class Ledger extends Controller{
 	
 	function updateTestLedger(Request $request)
@@ -11,18 +21,6 @@ class Ledger extends Controller{
 		$currentUsd = $bot->getLedger()->getUsd();
 		$currentBtc = $bot->getLedger()->getBtc();
 		
-		/*
-		writeLog("%%% CURRENT usd is $currentUsd");
-		writeLog("%%% CURRENT btc is $currentBtc");
-		writeLog("%%% Cost is $cost");
-		writeLog("%%% Fee in USD is $feeUsd");
-		writeLog("%%% Fee in BTC is $feeBtc");
-		writeLog("%%% last is $last");					//last price
-		writeLog("%%% Limit is $limit");				//order size
-		writeLog("%%% Type is $type");
-		
-		writeLog("**********  Update test ledger.");
-		*/
 		
 		//increase BTC, decrease USD													
 	    if($type == "p")	//purchase, so subtract fee in BTC;
@@ -65,42 +63,24 @@ class Ledger extends Controller{
 		    Session::get('token') == $request -> token &&
 			Session::get('authenticated') ){
 				
-		    $id = $request->id;
-		    $owner_id = $request->owner_id;	
-			
-			//decode those
-			$id = Crypt::decrypt($this->id);
-			
-			DB::table('test_ledger')
-                ->where('owner_id', $id)
-                ->update(array(
-                        'btc' => 5,
-                        'usd' => 500
 
-			));
+			$id = Crypt::decrypt($request->id);
+			
+			LOG::info("ID is " . $id);
+			
+			//reset the test ledger
+			$result = DB::table('test_ledger')
+			                ->where('owner_id', $id)
+			                ->update(array(
+			                        'btc' => 5,
+			                        'usd' => 500
+			
+						));
+						
+			return json_encode( array("status"=>$result) );
 			
 		}
-		
-		//need to make sure this is a valid request first
-	
-		//dCrypt($session, $token, $_SESSION["id"], $decrypttext);
-		//if(isset($_SESSION["authenticated"]) && $_SESSION["authenticated"])
-		//if($token == $decrypttext["token"])
-		//{
-		    //$query = "UPDATE test_ledger SET btc=$btc, usd= $usd WHERE owner_id=$id";
-		    
-		    
-				
-			 
-	        //db_updateTestLedger($usd, $btc, $id);
-			resetBotHistory($token, $session, $id);
-			db_updateLedger($usd, $btc, $id);
-			
-			//also have to update the bot balances.
-			
-			sleep(1);		//slight pause to give everything time to update before
-			                //sending the response to the client.
-		//}
+
 	}
 }
 
