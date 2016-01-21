@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Libraries\Member;
 use Log;
+use Crypt;
+use DB;
 use Illuminate\Support\Facades\Session;
 
 
@@ -19,17 +21,14 @@ class AuthenticateHandler extends Controller {
 	public $message = "Invalid Credentials.";
 	public $userId = null;
 
-	public function __construct(Request $request) {
+	public function __construct() {
 
-		$this -> uPass = $request -> uname;
-		$this -> uName = $request -> upass;
-		
-		//LOG::info("upass is " . $this -> uPass);
-		//LOG::info("uname is " . $this -> uName);
- 
 	}
 
-	function authenticate() {
+	function authenticate(Request $request) {
+		
+		$this -> uPass = $request -> uname;
+		$this -> uName = $request -> upass;
 		
 		//Server side sanity check
 		if (!$this -> uName || !$this -> uPass)
@@ -39,12 +38,8 @@ class AuthenticateHandler extends Controller {
 		$token = $this -> createToken();
 		$this -> token = $token;
 		
-		//LOG::info("token is " . $this -> token);
-		
 		$member = new Member();
 		$record = $member -> getMemberInfo($token);
-		
-		//LOG::info("Record type is " . gettype($record));
 
 		if ( gettype($record) === "object" ) {
 			//writeLog("Member exists", AUTHENTICATE);
@@ -105,6 +100,141 @@ class AuthenticateHandler extends Controller {
 
 		return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, hash('sha256', config('core.SEED'), true), substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)), MCRYPT_MODE_CBC, $iv), "\0");
 
+	}
+	
+	function updateLogin($request){
+		
+		$upass1 = $request -> upass1;
+		$upass2 = $request-> upass2;
+		
+		$token = $request -> token;
+		$session = $request -> session;
+		
+		
+		if( Session::get('session') == $session &&
+		    Session::get('token') == $token &&
+			Session::get('authenticated') ){
+				
+			$id = Crypt::decrypt($request->id);
+			
+			$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+			
+			$displayName = $result[0]->display_name;
+			$this->uName = $displayName;
+			$this->uPass = $upass1;
+
+			if( count($result) > 0 ){
+				
+				$newToken = $this->createToken();
+				
+				//TODO: remove
+				return;
+				
+				//now update the database
+				$result = DB::table('member')->where('id', $id)
+				          ->update(array(
+		                        'token' => $newToken
+							));
+							
+				return json_encode( array('status'=>$result) );
+			}
+		}
+
+	}
+	
+	function updateEmail($request){
+		
+		$token = $request -> token;
+		$session = $request -> session;
+		$newMail = $request->newMail;
+		
+		
+		if( Session::get('session') == $session &&
+		    Session::get('token') == $token &&
+			Session::get('authenticated') ){
+				
+				$id = Crypt::decrypt($request->id);
+				
+				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+				
+				//save new email
+				if( count($result) > 0 ){
+					//TODO: remove	
+					return;
+					
+					//now update the database
+					$result = DB::table('member')->where('id', $id)
+					          ->update(array(
+			                        'email' => $newMail
+								));
+								
+					return json_encode( array('status'=>$result) );
+					
+				}
+		}
+		
+		
+	}
+	
+	function updateBsConfigs($request){
+		
+		$token = $request -> token;
+		$session = $request -> session;
+		$uId = $request-> uid;
+		$uSecret = $request -> usecret;
+		$uToken = $request -> utoken;
+		
+		if( Session::get('session') == $session &&
+		    Session::get('token') == $token &&
+			Session::get('authenticated') ){
+				
+				$id = Crypt::decrypt($request->id);
+				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+				
+				//save new email
+				if( count($result) > 0 ){
+					
+					$token = json_encode( array( 'uid'=>$uId , 'usecret'=>$uSecret, 'utoken'=>$uToken) );
+					$newToken = Crypt::encode( $token );
+					//TODO Remove
+					return;
+					
+					//now update the database
+					$result = DB::table('user')->where('owner_id', $id)
+					          ->update(array(
+			                        'api_key' => $newToken
+								));
+								
+					return json_encode( array('status'=>$result) );
+				}
+		
+	}
+			
+	
+	function activateAccount($request){
+		
+		$token = $request -> token;
+		$session = $request -> session;
+		
+		
+		if( Session::get('session') == $session &&
+		    Session::get('token') == $token &&
+			Session::get('authenticated') ){
+				
+				$id = Crypt::decrypt($request->id);
+				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+				
+				if( count($result) > 0 ){
+					//now update the database
+					$result = DB::table('wallet')->where('owner_id', $id)
+					          ->update(array(
+			                        'sweep' => 1
+								));
+					
+					return json_encode( array('status'=>$result) );
+					
+				}
+		}
 	}
 
 }

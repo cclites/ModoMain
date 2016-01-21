@@ -25,8 +25,8 @@
 			<div class="bannerContent">
 				<div id="bannerLeft">
 					<div class="form">
-						<input id="banner_uname" type="text" required="required" autofocus="" placeholder="Username" value="ModoBot">
-						<input id="banner_upass" type="password" required="required" placeholder="Password" value="modobot_demo">
+						<input id="banner_uname" type="text" required="required" autofocus="" placeholder="Username" value="ModoBoss">
+						<input id="banner_upass" type="password" required="required" placeholder="Password" value=">Y9pgtdtz>">
 						<button id="logIn" type="submit">
 							⋅ Log In
 						</button>
@@ -83,6 +83,7 @@
 		</script>
 		
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>

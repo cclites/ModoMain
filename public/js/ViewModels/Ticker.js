@@ -39,8 +39,8 @@ function buildTickerView()
 	str += "                  <td>$" + myB.ask + "</td>\n";
 	
 	var trend = "Rising";
-	if(myB.direction == -1) trend = "Falling";
-	if(myB.direction == 0) trend = "Even";
+	if(myB.trend < 0) trend = "Falling";
+	if(myB.trend == 0) trend = "Even";
 	
 	str += "                  <td>" + trend + "</td>\n";
 	str += "                </tr>\n";

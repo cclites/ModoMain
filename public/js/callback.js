@@ -89,4 +89,53 @@ var ca = {
 		mo.getBotState();
 	},
 	
+	getTransactionsSuccess: function(data){
+		//console.log(data);
+		
+		var transactionView = tem.buildTransactionView(data);
+		
+		//throw it into a dialog and display
+		$("#modals").html(transactionView).dialog(
+			{
+				modal: true,
+				width: 800,
+				height: 400,
+				dialogClass: 'modalDialog',
+				title: "Transactions"
+			}
+		);
+		
+		$(".ui-dialog-titlebar-close").html("X");
+		
+		//console.log(transactionView);
+	},
+	
+	getTransactionsFailure: function(xsr, type, exception){
+		
+	},
+	
+	updateLoginSuccess: function(data){
+		
+		console.log(data);
+	},
+	
+	updateLoginfailure: function(xsr, type, exception){},
+	
+	updateEmailSuccess: function (data){
+		console.log(data);
+	},
+	
+	updateEmailFailure: function(xsr, type, exception){},
+	
+	updateBsCongigsSuccess: function(data){
+		console.log(data);
+	},
+	
+	updateBsCongigsFailure: function(xsr, type, exception){},
+	
+	activateAccountSuccess: function(data){
+		console.log(data);
+	},
+	
+	activateAccountFailure: function(xsr, type, exception){},
 };

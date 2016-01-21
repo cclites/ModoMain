@@ -711,3 +711,11 @@ table.historyTable tbody tr td
 #configSummary{
 
 }
+
+.modalDialog {
+	
+}
+
+.modalDialog .ui-dialog-titlebar.ui-widget-header{
+	background: #004976;
+}

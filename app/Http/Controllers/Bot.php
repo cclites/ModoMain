@@ -40,16 +40,12 @@ class Bot extends Controller{
 			//TODO remove hard coded trade divisor
 			$bot[0]->trades = $balance/100000;
 			
-			//LOG::info("id is " . $id[0]);
-			
-			//LOG::info($bot[0]->testing_mode);
+
 			if($id[0] == 64){
 				$bot[0]->testing_mode = 1;
 			}
 			
-			//if the bot is in test mode, then need to get 
-			//values from test_ledger table
-			if($bot[0]->testing_mode){
+			if($bot[0]->testing_mode == 1){
 				
 				$result = DB::table('test_ledger')->where('owner_id', $botId)->get();
 				
@@ -57,8 +53,7 @@ class Bot extends Controller{
 				$bot[0]->btc = $result[0]->btc;
 				
 			}
-			
-			
+
 			return json_encode( array("bot"=>$bot) );
 					
 		}else{
@@ -70,6 +65,12 @@ class Bot extends Controller{
 	}
 
 	public function updateConfigs(Request $request){
+		
+		echo "Client side configs\n";
+		//print_r($request);
+		//return;
+		LOG::info("FIXED SELL AMOUNT " . $request->fixed_sell_amount);
+		LOG::info("FIXED BUY AMOUNT " . $request->fixed_buy_amount);
 		
 	    $token = $request -> token;
 		$session = $request -> session;
@@ -103,14 +104,15 @@ class Bot extends Controller{
 			$configs["fixed_sell_amount"] = str_replace(",", "", $request->fixed_sell_amount);
 			$configs["fixed_buy_amount"] = str_replace(",", "", $request->fixed_buy_amount);
 			
+			
 			$configs["base"] = str_replace(",", "", $request->base);
 			
 			if($id == 38){ //hard coded public test model
 			  $configs["testing_mode"] = 1;
 			}
 			
-			$s = print_r($configs, true);
-			LOG::info("CONFIGS: " . $s);
+			//$s = print_r($configs, true);
+			//LOG::info("CONFIGS: " . $s);
 			
 			$response = DB::table('bot')
             ->where('owner_id', $id)
@@ -123,7 +125,11 @@ class Bot extends Controller{
                         'fixed_sell' =>$configs["fixed_sell"],
                         'fixed_buy' => $configs['fixed_buy'],
 						'fixed_sell_amount' => $configs["fixed_sell_amount"],
-						'fixed_buy_amount' => $configs["fixed_buy_amount"]
+						'fixed_buy_amount' => $configs["fixed_buy_amount"],
+						'sell_limit_btc' => $request->sellLimitBtc,
+						'buy_limit_btc' => $request->buyLimitBtc,
+						'increase' =>$request->increase/100,
+						'decrease'=>$request->decrease/100
 					));
 			
 	        return json_encode( array('status'=>$response) );
@@ -131,4 +137,67 @@ class Bot extends Controller{
 	}
 	
 	
+	//Main entry point for updating bots via daemon
+	public function processBotRules($bots){
+
+        LOG::info("Processing bot rules");
+
+        $id = 1;
+
+		$ticker = app('App\Http\Controllers\Ticker')->getTickerById($id);
+
+		for($i=0; $i<count($bots); $i += 1){
+			
+			$bots[$i] = $this->calculatePricePoints($bots[$i]);
+			$bots[$i] = app('App\Http\Controllers\Transaction')->updateTransaction($bots[$i], $ticker);
+			
+		}
+		
+		echo "Finished processing";
+	}
+
+    public function getAllActiveBots(){
+    	
+		LOG::info("Getting all active bots.\n");
+    	
+		$bots = DB::table('bot')->where('owner_id', 1)->get();
+		
+		//return $this->cacluclatePricePoints()
+		for($i=0; $i<count($bots); $i += 1){
+			
+			//TODO: There is a function identical to this. Refactor.
+			if($bots[$i]->testing_mode == 1){
+				$result = DB::table('test_ledger')->where('owner_id', $bots[$i]->id )->get();
+				
+				$bots[$i]->usd = $result[0]->usd;
+				$bots[$i]->btc = $result[0]->btc;
+				
+			}
+			
+		}
+		
+		//$bots = DB::table('bot')->where('is_active', 1)->get(); 
+        return $bots;
+    }
+	
+
+	function calculatePricePoints($bot){
+		
+		LOG::info("Calculating price points");
+		
+		$base = $bot->base;
+		$increase = $bot->increase;
+		$decrease = $bot->decrease;
+		
+		$bot->spp = $base * (1 + $increase);
+		$bot->ppp = $base * (1 - $decrease);
+		
+		/*
+		$bot->spp = ( $base + ($base * ($increase/10) ) );
+		$bot->ppp = ( $base - ($base * ($increase/10) ) );
+		 * 
+		 */
+		
+		return $bot;
+	}
 }

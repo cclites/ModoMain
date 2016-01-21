@@ -57,20 +57,94 @@ var li = {
 		mo.asynch(request);
 	},
 	
-	getTransactions: function(){},
+	getTransactions: function(){
+		var data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id},
+		    url = "transactions",
+		    request = new mo.requestObject(url, "POST", ca.getTransactionsSuccess, ca.getTransactionsFailure, data);
+		    
+		mo.asynch(request);
+		
+	},
 	
 	logOut: function(){
 		//TODO: Put into .env
 		location.href = "//localhost/ModoMain/public/";
 	},
 	
-	updateAccount: function(){},
+	updateAccount: function(){
+		
+		console.log("Updating account");
+		
+		var accountView = tem.buildAccountView();
+		
+		//throw it into a dialog and display
+		$("#modals").html(accountView).dialog(
+			{
+				modal: true,
+				width: 800,
+				height: 400,
+				dialogClass: 'modalDialog',
+				title: "Account"
+			}
+		);
+		
+		$(".ui-dialog-titlebar-close").html("X");
+	},
 	
 	initDirtyFlag: function(){
 		
 		$(".configSummary#configSummary input").keyup(function(){
 			mo.dirtyFlag = true;
 		});
-	}
+	},
+	
+	saveNewPass: function(){
+		
+		var pass1 = $("#newPass1").val(),
+		    pass2 = $("#newPass1").val(),
+		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, pass1: pass1, pass2: pass2},
+		    url = "updatelogin",
+		    request = new mo.requestObject(url, "POST", ca.updateLoginSuccess, ca.updateLoginFailure, data);
+		    
+		mo.asynch(request);
+		
+	},
+	
+	showAccountConfig: function(section){
+		
+		$(".accountAction").hide();
+		$(section).show();
+	},
+	
+	saveNewEmail: function(){
+		
+		var newMail = $("#newMail").val(),
+		    url = 'updatemail',
+		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, newMail: newMail},
+		    request = new mo.requestObject(url, "POST", ca.updateEmailSuccess, ca.updateEmailFailure, data);
+		    
+		mo.asynch(request);
+	},
+	
+	updateBitstampConfigs: function(){
+		var utoken = $("#key").val(),
+		    usecret = $("#secret").val(),
+		    uid = $("#acctId").val(),
+		    url = 'updatebsconfigs',
+		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, newMail: newMail, utoken:utoken, usecret: usecret, id: uid},
+		    request = new mo.requestObject(url, "POST", ca.updateBsCongigsSuccess, ca.updateeBsCongigsFailure, data);
+		    
+		mo.asynch(request);
+	},
+	
+	activateAccount: function(){
+		
+		var data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id},
+		    url = "activateaccount",
+		    request = new mo.requestObject(url, "POST", ca.activateAccountSuccess, ca.activeAccountFailure, data);
+		    
+		mo.asynch(request);
+		
+	},
 	
 };

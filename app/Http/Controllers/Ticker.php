@@ -24,10 +24,6 @@ class Ticker extends Controller{
 	function getTickerById($id){
 		
 		$record = DB::table('ticker')->where('id', $id)->get();
-		
-		//LOG::error("Type of record is " . gettype($record));
-		//LOG::error("Record:" . $record[0]);
-		
 		return $record[0];
 	}
 	
@@ -74,10 +70,6 @@ class Ticker extends Controller{
 	function updateTrend($currentMarket, $previousMarket)
 	{
 		
-		//LOG::info("CurrentMarket " . gettype($currentMarket));
-		//LOG::info("PreviousMarket " . gettype($previousMarket));
-		
-
 		if($currentMarket->last < $previousMarket->last){
 			$currentMarket->direction = -1;
 		}else if($currentMarket->last > $previousMarket->last){
@@ -86,46 +78,14 @@ class Ticker extends Controller{
 			$currentMarket->direction = 0;
 		}
 		
-       /*
-		if($currentMarket->getLast() < $previousMarket->getLast())   			// trending down
-		{
-			writeLog("**********  Trending down. ");
-			if( $previousMarket->getDirection() == -1)  // was already decreasing
-			{
-				$t = $previousMarket->getTrend();
-				$currentMarket->setTrend( ($t += 1) );
-				$currentMarket->setDirection(1);
-			}
-			else				//was increasing. Set to direction to decreasing,  and reset trend
-			{
-				writeLog("**********  Was increasing");
-				$currentMarket->setTrend(1);
-				$currentMarket->setDirection(-1);
-			}
+		if($currentMarket->direction < $previousMarket->direction){
+			$currentMarket->trend = $previousMarket->trend--;
+		}else if($currentMarket->direction > $previousMarket->direction){
+			$currentMarket->trend = $previousMarket->trend++;
+		}else{
+			//do nothing, but hold this place for logging
 		}
-		else if ( $currentMarket->getLast() > $previousMarket->getLast() )   // trending up
-		{
-			writeLog("**********  Trending up");
-			if( $previousMarket->getDirection() == 1)		// Was already increasing
-			{
-				$t = $currentMarket->getTrend();
-				$currentMarket->setTrend( ($t += 1) );
-				$currentMarket->setDirection(-1);
-			}
-			else			// was decreasing. Set direction to increasing
-			{
-				writeLog("**********  Was decreasing");
-				$currentMarket->setTrend(1);
-				$currentMarket->setDirection(1);
-			}
-		}
-	    * 
-	    */
-		
-		return $currentMarket;
-			
-		//}
+				
+		return $currentMarket;		
 	}
-	
-	
 } 

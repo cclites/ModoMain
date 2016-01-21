@@ -18,6 +18,10 @@ class VerifyCsrfToken extends BaseVerifier
         '/update',
         '/resetbalance',
         '/resethistory',
-        '/transactions'
+        '/transactions',
+        '/updatelogin',
+        '/updateemail',
+        '/updatebsconfigs',
+        '/activateaccount'
     ];
 }

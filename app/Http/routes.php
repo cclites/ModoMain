@@ -45,5 +45,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/update', 'Bot@updateConfigs');
 	Route::post('/resetbalance', 'Ledger@resetTestBalance');
 	Route::post('/resethistory', 'History@resetBotHistory');
-	Route::post('/transactions', 'Transactions@getTransaction');
+	Route::post('/transactions', 'Transaction@getTransactions');
+	
+	Route::post('/updatelogin', 'Auth\ModoAuth@updateLogin');
+	Route::post('/updatemail', 'Auth\ModoAuth@updateEmail');
+	Route::post('/updatebsconfigs', 'Auth\ModoAuth@updateBsConfigs');
+	Route::post('/activateaccount', 'Auth\ModoAuth@activateAccount');
 });
