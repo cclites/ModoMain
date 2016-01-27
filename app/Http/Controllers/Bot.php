@@ -27,11 +27,18 @@ class Bot extends Controller{
 			$id = DB::table('member')->where('token', $this->token)->pluck("id");
 			$bot = DB::table('bot')->where('owner_id', $id)->get();
 			
+			//LOG::info("Bot length is " . count($bot) );
+			
+			//return json_encode( array("bot"=>$bot) );
+			
 			$botId = $bot[0]->id;
 			
 			//before I send this back, I want to encode the owner id and id.
 			$bot[0]->id = Crypt::encrypt($bot[0]->id);
 			$bot[0]->owner_id = Crypt::encrypt($bot[0]->owner_id);
+			
+			$bot[0]->id = htmlentities($bot[0]->id);
+			$bot[0]->owner_id = htmlentities($bot[0]->owner_id);
 			
 			
 			$balance = DB::table('member')->where('id', $id[0])->pluck("balance");
@@ -47,7 +54,12 @@ class Bot extends Controller{
 			
 			if($bot[0]->testing_mode == 1){
 				
-				$result = DB::table('test_ledger')->where('owner_id', $botId)->get();
+				//LOG::info("Bot id is " . $id[0]);
+				
+				$result = DB::table('test_ledger')->where('owner_id', $id)->get();
+				
+				//LOG::info( gettype($result) );
+				//return json_encode( array("test ledger result"=>$result) );
 				
 				$bot[0]->usd = $result[0]->usd;
 				$bot[0]->btc = $result[0]->btc;
@@ -66,11 +78,11 @@ class Bot extends Controller{
 
 	public function updateConfigs(Request $request){
 		
-		echo "Client side configs\n";
+		//echo "Client side configs\n";
 		//print_r($request);
 		//return;
-		LOG::info("FIXED SELL AMOUNT " . $request->fixed_sell_amount);
-		LOG::info("FIXED BUY AMOUNT " . $request->fixed_buy_amount);
+		//LOG::info("FIXED SELL AMOUNT " . $request->fixed_sell_amount);
+		//LOG::info("FIXED BUY AMOUNT " . $request->fixed_buy_amount);
 		
 	    $token = $request -> token;
 		$session = $request -> session;
@@ -79,17 +91,17 @@ class Bot extends Controller{
 		    Session::get('token') == $token &&
 			Session::get('authenticated') ){
 				
-			LOG::info(">" . $token . "<");
+			//LOG::info(">" . $token . "<");
 				
 			$id = DB::table('member')->where('token', $request -> token )->pluck("id");
 			$id = $id[0];
 			
-			LOG::info($request->is_active);
-			LOG::info($request->testing_mode);
-			LOG::info($request->buying);
-			LOG::info($request->selling);
-			LOG::info($request->fixed_sell);
-			LOG::info($request->fixed_buy);
+			//LOG::info($request->is_active);
+			//LOG::info($request->testing_mode);
+			//LOG::info($request->buying);
+			//LOG::info($request->selling);
+			//LOG::info($request->fixed_sell);
+			//LOG::info($request->fixed_buy);
 				
             $configs = array();
 
@@ -158,16 +170,22 @@ class Bot extends Controller{
 
     public function getAllActiveBots(){
     	
+		
 		LOG::info("Getting all active bots.\n");
     	
-		$bots = DB::table('bot')->where('owner_id', 1)->get();
+		//$bots = DB::table('bot')->where('owner_id', 1)->get();
+		//actually get all active bots
+		$bots = DB::table('bot')->where('is_active', 1)->get();
 		
 		//return $this->cacluclatePricePoints()
 		for($i=0; $i<count($bots); $i += 1){
 			
 			//TODO: There is a function identical to this. Refactor.
 			if($bots[$i]->testing_mode == 1){
-				$result = DB::table('test_ledger')->where('owner_id', $bots[$i]->id )->get();
+				
+				$result = DB::table('test_ledger')->where('owner_id', $bots[$i]->owner_id )->get();
+				
+				$bots[$i] = $this->calculatePricePoints($bots[$i]);
 				
 				$bots[$i]->usd = $result[0]->usd;
 				$bots[$i]->btc = $result[0]->btc;

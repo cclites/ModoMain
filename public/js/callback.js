@@ -3,20 +3,20 @@ var ca = {
 	loginSuccess: function(data){
 		
 		//No bot for that member
-		if(data.bot == 0){
-			alert("Unable to find a user with those credentials.");
+		if(data.status == 0){
+			mo.log("Unable to find a user with those credentials.");
 		}else{
 			model.token = data.token;
 			model.session = data.session;
 			
-			//remove all of the splash screen stuff.
-			$(".splash, .form, #newAccount").hide();
-			
-			
-			//TODO: show waiting modal
+			$(".modalMessage").html("Loading content"); //show modal
+		    $("#waitModal").toggle("fade");
+		    
 			
 			//Get the bot
 			mo.getBotState();
+			mo.pollDirty();   //poll the dirty flag.
+			mo.log("Ready....");
 		}
 	},
 	
@@ -25,7 +25,7 @@ var ca = {
 	getBotStateSuccess: function(data){
 		
 		if(data.bot == 0){
-			alert("Unable to retrieve bot");
+			mo.log("Unable to retrieve bot");
 		}else{
 			
 			model.id = data.bot[0].id;
@@ -58,21 +58,41 @@ var ca = {
 		
 		//ko_models.history = ko.mapping.fromJS(data);
 		ko_models.history = data;
-		
 		view.buildBotView();
+		
+		mo.log("Updated.");
+		
+		if( $("#waitModal").css("display") == "block"){
+			
+			setTimeout(function(){ //hide
+				$("#waitModal").toggle("fade");
+			    $(".modalMessage").html("");
+			    
+			}, 1000);
+		}
+		
+		
+		
+		
 	},
 	
 	getHistoryFailure: function(xhr, type, exception){},
 	
 	updateConfigsSuccess: function(data){
-		console.log(data);
+		
+		mo.log("Configuration has been updated.");
+		$(".statusIndicator").html(tem.showStatusAsSaved);		
 	},
 	
-	updateConfigsFailure: function (xhr, type, exception){},
+	updateConfigsFailure: function (xhr, type, exception){
+		
+		console.log(xhr);
+		console.log(type);
+		console.log(exception);
+		
+	},
 	
 	resetBalanceSuccess: function(data){
-		
-		//refresh bot
 		mo.getBotState();
 	},
 	
@@ -80,6 +100,7 @@ var ca = {
 	
 	resetHistorySuccess: function(data){
 		console.log("SUCCESS" + data);
+		mo.log("History has been reset");
 		mo.getBotState();
 	},
 	
@@ -115,27 +136,74 @@ var ca = {
 	},
 	
 	updateLoginSuccess: function(data){
+			
+		if(data.status == 1){
+			mo.log("Your password has been updated.");
+		}else{
+			mo.log("Unable to update password at this time. Please try later.");
+		}
 		
-		console.log(data);
+		$(".ui-dialog-titlebar-close").trigger("click");
 	},
 	
 	updateLoginfailure: function(xsr, type, exception){},
 	
 	updateEmailSuccess: function (data){
-		console.log(data);
+		
+		if(data.status == 1){
+			mo.log("Your email address has been updated.");
+		}else{
+			mo.log("Your email address could not be validated at this time. Please try later.");
+		}
+		
+		$(".ui-dialog-titlebar-close").trigger("click");
+		
 	},
 	
 	updateEmailFailure: function(xsr, type, exception){},
 	
 	updateBsCongigsSuccess: function(data){
-		console.log(data);
+		
+		if(data.status == 1){
+			mo.log("Your Bitstamp info has been updated.");
+			
+		}else{
+			mo.log("Your Bitstamp info could not be updated at this time. Please try later.");
+		}
+		
+		$(".ui-dialog-titlebar-close").trigger("click");
 	},
 	
 	updateBsCongigsFailure: function(xsr, type, exception){},
 	
 	activateAccountSuccess: function(data){
-		console.log(data);
+
+		if(data.status == 1){
+			mo.log("Notification to activate account has been sent.");
+		}else{
+			mo.log("Unable to activate account at this time.");
+		}
+		
+		$(".ui-dialog-titlebar-close").trigger("click");
 	},
 	
 	activateAccountFailure: function(xsr, type, exception){},
+	
+	addNewMemberSuccess:function(data){
+		console.log(data);
+	},
+	
+	addNewMemberFailure: function(xsr, type, exception){},
+	
+	resetPasswordSuccess: function(data){
+		console.log(data);
+	},
+	
+	resetPasswordFailure: function(xsr, type, exception){},
+	
+	resetValidationSuccess: function(data){
+		console.log(data);
+	},
+	
+	resendValidationFailure: function(xsr, type, excpetion){},
 };

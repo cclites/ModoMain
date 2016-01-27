@@ -95,6 +95,9 @@ var li = {
 		
 		$(".configSummary#configSummary input").keyup(function(){
 			mo.dirtyFlag = true;
+			
+			//change state
+			$(".statusIndicator").html(tem.showStatusAsDirty);
 		});
 	},
 	
@@ -119,7 +122,7 @@ var li = {
 	saveNewEmail: function(){
 		
 		var newMail = $("#newMail").val(),
-		    url = 'updatemail',
+		    url = 'updateemail',
 		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, newMail: newMail},
 		    request = new mo.requestObject(url, "POST", ca.updateEmailSuccess, ca.updateEmailFailure, data);
 		    
@@ -131,7 +134,7 @@ var li = {
 		    usecret = $("#secret").val(),
 		    uid = $("#acctId").val(),
 		    url = 'updatebsconfigs',
-		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, newMail: newMail, utoken:utoken, usecret: usecret, id: uid},
+		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, utoken:utoken, usecret: usecret, uid: uid},
 		    request = new mo.requestObject(url, "POST", ca.updateBsCongigsSuccess, ca.updateeBsCongigsFailure, data);
 		    
 		mo.asynch(request);
@@ -145,6 +148,54 @@ var li = {
 		    
 		mo.asynch(request);
 		
+	},
+	
+	newAccount: function(){
+        view.buildNewAccountView();
+	},
+	
+	addNewMember: function(){
+		
+		var data = {
+			 	umail: $("#newUserEmail").val(),
+			 	uname: $("#newUserName").val(),
+			 	upass: $("#newUserPass").val()
+			 }, 
+			 url = 'addnewuser',
+			 request = new mo.requestObject(url, "POST", ca.addNewMemberSuccess, ca.activeAccountFailure, data);
+		 
+        mo.asynch(request);
+	},
+	
+	resendValidation: function(){
+		
+		var data = {
+			 	umail: $("#newUserEmail").val()
+			 }, 
+			 url = 'resendvalidation',
+			 request = new mo.requestObject(url, "POST", ca.resendValidationSuccess, ca.resendValidationFailure, data);
+		 
+		 mo.asynch(request);
+	},
+	
+	changePassword: function(){
+		
+		var data = {
+			 	umail: $("#newUserEmail").val()
+			 }, 
+			 url = 'changepassword',
+			 request = new mo.requestObject(url, "POST", ca.resetPasswordSuccess, ca.rresetPasswordFailure, data);
+		 
+		 mo.asynch(request);
+	},
+	
+	clearLog: function(){
+		
+		$("#statusLogContent").empty();
+	},
+	
+	contact: function(){
+		console.log("Show contact form");
 	},
 	
 };

@@ -193,7 +193,9 @@ article div{
 
 .statusLog div
 {
-	margin-left: 8px;
+	padding-left: 8px;
+    position: relative;
+    top: 33px;
 }
 
 footer
@@ -217,8 +219,10 @@ footer div{
     border: 3px solid #f47521;
     border-radius: 6px;
     color: #8a8c8f;
-    font-size: 16px;
+    font-family: "News Cycle";
     height: 406px;
+    line-height: 22px;
+    padding: 32px 8px 4px;
     resize: none;
     width: 300px;
 }
@@ -719,3 +723,77 @@ table.historyTable tbody tr td
 .modalDialog .ui-dialog-titlebar.ui-widget-header{
 	background: #004976;
 }
+
+.fa{
+	cursor: pointer;
+}
+
+
+.fa.fa-strikethrough {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin-right: 4px;
+    padding: 2px;
+}
+
+.fa-heart{
+	color: green;
+}
+
+.fa-heart-o{
+	color: red;
+}
+
+.statusIndicator{
+    display: none;
+    left: 34px;
+    margin: 0 auto;
+    position: relative;
+    text-align: right;
+    top: 18px;
+    width: 878px;
+}
+
+.saveStatus{
+	margin-left:6px;
+}
+
+#waitModal{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 1000;
+	background: #ddd;
+	opacity: .98;
+}
+
+#waitModal .fa-cog{
+
+}
+
+.waitContainer{
+	width: 400px;
+	height: 400px;
+	margin: 20% auto 0;
+	text-align: center;
+	
+}
+
+.modalMessage{
+	font-size: 30px;
+    text-align: center;
+}
+
+#mail{
+	bottom: auto;
+    height: 65px;
+    left: 96%;
+    position: absolute;
+    right: auto;
+    top: 24px;
+    width: 65px;
+}
+

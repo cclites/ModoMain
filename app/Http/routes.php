@@ -19,12 +19,19 @@ Route::get('/', function () {
     return view("main");
 });
 
+/*
 Route::get('/routetest', function(){
 	return view('routetest');
 });
+ */
 
 Route::get('/ticker', 'Ticker@getTicker');
 Route::get('/daemon', 'Daemon\Daemon@main');
+Route::get('/validateaccount', 'Auth\ModoAuth@validateAccount');
+
+Route::get('/resetaccountpass', 'Auth\ModoAuth@resendAccountPass');
+
+//Route::get('/addwallets' , 'Wallet@addWallets');
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +55,13 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/transactions', 'Transaction@getTransactions');
 	
 	Route::post('/updatelogin', 'Auth\ModoAuth@updateLogin');
-	Route::post('/updatemail', 'Auth\ModoAuth@updateEmail');
+	Route::post('/updateemail', 'Auth\ModoAuth@updateEmail');
 	Route::post('/updatebsconfigs', 'Auth\ModoAuth@updateBsConfigs');
 	Route::post('/activateaccount', 'Auth\ModoAuth@activateAccount');
+	
+	Route::post('/addnewuser', 'Auth\ModoAuth@addNewUser');
+	Route::post('/resetpassword', 'Auth\ModoAuth@resetPassword');
+	Route::post('/resendvalidation', 'Auth\ModoAuth@resendValidation');
+	
+	
 });

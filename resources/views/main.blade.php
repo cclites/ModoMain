@@ -10,6 +10,8 @@
 		<link href='https://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 		
 		
 
@@ -22,6 +24,7 @@
 
 		<div id="banner_background"></div>
 		<div class="banner">
+			<i id="mail" class="fa fa-envelope-o fa-4x" onclick="li.contact()"></i>
 			<div class="bannerContent">
 				<div id="bannerLeft">
 					<div class="form">
@@ -34,12 +37,15 @@
 				</div>
 				<div id="bannerCenter"></div>
 				<div id="bannerRight">
-					<span id="newAccount" onclick="newAccount()">⋅ New Account</span>
+					<span id="newAccount" onclick="li.newAccount()">⋅ New Account</span>
 				</div>
 			</div>
 		</div>
 		<br>
 		
+		<div class='statusIndicator'>
+		    <span>Configuration Saved.<i class="fa fa-heart saveStatus"></i></span>	
+		</div>
 		
 		<div id="frame">
 			
@@ -74,7 +80,13 @@
 		
 
 		<div id="modals"></div>
-		<div id="waitModal"></div>
+		<div id="waitModal">
+			<div class='waitContainer'>
+				<div class='modalMessage'></div>
+				<i class="fa fa-cog fa-4x fa-refresh fa-spin"></i>
+			</div>
+			
+		</div>
 		<div class="contact glyphicon-envelope btn-lg" onclick="contactDisplay()"></div>
 		<br>
 

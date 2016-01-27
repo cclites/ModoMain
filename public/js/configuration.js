@@ -2,7 +2,7 @@
 //There is no model when this is first loaded. Binding has to happen once the bot configuration is loaded.
 //var configs = new ko.observableArray(model[0].configs);
 
-
+/*
 var updateConfigs = function(id)
 {
 	var url = 'Api/Dispatcher.php',
@@ -66,4 +66,4 @@ var updateConfigs = function(id)
 		}).fail(function(data, msg, error){
 		   addMessage("Configuration failed to update.\n" + data + "\n" + msg + "\n" + error);
 		});
-}
+}*/

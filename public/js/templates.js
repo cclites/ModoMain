@@ -82,7 +82,7 @@ var tem = {
 	
 	buildRestPasswordView : function(){
 
-		str = '  <table id="resetPassword">' +
+		var str = '  <table id="resetPassword">' +
 			'    <tr>' +
 			'      <td class="accountLabel">Enter new Password:</td>' +
 			'      <td><input type="password" id="newPass1"/></td>' +
@@ -101,7 +101,7 @@ var tem = {
 
     buildResetEmail : function(){
 
-		str = '  <table id="resetEmail">' +
+		var str = '  <table id="resetEmail">' +
 			'    <tr>' +
 			'      <td class="accountLabel">Enter new Email:</td>' +	
 			'      <td><input type="text" id="newMail"/></td>' +
@@ -116,7 +116,7 @@ var tem = {
 
     buildBitstampCfg : function(){
 
-		str ='  <table id="bitstampCfgsTable">' +	
+		var str ='  <table id="bitstampCfgsTable">' +	
 			'    <tr>' +
 			'    <tr>' +	
 			'      <td class="accountLabel">Account id:</td>' +	
@@ -140,14 +140,68 @@ var tem = {
     buildAccountActivate : function()
 	{
 			
-		str = "<div id='disclaimer'><b>Disclaimer:</b> Modobot.com is for entertainment purposes only. Performance is dependent on market conditions and operator performance." +
+		var str = "<div id='disclaimer'><b>Disclaimer:</b> Modobot.com is for entertainment purposes only. Performance is dependent on market conditions and operator performance." +
 		       "This service is provided as-is, with no guarantees or warranties. All accounts will be manually activated.</div>" +
 	           "<br>" +
-		       "<div><b>Pricing:</b> During beta-testing, a limited number of bots will be allowed free limited live access. In order to activate your bot for live trades, you must sign up for an account on the support forum and respond to the Bot Activation Request thread. Activation may take up to 24 hours. Bots will be limited to 1฿ per trade on free accounts.</div>";
-		
+	           "<button class='action' onclick='li.activateAccount();'>Activate Account</buton>";
 		return str;
 	},
 	
+	buildNewAccountView : function(){
+		
+		var str = '<form>' +
+		          '  <div id="accountMessage">' +
+		          '    Once your account is registered, you will receive an auto-generated email with a validation url. Please click on the link in the email to validate your account. Once validated, you will be able to log in.' +
+		          '</div>' +
+		
+		          '    <br>' +
+		
+		          '<div id="newAccountDisclaimer">' +
+		          'Modobot is provided for entertainment purposes only, and is not intended as a viable investment strategy. Bot performance is dependant on market conditions and individual operation. No claims of profitability are implied. It is the responsibility of the  operator to familiarize themselves with ModoBot functionality before making live trades. Please select a secure password that is unique to this site.<br><br>Modobot.com requires a linked Bitstamp account for live trading.' +
+		          '  </div>' +
+		
+		          '    <br>' +
+		          '        ' +
+		          '  <input type="text" id="newUserName" placeholder="Enter User Name" required="required">' +
+		          '    <br>' +
+		          '  <input type="text" id="newUserEmail" placeholder="Enter Email Address" required="required">' +
+		          '    <br>' +
+		          '  <input type="password" id="newUserPass" placeholder="Enter Password" required="required">' +
+		          '    <br>' +
+		          '  <input type="button" class="action" id="createAccount" onclick="li.addNewMember()" value=" Submit "/>' +
+		          '  <button class="action" id="resendValidate" onclick="li.resendValidation()">Resend Validation</button>' +
+		          '  <button class="action" id="changePassword" onclick="li.changePassword()">Reset Password</button>' +
+		          '</form>';
+		
+		
+	    return str;	
+	},
+	
+	newPasswordReset: function(){
+		
+		return view('newPasswordReset');
+	},
+	
+	showStatusAsSaved: '<span>Configuration Saved.<i class="fa fa-heart saveStatus"></i></span>',
+	
+	showStatusAsDirty: '<span>Configuration Not Saved.<i class="fa fa-heart-o saveStatus"></i></span>',
+	
+	showStatusAsSaving: '<span>Saving Configuration.<i class="fa fa-heartbeat saveStatus"></i></span>',
+	
+	buildContact: function(){
+	    var str = "";
+	  
+	    var str = "  <h3>Please send any questions, comments, or suggestions</h3>\n" +
+			      "  <form>\n" +
+			      "    <div><label>ContractAddress:</label><input id='cAddress'></div>\n" +
+			      "      <br>\n" +
+			      "    <div><label>Subject:</label><input id='cSubject'></div>\n" +
+			      "      <br>\n" +
+			      "    <div><label>Message:</label><textarea id='cMessage'></textarea></div>\n" +
+			      "      <br>\n" +
+			      "    <div id='contactSubmit' class='divAsButton'>Submit</div>" +
+			      "  </form>\n";
+	},
 	
 	
 };

@@ -10,38 +10,53 @@ class ModoAuth extends Controller{
 	
 	
 	function validateLogin(Request $request){
-		
 		$ah = new AuthenticateHandler();
 		return $ah->authenticate($request);
-
 	}
 	
 	function updateLogin(Request $request){
-		
 		$ah = new AuthenticateHandler();
 		return $ah->updateLogin($request);
-		
 	}
 	
 	function updateEmail(Request $request){
-		
-		$ah = new AuthenticateHandler($request);
-		return $ah->updateEmail();
-		
+		$ah = new AuthenticateHandler();
+		return $ah->updateEmail($request);	
 	}
 	
 	function updateBsConfigs(Request $request){
-		
 		$ah = new AuthenticateHandler();
-		return $ah->updateBsConfigs($request);
-		
+		return $ah->updateBsConfigs($request);	
 	}
 	
 	function activateAccount(Request $request){
-		
 		$ah = new AuthenticateHandler();
-		return $ah->updateBsConfigs($request);
-		
+		return $ah->activateAccount($request);
+	}
+	
+	function addNewUser(Request $request){
+		$ah = new AuthenticateHandler();
+		return $ah->addNewUser($request);
+	}
+	
+	function resetPassword(Request $request){
+		$ah = new AuthenticateHandler();
+		return $ah->resetPassword($request);
+	}
+	
+	function resendValidation(Request $request){
+		$ah = new AuthenticateHandler();
+		return $ah->resendValidation($request);
+	}
+	
+	function validateAccount(Request $request){
+		$ah = new AuthenticateHandler();
+		return $ah->validateAccount($request);
+	}
+	
+	function resendAccountPass(Request $request){
+		$ah = new AuthenticateHandler();
+		return $ah->resendAccountPass($request);
 	}
 	
 

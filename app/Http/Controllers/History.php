@@ -29,7 +29,7 @@ class History extends Controller{
 		    Session::get('token') == $this->token &&
 			Session::get('authenticated') ){
 				
-				$this->id = Crypt::decrypt($this->id);
+				$this->id = Crypt::decrypt($this->owner_id);
 			    $history = DB::table('historic')->where('owner_id', $this->id)->get();
 		        return json_encode( array('history'=> $history) );
 		}

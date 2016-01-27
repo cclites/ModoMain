@@ -18,7 +18,7 @@ class Daemon extends Controller{
 	
 	function main(){
 		
-		echo("Bot is running<br>");
+		echo("\nBot is running\n");
 		
 		//$this->updatetTicker(1);
    

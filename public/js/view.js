@@ -2,6 +2,10 @@ var view = {
 	
 	buildBotView: function(){
 		
+		//remove all of the splash screen stuff.
+		$(".splash, .form, #newAccount").hide();
+		$(".statusIndicator").show();
+		
 		//add the logout and account menu items
 		view.addAuthMenuItems();
 		
@@ -15,7 +19,14 @@ var view = {
 		}
 		
 		$("#historyContainer").html( buildHistoryView() );
-		$("#statusLogContainer").html( statusLogView() ).show();
+		
+		if( $("#statusLogContainer").css("display") === 'block' ) {
+			//just update. Eventually we will check for messages from server
+			//TODO: implement messaging poll.
+		}else{
+			$("#statusLogContainer").html( statusLogView() ).show();
+		}
+
 		
 		mo.setUpdateTimers();
 		
@@ -30,6 +41,24 @@ var view = {
 		
 	    $("#bannerLeft").html('<div id="logOut" onclick="li.logOut();">&#8901;&nbsp;Log Out</div>');
 	    $("#bannerRight").html('<div id="account" onclick="li.updateAccount()">&#8901;&nbsp;Account</div>');
+	},
+	
+	buildNewAccountView: function(){
+		
+		 var newAccountView = tem.buildNewAccountView();
+		 
+		 //throw it into a dialog and display
+		$("#modals").html(newAccountView).dialog(
+			{
+				modal: true,
+				width: 800,
+				height: 500,
+				dialogClass: 'modalDialog',
+				title: "New Account"
+			}
+		);
+		
+		$(".ui-dialog-titlebar-close").html("X");
 	},
 	
 };

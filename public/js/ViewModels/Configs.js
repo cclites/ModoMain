@@ -79,7 +79,7 @@ function buildConfigView(){
 	
 	      
 	
-	 str +=      "                     <td><input id='increase' onkeyup='mo.updateMargins()' size='8' value='" + parseFloat(temp) + "'  type='text'></td>\n" +
+	 str +=      "                     <td><input id='increase' onkeyup='mo.updateMargins()' size='8' value='" + parseFloat(temp).toFixed(2) + "'  type='text'></td>\n" +
 	 "                      <td class='configLabel' colspan='2'>Margin Buy Price</td>\n" +
 	       "                      <td id='marginPurchasePrice'>$0</td>\n" +
 	       "                     <td>&nbsp;</td>\n" +
@@ -103,7 +103,7 @@ function buildConfigView(){
 	str += "                     <td class='configLabel'>% Decrease</td>\n";
 	
 	temp = myB.decrease*100;
-	str += "                     <td><input id='decrease' onkeyup='mo.updateMargins()' size='8' value='" + parseFloat(temp) + "' type='text'></td>\n"; 
+	str += "                     <td><input id='decrease' onkeyup='mo.updateMargins()' size='8' value='" + parseFloat(temp).toFixed(2) + "' type='text'></td>\n"; 
 	str += "                     <td class='configLabel'>Sell Limit Btc</td>\n";
 	
 	temp = myB.sell_limit_btc;

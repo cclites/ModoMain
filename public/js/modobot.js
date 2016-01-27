@@ -57,7 +57,8 @@ var mo = {
 	
 	},
 	
-	getBotState: function(){
+	getBotState: function(){//show the modal
+		
 		
 		var data = {session: model.session, token: model.token},
 		    url = "state",
@@ -86,8 +87,6 @@ var mo = {
     
     setUpdateTimers: function(){
     	
-    	//return;
-    	
     	if( mo.tickerTimer === null){
 	    	mo.tickerTimer = setInterval(function(){
 	    		mo.getBotState();
@@ -109,7 +108,24 @@ var mo = {
    
     	$("#marginSalePrice").html( "$" + ( base * (1 + increase) ).toFixed(2) );
     	$("#marginPurchasePrice").html( "$" + ( base * (1 - decrease) ).toFixed(2) );
-    }
+    },
+    
+    log: function(message){
+    	$("#statusLogContent").append(message + "\n");
+    	
+    	console.log(message);
+    },
+    
+    pollDirty: function(){
+    	
+    	setInterval(function(){
+    		
+    		if(mo.dirtyFlag){
+    			li.updateConfigs();
+    		}
+    	}, 4000);
+    	
+    },
 };
 
 /* Ready, go */
@@ -121,5 +137,10 @@ $(function() {
     //apply bindings to the model here.
     ko.applyBindings(ko_models);
     
+    //$( "#mail" ).draggable();
+    
 });
+
+
+
 

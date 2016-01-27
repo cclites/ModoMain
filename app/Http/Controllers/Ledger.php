@@ -64,7 +64,7 @@ class Ledger extends Controller{
 			Session::get('authenticated') ){
 				
 
-			$id = Crypt::decrypt($request->id);
+			$id = Crypt::decrypt($request->owner_id);
 			
 			LOG::info("ID is " . $id);
 			
