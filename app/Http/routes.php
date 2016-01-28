@@ -26,10 +26,10 @@ Route::get('/routetest', function(){
  */
 
 Route::get('/ticker', 'Ticker@getTicker');
-Route::get('/daemon', 'Daemon\Daemon@main');
 Route::get('/validateaccount', 'Auth\ModoAuth@validateAccount');
 
 Route::get('/resetaccountpass', 'Auth\ModoAuth@resendAccountPass');
+Route::get('/sweep', 'Sweeper@sweep');
 
 //Route::get('/addwallets' , 'Wallet@addWallets');
 
@@ -62,6 +62,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/addnewuser', 'Auth\ModoAuth@addNewUser');
 	Route::post('/resetpassword', 'Auth\ModoAuth@resetPassword');
 	Route::post('/resendvalidation', 'Auth\ModoAuth@resendValidation');
+	
+	Route::get('/daemon', 'Daemon\Daemon@main');
 	
 	
 });

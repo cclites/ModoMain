@@ -45,7 +45,7 @@ class Bot extends Controller{
 			$balance = $balance[0];
 	
 			//TODO remove hard coded trade divisor
-			$bot[0]->trades = $balance/100000;
+			$bot[0]->trades = $balance;
 			
 
 			if($id[0] == 64){

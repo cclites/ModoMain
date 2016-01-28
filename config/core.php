@@ -9,5 +9,6 @@
 	    "BITSTAMP_SELL_LIMIT"=> "https://www.bitstamp.net/api/sell/",
 	    "BITSTAMP_OPEN_ORDERS"=>"https://www.bitstamp.net/api/open_orders/",
 	    "BITSTAMP_CLOSE_ORDER"=>"https://www.bitstamp.net/api/cancel_order/",
-	    "BITSTAMP_TRANSACTIONS"=>"https://www.bitstamp.net/api/user_transactions/"
+	    "BITSTAMP_TRANSACTIONS"=>"https://www.bitstamp.net/api/user_transactions/",
+	    "SWEEP_ONCE"=>true
 	];

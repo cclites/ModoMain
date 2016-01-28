@@ -293,10 +293,10 @@ class Transaction extends Controller{
 		/** end auto triggers **/
 		
         //Should not need the fixed transactions. Should just need a check.
-        /*
+        
 		else if($this->bot->fixed_sell == 1 && 
 		        $this->bot->fixed_sell_amount > 0  && 
-		        $this->ticker->last >= $this->bot->triggers["fixedSellCost"] )
+		        $this->ticker->last >= $this->bot->total_usd_can_sell )
 		{
 		    LOG::info("******************************* CREATING FIXED SELL TRANSACTION\n");
 			
@@ -305,14 +305,15 @@ class Transaction extends Controller{
 		}
 		else if($this->bot->fixed_buy == 1 && 
 		        $this->bot->fixed_buy_amount <= $this->bot->usd && 
-		        $this->bot->buy_limit_btc > 0 && $this->ticker->last < $this->bot->triggers["fixedBuyCost"] )
+		        $this->bot->buy_limit_btc > 0 && 
+		        $this->ticker->last < $this->bot->total_usd_can_buy )
 		{
 			LOG::info ("*******************************  CREATING FIXED BUY TRANSACTION\n");
 			
 			$this->createBuyTransaction();
 			//disableFixedTransaction("b", $this->bot->getId());
 		}
-		 */
+		 
 
 	}
 
