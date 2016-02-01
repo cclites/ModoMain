@@ -31,7 +31,7 @@ class AuthenticateHandler extends Controller {
 		$this -> uPass = $request -> upass;
 		$this -> uName = $request -> uname;
 		
-		LOG::info($this->uPass);
+		//LOG::info($this->uPass);
 		
 		//Server side sanity check
 		if (!$this -> uName || !$this -> uPass)
@@ -40,7 +40,7 @@ class AuthenticateHandler extends Controller {
 		$token = $this -> createToken();
 		$this -> token = $token;
 		
-		LOG::info("Token in auth is " . $token);
+		//LOG::info("Token in auth is " . $token);
 
 		
 		$member = new Member();
@@ -240,13 +240,13 @@ class AuthenticateHandler extends Controller {
 		$token = $request -> token;
 		$session = $request -> session;
 		
-		LOG::info("Activating account");
+		//LOG::info("Activating account");
 		
 		if( Session::get('session') == $session &&
 		    Session::get('token') == $token &&
 			Session::get('authenticated') ){
 				
-				LOG::info("Valid account...");
+				//LOG::info("Valid account...");
 				
 				$id = Crypt::decrypt($request->id);
 				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
@@ -262,7 +262,7 @@ class AuthenticateHandler extends Controller {
 					
 				}
 				else{
-					LOG::info("I don't know you.....");
+					return json_encode( array('status'=>$result) );
 				}
 		}
 	}
