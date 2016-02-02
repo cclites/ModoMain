@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\Bitstamp;
+use App\Libraries\AuthenticateHandler;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Libraries\Member;
@@ -27,10 +29,6 @@ class Bot extends Controller{
 			$id = DB::table('member')->where('token', $this->token)->pluck("id");
 			$bot = DB::table('bot')->where('owner_id', $id)->get();
 			
-			//LOG::info("Bot length is " . count($bot) );
-			
-			//return json_encode( array("bot"=>$bot) );
-			
 			$botId = $bot[0]->id;
 			
 			//before I send this back, I want to encode the owner id and id.
@@ -44,26 +42,14 @@ class Bot extends Controller{
 			$balance = DB::table('member')->where('id', $id[0])->pluck("balance");
 			$balance = $balance[0];
 	
-			//TODO remove hard coded trade divisor
 			$bot[0]->trades = $balance;
-			
-
-			if($id[0] == 64){
-				$bot[0]->testing_mode = 1;
-			}
 			
 			if($bot[0]->testing_mode == 1){
 				
-				//LOG::info("Bot id is " . $id[0]);
-				
 				$result = DB::table('test_ledger')->where('owner_id', $id)->get();
 				
-				//LOG::info( gettype($result) );
-				//return json_encode( array("test ledger result"=>$result) );
-				
 				$bot[0]->usd = $result[0]->usd;
-				$bot[0]->btc = $result[0]->btc;
-				
+				$bot[0]->btc = $result[0]->btc;	
 			}
 
 			return json_encode( array("bot"=>$bot) );
@@ -94,14 +80,17 @@ class Bot extends Controller{
 			//LOG::info(">" . $token . "<");
 				
 			$id = DB::table('member')->where('token', $request -> token )->pluck("id");
-			$id = $id[0];
+			//LOG::info("ID IS $id[0]\n\n\n");
+			//$id = $id[0];
 			
-			//LOG::info($request->is_active);
-			//LOG::info($request->testing_mode);
-			//LOG::info($request->buying);
-			//LOG::info($request->selling);
-			//LOG::info($request->fixed_sell);
-			//LOG::info($request->fixed_buy);
+			//return;
+			
+			LOG::info($request->is_active);
+			LOG::info($request->testing_mode);
+			LOG::info($request->buying);
+			LOG::info($request->selling);
+			LOG::info($request->fixed_sell);
+			LOG::info($request->fixed_buy);
 				
             $configs = array();
 
@@ -119,15 +108,13 @@ class Bot extends Controller{
 			
 			$configs["base"] = str_replace(",", "", $request->base);
 			
-			if($id == 38){ //hard coded public test model
-			  $configs["testing_mode"] = 1;
-			}
+
 			
-			//$s = print_r($configs, true);
+			$s = print_r($configs, true);
 			//LOG::info("CONFIGS: " . $s);
 			
 			$response = DB::table('bot')
-            ->where('owner_id', $id)
+            ->where('owner_id', $id[0])
             ->update(array(
                         'base' => $configs["base"],
                         'is_active' => $configs["is_active"],
@@ -152,7 +139,7 @@ class Bot extends Controller{
 	//Main entry point for updating bots via daemon
 	public function processBotRules($bots){
 
-        LOG::info("Processing bot rules");
+        //LOG::info("Processing bot rules");
 
         $id = 1;
 
@@ -160,12 +147,39 @@ class Bot extends Controller{
 
 		for($i=0; $i<count($bots); $i += 1){
 			
+			//call bot balance update routine here
+			
+			//only do this if the bot is not in testing mode
+			if(!$bots[$i]->testing_mode){
+				$this->getBitstampBalance($bots[$i]);
+			}
+			
+			
 			$bots[$i] = $this->calculatePricePoints($bots[$i]);
 			$bots[$i] = app('App\Http\Controllers\Transaction')->updateTransaction($bots[$i], $ticker);
 			
 		}
 		
-		echo "Finished processing";
+		//echo "Finished processing";
+	}
+	
+	public function getBitstampBalance($bot){
+		
+		//I need to get the bot api_token first.
+		$api_token = DB::table('user')->where('owner_id', $bot->id)->pluck('api_key');	
+		$temp = $api_token[0];	
+		$ah = new AuthenticateHandler();
+		$decrypted_token = json_decode( $ah->dCrypt($temp) );
+		$bs = new Bitstamp( $decrypted_token->utoken, $decrypted_token->usecret, $decrypted_token->uid );		
+		$balanceResult = $bs->bitstamp_query("balance");
+		
+		//update the bot.
+		$response = DB::table('bot')
+            ->where('id', $bot->id)
+            ->update(array(
+                        'btc' => $balanceResult["btc_available"],
+                        'usd' => $balanceResult["usd_available"]
+					));
 	}
 
     public function getAllActiveBots(){

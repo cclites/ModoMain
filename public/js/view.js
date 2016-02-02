@@ -39,8 +39,8 @@ var view = {
 	
 	addAuthMenuItems: function(){
 		
-	    $("#bannerLeft").html('<div id="logOut" onclick="li.logOut();">&#8901;&nbsp;Log Out</div>');
-	    $("#bannerRight").html('<div id="account" onclick="li.updateAccount()">&#8901;&nbsp;Account</div>');
+	    $("#bannerLeft").html('<div id="logOut" onclick="li.logOut();">Log Out</div>');
+	    $("#bannerRight").html('<div id="account" onclick="li.updateAccount()">Account</div>');
 	},
 	
 	buildNewAccountView: function(){

@@ -18,9 +18,9 @@ class Daemon extends Controller{
 	
 	function main(){
 		
-		echo("\nBot is running\n");
+		//echo("\nBot is running\n");
 		
-		//$this->updatetTicker(1);
+		$this->updatetTicker(1);
    
         $bots = app('App\Http\Controllers\Bot')->getAllActiveBots();
 		$result = app('App\Http\Controllers\Bot')->processBotRules($bots);

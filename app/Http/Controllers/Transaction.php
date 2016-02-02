@@ -69,8 +69,8 @@ class Transaction extends Controller{
 		
 		$usdNeededForPurchase = ($totes) - (  $totes * $fee);
 		
-		echo "Total usd needed for purchase $usdNeededForPurchase\n";
-		echo $this->bot->total_usd_can_purchase . "\n";
+		//echo "Total usd needed for purchase $usdNeededForPurchase\n";
+		//echo $this->bot->total_usd_can_purchase . "\n";
 		
 		//not convinced that this logic is correct.
 		$this->bot->total_usd_can_purchase = ( $this->bot->total_usd_can_purchase < $usd )? $usd : $this->bot->total_usd_can_purchase;
@@ -142,7 +142,7 @@ class Transaction extends Controller{
 	 */
 	public function checkTransactionRules(){
 		
-		print_r($this->bot);
+		//print_r($this->bot);
 		
 		LOG::info("\n\n*****************************************************\n");
 		
@@ -170,7 +170,7 @@ class Transaction extends Controller{
 			LOG::info("    There is enough USD available. Buy total +1.");
 			$buyTotal += 1;
 		}else{
-			LOG::info("NOT ENOUGH USD AVAILABLE \n     Usd = " . $this->bot->usd . "\n     Total Buy cost: " . $this->bot->total_usd_can_purchase );
+			//LOG::info("NOT ENOUGH USD AVAILABLE \n     Usd = " . $this->bot->usd . "\n     Total Buy cost: " . $this->bot->total_usd_can_purchase );
 		}
 		
 		if($this->ticker->direction == 1)
@@ -253,7 +253,7 @@ class Transaction extends Controller{
 			LOG::info("SELL ORDER IS ZERO.\n     Total Sell Cost = " . $this->bot->total_btc_can_sell );
 		}
 		
-		if($sellTotal == 5)
+		if($sellTotal == 5 )
 		{
 			LOG::info("\n**** TRIGGERING PURCHASE ****");
 		}
@@ -272,7 +272,7 @@ class Transaction extends Controller{
 		
 		if($buyTotal == 5)
 		{
-			echo "\nTriggering buy transaction\n";
+			//echo "\nTriggering buy transaction\n";
 			
 			LOG::info("\n********************************************************\n");
 			LOG::info ("*******************************  CREATING BUY TRANSACTION\n");
@@ -281,7 +281,7 @@ class Transaction extends Controller{
 		}
 		else if($sellTotal == 5)
 		{
-			echo "\nTriggering sell transaction\n";
+			//echo "\nTriggering sell transaction\n";
 			
 			LOG::info("\n********************************************************\n");
 			LOG::info("*******************************  CREATING SELL TRANSACTION\n");
@@ -294,24 +294,23 @@ class Transaction extends Controller{
 		
         //Should not need the fixed transactions. Should just need a check.
         
-		else if($this->bot->fixed_sell == 1 && 
-		        $this->bot->fixed_sell_amount > 0  && 
-		        $this->ticker->last >= $this->bot->total_usd_can_sell )
+		if($this->bot->fixed_sell == 1 && 
+		        $this->bot->total_btc_can_purchase > 0 &&
+		        $this->bot->sell_limit_btc > 0 )
 		{
 		    LOG::info("******************************* CREATING FIXED SELL TRANSACTION\n");
 			
 			$this->createSellTransaction();
-			//disableFixedTransaction("s", $this->bot->getId());
 		}
-		else if($this->bot->fixed_buy == 1 && 
-		        $this->bot->fixed_buy_amount <= $this->bot->usd && 
-		        $this->bot->buy_limit_btc > 0 && 
-		        $this->ticker->last < $this->bot->total_usd_can_buy )
+		
+		
+		if($this->bot->fixed_buy == 1 && 
+		        $this->bot->total_usd_can_purchase > 0 && 
+		        $this->bot->buy_limit_btc > 0 )
 		{
 			LOG::info ("*******************************  CREATING FIXED BUY TRANSACTION\n");
 			
 			$this->createBuyTransaction();
-			//disableFixedTransaction("b", $this->bot->getId());
 		}
 		 
 
@@ -319,25 +318,18 @@ class Transaction extends Controller{
 
     public function createSellTransaction(){
     	
-		print_r($this->bot);
+		//print_r($this->bot);
     	
-		LOG::info("* Creating Sell Transaction for bot: " . $this->bot->id . "\n");
+		//LOG::info("* Creating Sell Transaction for bot: " . $this->bot->id . "\n");
 		//limit is actual order size in btc
 		
 		$cost = ($this->bot->total_btc_can_sell * $this->ticker->last); 
 		
-		echo("Cost = " . $cost . "\n");
-		echo("usd before = " . $this->bot->usd . "\n");
-	    echo("btc before = " . $this->bot->btc . "\"n");
+		$this->bot->usd += $cost;
+			$this->bot->btc -= $this->bot->total_btc_can_sell;
 		
 		if($this->bot->testing_mode == 1){
 					
-			$this->bot->usd += $cost;
-			$this->bot->btc -= $this->bot->total_btc_can_sell;	
-			
-			echo("usd after = " . $this->bot->usd . "\n");
-	        echo("btc after = " . $this->bot->btc . "\n");
-	
 			$response = DB::table('test_ledger')
             ->where('owner_id', $this->bot->owner_id)
             ->update(array(
@@ -345,56 +337,58 @@ class Transaction extends Controller{
                         'btc' => $this->bot->btc
 
 					));
-			
-			$response = DB::table('bot')
-				            ->where('id', $this->bot->id)
-				            ->update(array(
-				                        'fixed_sell' => 0
-					));	
 
 			
 		}else{
-			//TODO: add bitstamp logic
+			$result = $this->sellBitstampTransaction();
+			
+			if($result){
+				
+				$response = DB::table('bot')
+				            ->where('id', $this->bot->id)
+				            ->update(array(
+				                        'btc' => $this->bot->btc,
+				                        'usd' => $this->usd->usd
+					));
+				
+			}
 		}
 		
+		$response = DB::table('bot')
+				            ->where('id', $this->bot->id)
+				            ->update(array(
+				                        'fixed_sell' => 0,
+				                        'can_sell' => 0
+					));	
 		
-		/*			
+				
 		$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
 		$balance = $balance[0];
 		
 		$response = DB::table('member')
 				            ->where('id', $this->bot->owner_id)
 				            ->update(array(
-				                        'balance' => ((int)$balance - 100000),
+				                        'balance' => ((int)$balance - 1),
 
 					));
-		 * */
-
+		 
+         return 1;
     }
 	
 	public function createBuyTransaction(){
 		
-		print_r($this->bot);
-		
-	
-		
-		LOG::info(" ### Creating Buy Transaction for bot: " . $this->bot->id);
-		
 		$cost = $this->bot->total_usd_can_purchase;
 		
-		echo("COST: " . $cost . "\n");
+		//echo("COST: " . $cost . "\n");
 		
-		echo("usd before = " . $this->bot->usd . "\n");
-	    echo("btc before = " . $this->bot->btc . "\n");
+		LOG::info("usd can buy = " . $cost . "\n");
+		LOG::info("#btc to buy = " . $this->bot->total_btc_can_purchase);
+	   // echo("btc before = " . $this->bot->btc . "\n");
+		
+		$this->bot->usd = $this->bot->usd - $cost;
+		$this->bot->btc += $this->bot->total_btc_can_purchase;
 		
 		if($this->bot->testing_mode == 1){
-			
-			$this->bot->usd = $this->bot->usd - $cost;
-			$this->bot->btc += $this->bot->total_btc_can_purchase;
-			
-			echo("usd after = " . $this->bot->usd . "\n");
-	        echo("btc after = " . $this->bot->btc . "\n");
-			
 			
 			$response = DB::table('test_ledger')
             ->where('owner_id', $this->bot->owner_id)
@@ -403,33 +397,75 @@ class Transaction extends Controller{
                         'btc' => $this->bot->btc
 					));
 					
-			LOG::info("test_ledger update = " . $response);
-					
-			$response = DB::table('bot')
-				            ->where('id', $this->bot->id)
-				            ->update(array(
-				                        'fixed_buy' => 0
-					));
-				
-			LOG::info("Bot update response = " . $response);	
-			 
+			
 			
 		}else{
-			//TODO: add bitstamp logic
+			
+			$result = $this->buyBitstampTransaction();
+			
+			if($result){
+				
+				$response = DB::table('bot')
+				            ->where('id', $this->bot->id)
+				            ->update(array(
+				                        'btc' => $this->bot->btc,
+				                        'usd' => $this->usd->usd
+					));
+				
+			}
 		}
 		
-		/*
+		$response = DB::table('bot')
+				            ->where('id', $this->bot->id)
+				            ->update(array(
+				                        'fixed_buy' => 0,
+				                        'can_buy' => 0
+					)); 
+		
+		
+		
+		//THIS CODE HANDLES THE BALANCE
+		
 		$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
 		$balance = $balance[0];
 		
 		$response = DB::table('member')
 				            ->where('id', $this->bot->owner_id)
 				            ->update(array(
-				                        'balance' => ((int)$balance - 100000),
+				                        'balance' => ((int)$balance - 1),
 
 					));
 		
-		*/
+		
+		//don't forget to record a transaction.
+		return 1;
+	}
+	
+	public function sellBitstampTransaction(){
+		
+		$api_token = DB::table('user')->where('owner_id', $this->bot->id)->pluck('api_key');	
+		$temp = $api_token[0];	
+		$ah = new AuthenticateHandler();
+		$decrypted_token = json_decode( $ah->dCrypt($temp) );
+		
+		$bs = new Bitstamp( $decrypted_token->utoken, $decrypted_token->usecret, $decrypted_token->uid );
+		$result = $bs->bitstamp_query("sell", array('amount'=>($this->bot->sell_order_size_in_btc),'price'=>$this->ticker->last));
+		return result;
+	}
+	
+	public function buyBitstampTransaction(){
+		
+		$api_token = DB::table('user')->where('owner_id', $this->bot->id)->pluck('api_key');	
+		$temp = $api_token[0];	
+		$ah = new AuthenticateHandler();
+		$decrypted_token = json_decode( $ah->dCrypt($temp) );
+		
+		$bs = new Bitstamp( $decrypted_token->utoken, $decrypted_token->usecret, $decrypted_token->uid );
+		
+		$result = $bs->bitstamp_query("sell", array('amount'=>($this->bot->total_usd_can_purchase),'price'=>$this->ticker->last));
+		
+		return result;
+		
 	}
 	
 	//doesnt belong here, but don't wqant to create a separate class yet.
@@ -437,10 +473,6 @@ class Transaction extends Controller{
 					
         $usd = $this->bot->btc * $this->ticker->previous + $this->bot->usd;
 		$date = date("y/m/d");
-		
-		//if usd us higher than history
-		//$history = 
-		
 		
 		$high = str_replace(",", "", number_format($usd,2));
 		$low = str_replace(",", "", number_format($usd,2));				
@@ -468,10 +500,7 @@ class Transaction extends Controller{
 			Session::get('authenticated') ){
 				
 				$owner_id = Crypt::decrypt($request->owner_id);
-				
 				$result = (array)$balance = DB::table('transaction')->where('owner_id', $owner_id)->get();
-				
-				
 				return json_encode( array('transactions'=>$result) );
 			}
 	}

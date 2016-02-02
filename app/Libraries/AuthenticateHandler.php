@@ -85,9 +85,9 @@ class AuthenticateHandler extends Controller {
 
 	function createToken(){
 	
-		LOG::info("CREATE TOKEN");
-		LOG::info($this->uName);
-		LOG::info($this->uPass);
+		//LOG::info("CREATE TOKEN");
+		//LOG::info($this->uName);
+		//LOG::info($this->uPass);
 		
 		$token = $this -> uName . config('core.SEED') . $this -> uPass;
 
@@ -125,7 +125,7 @@ class AuthenticateHandler extends Controller {
 		$token = $request -> token;
 		$session = $request -> session;
 		
-		LOG::info("upass1: " . $pass1);
+		//LOG::info("upass1: " . $pass1);
 		
 		
 		if( Session::get('session') == $session &&
@@ -136,7 +136,7 @@ class AuthenticateHandler extends Controller {
 			
 			//LOG::info("token is $token");
 			//LOG::info("session is $session");
-			LOG::info("ID is $id");
+			//LOG::info("ID is $id");
 			
 			$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
 			
@@ -154,7 +154,7 @@ class AuthenticateHandler extends Controller {
 				
 				$newToken = $this->createToken();
 				
-				LOG::info("New token: $newToken");
+				//LOG::info("New token: $newToken");
 				
 				
 				//now update the database
@@ -203,9 +203,22 @@ class AuthenticateHandler extends Controller {
 		
 		$token = $request -> token;
 		$session = $request -> session;
+		
+		
 		$uId = $request-> uid;
 		$uSecret = $request -> usecret;
 		$uToken = $request -> utoken;
+		
+		//LOG::info("uID = $uId");
+		//LOG::info("uSecret = $uSecret");
+		//LOG::info("uToken = $uToken");
+		
+		//LOG::info("session = " . $session = $request -> session);
+		//LOG::info("token = " . $session = $request -> token);
+		
+		//LOG::info(Session::get('session'));
+		//LOG::info(Session::get('token'));
+		//LOG::info(Session::get('authenticated'));
 		
 		if( Session::get('session') == $session &&
 		    Session::get('token') == $token &&
@@ -213,20 +226,34 @@ class AuthenticateHandler extends Controller {
 				
 				$id = Crypt::decrypt($request->id);
 				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
-				
+
 				//save new email
 				if( count($result) > 0 ){
 					
 					$token = json_encode( array( 'uid'=>$uId , 'usecret'=>$uSecret, 'utoken'=>$uToken) );
-					$newToken = Crypt::encrypt( $token );
-					
-					//LOG::info("New Token is $newToken");
+					//$newToken = Crypt::encrypt( $token );
+					$newToken = $this->eCrypt($token);
 					
 					//now update the database
 					$result = DB::table('user')->where('owner_id', $id)
 					          ->update(array(
 			                        'api_key' => $newToken
 								));
+								
+					return json_encode( array('status'=>$result) );
+					
+				}else{
+					
+					$token = json_encode( array( 'uid'=>$uId , 'usecret'=>$uSecret, 'utoken'=>$uToken) );
+					$newToken = $this->eCrypt($token);
+					
+					LOG::info("New Token:\n$newToken");
+					
+					//add user to the database
+					$result = DB::table('user')->insert(
+			                        ['api_key' => $newToken,
+			                        'owner_id'=> $id]
+								);
 								
 					return json_encode( array('status'=>$result) );
 				}
@@ -305,7 +332,6 @@ class AuthenticateHandler extends Controller {
 		//addValidator
 		$validationToken = $this->eCrypt($umail . "|" . $this -> token . "|" . $owner_id);
 		
-		//Still not convinced that this table is needed.
 		//add user
 		DB::table('validation')->insert(
 		    ['owner_id'=>$recordId, 'hash'=>$validationToken]
@@ -349,13 +375,6 @@ class AuthenticateHandler extends Controller {
 	
 	function resendValidation($request){
 		
-		//$testToken = $this->eCrypt('admin@modobot.com' . "|" . "003780ea2f2dc2b1614fd6138796137cae8d42f98959ec2afb6d84083a2da79c" . "|" . 98);
-		
-		//$testToken = urlencode ($testToken);
-		
-		//LOG::info($testToken);
-		//return;
-		
 		//TODO:: Send out an email with the proper validation
 		$umail = $request->umail;
 		$id = DB::table('member')->where('email', $umail)->pluck('id');		
@@ -378,9 +397,6 @@ class AuthenticateHandler extends Controller {
 	}
 	
 	function sendValidationEmail( $umail, $validationToken ){
-		
-		//$s = print_r($validationToken, true);
-		//LOG::info($s);
 		
 		LOG::info("umail is $umail");
 		LOG::info("validation token is $validationToken[0]");

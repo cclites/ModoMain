@@ -31,13 +31,13 @@
 						<input id="banner_uname" type="text" required="required" autofocus="" placeholder="Username" value="ModoBoss">
 						<input id="banner_upass" type="password" required="required" placeholder="Password" value=">Y9pgtdtz>">
 						<button id="logIn" type="submit">
-							⋅ Log In
+							Log In
 						</button>
 					</div>
 				</div>
 				<div id="bannerCenter"></div>
 				<div id="bannerRight">
-					<span id="newAccount" onclick="li.newAccount()">⋅ New Account</span>
+					<span id="newAccount" onclick="li.newAccount()">New Account</span>
 				</div>
 			</div>
 		</div>

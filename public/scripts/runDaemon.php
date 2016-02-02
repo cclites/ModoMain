@@ -15,7 +15,7 @@ function pingDaemon(){
 	echo "Daemon Sleeping\n";
 	sleep(65);
 	
-	//pingDaemon();
+	pingDaemon();
 	//pingSweeper();
 }
 

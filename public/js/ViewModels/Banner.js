@@ -37,8 +37,8 @@ var notRegisteredView = function()
 		
 	bannerLeftContent += buildLogInView();
 	bannerCenterContent += '&nbsp;';
-	bannerRightContent += '<span id="forumLink" onclick="window.location=\'https://www.modobot.com/forum\'">&#8901;&nbsp;Forum</span>';
-	bannerRightContent += '<span id="newAccount" onclick="li.newAccount()">&#8901;&nbsp;New Account</span>';
+	bannerRightContent += '<span id="forumLink" onclick="window.location=\'https://www.modobot.com/forum\'">Forum</span>';
+	bannerRightContent += '<span id="newAccount" onclick="li.newAccount()">New Account</span>';
 		
 	viewObject.bannerLeftContent = bannerLeftContent;
 	viewObject.bannerCenterContent = bannerCenterContent;
@@ -54,10 +54,10 @@ var registeredView = function()
 		bannerCenterContent = "",
 		viewObject = {};
 		
-	bannerLeftContent += '<div id="account" onclick="updateAccount()">&#8901;&nbsp;Account</div>';	
-	bannerLeftContent += '<div id="logOut" onclick="logOut();">&#8901;&nbsp;Log Out</div>';	
+	bannerLeftContent += '<div id="account" onclick="updateAccount()">Account</div>';	
+	bannerLeftContent += '<div id="logOut" onclick="logOut();">Log Out</div>';	
 	bannerCenterContent += '&nbsp;';
-	bannerRightContent += '<span id="forumLink" onclick="window.location=\'https://www.modobot.com/forum\'">&#8901;&nbsp;Forum</span>';	
+	bannerRightContent += '<span id="forumLink" onclick="window.location=\'https://www.modobot.com/forum\'">Forum</span>';	
 	
 	
 	viewObject.bannerLeftContent = bannerLeftContent;

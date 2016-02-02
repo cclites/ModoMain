@@ -95,8 +95,9 @@ var li = {
 		
 		$(".configSummary#configSummary input").keyup(function(){
 			mo.dirtyFlag = true;
-			
-			//change state
+			$(".statusIndicator").html(tem.showStatusAsDirty);
+		}).click(function(){
+			mo.dirtyFlag = true;
 			$(".statusIndicator").html(tem.showStatusAsDirty);
 		});
 	},

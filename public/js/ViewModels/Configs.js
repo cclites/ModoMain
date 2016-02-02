@@ -41,7 +41,7 @@ function buildConfigView(){
 	
 	temp = myB.testing_mode;
 	
-	if ( temp == 1 || live == 0 )
+	if ( myB.testing_mode == 1 )
 	{
 		str += "                     <td><input id='isTesting' checked='checked' type='checkbox'></td>\n";
 	}

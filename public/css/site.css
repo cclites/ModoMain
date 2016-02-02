@@ -103,9 +103,9 @@ article div{
 {
 	float: left;
     position: relative;
-    right: 50px;
+    right: 40px;
     text-align: right;
-    top: 68px;
+    top: 71px;
     width: 450px;
 }
 
@@ -115,12 +115,13 @@ article div{
 
 #logIn
 {
-	border: none;
-    background-color:transparent;
-	cursor: pointer;
-	font-family: 'Allura', cursive;
-	font-size: 25px;
-	color: #fff;
+	background-color: transparent;
+    border: medium none;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Allura",cursive;
+    font-size: 25px;
+    margin-left: 6px;
 }
 
 #bannerCenter
@@ -139,7 +140,7 @@ article div{
 	color: #fff;
     left: 260px;
     position: relative;
-    top: 68px;
+    top: 72px;
     width: 200px;
 }
 
@@ -149,6 +150,8 @@ article div{
     float: right;
     font-family: "Allura",cursive;
     font-size: 25px;
+    margin-left: 8px;
+    margin-top: 2px;
     position: relative;
     right: 20px;
 }
