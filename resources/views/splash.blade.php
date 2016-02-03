@@ -1,47 +1,19 @@
 <article class="splash">
-
-	<div>
+	
+	<div class="splashContent">
 		Modobot is an automated trading platform for Bitcoins. It is easy to understand and simple to operate.
 	</div>
-
-</article>
-
-<article class="splash">
-
-	<div id="box1" class="brighten">
-
-		<div id="accent1">
-			<div class="quarter-circle-left"></div>
-			<div class="marquee_band"></div>
-			<div class="quarter-circle-right"></div>
-		</div>
-
-		<div id="accent2">
-			<div class="quarter-circle-left"></div>
-			<div class="marquee_band"></div>
-			<div class="quarter-circle-right"></div>
-		</div>
-
-		<div id="accent3">
-			<div class="quarter-circle-left"></div>
-			<div class="marquee_band"></div>
-			<div class="quarter-circle-right"></div>
-		</div>
-
-		<div id="neon" class="label flickerOff">
-			Signups are open!
-		</div>
-
-	</div>
-
-	<div id="box2">
-		<div id="box3"></div>
+	
+	<div class="badgeContent">
+		<img src="images/priceBoard.png">
+        <img src="images/freeBoard.png">
 	</div>
 	
 	
-	<br />
+
+
 	<div class="splashContent">
-		Click on 'New Accounts' in the upper right hand corner to register for a free automated trading bot.
+		Select 'New Accounts' in the menu bar to build your own free automated trading bot.
 	</div>
 
 </article>

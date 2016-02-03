@@ -2,6 +2,8 @@ var tem = {
 	
 	buildTransactionView: function(transactions){
 		
+		console.log(transactions);
+		
 		var str = "";
 	
 		if(transactions.transactions.length < 1)
@@ -15,25 +17,28 @@ var tem = {
 			var tBtc = (transactions.transactions[i]["amount"]*transactions.transactions[i]["price"]);
 
 			str += "<table class='transactionTable'>\n" +
-				 "    <tr>\n " +
-				 "    <td class='headerBar' colspan='6'>&nbsp;</td>\n " +
-				 "    </tr>\n " +
-				 "    <tr>\n " +
-				 "      <th>Date</th>\n " +
-				 "      <th>Type</th>\n " +
-				 "      <th>Price(USD)</th>\n " +
-				 "      <th>Total Cost(USD)</th>\n " +
-				 "      <th>Fee(USD)</th>\n " +
-				 "      <th>Amount(BTC)</th>\n " +
-				 "    </tr>\n " +
-				 "    <tr>\n " +
-				 "      <td>" + transactions.transactions[i]["datetime"]+ "</td>\n " +
-				 "      <td>" + transactions.transactions[i]["category"]+ "</td>\n " +
-				 "      <td>$" + parseFloat(transactions.transactions[i]["price"]).toFixed(2)+ "</td>\n " +
-				 "      <td>$" + parseFloat(tBtc).toFixed(2)+ "</td>\n " +
-				 "      <td>$" + parseFloat(transactions.transactions[i]["fee"]).toFixed(2)+ "</td>\n " +
-				 "      <td>" + parseFloat(transactions.transactions[i]["amount"]).toFixed(4)+ "</td>\n " +
-				 "    </tr>\n " +
+			     "    <thead>\n" +
+			     
+			     "        <tr>\n " +
+				 "          <th>Date</th>\n " +
+				 "          <th>Type</th>\n " +
+				 "          <th>Price(USD)</th>\n " +
+				 "          <th>Total Cost(USD)</th>\n " +
+				 "          <th>Amount(BTC)</th>\n " +
+				 "        </tr>\n " +
+			     
+			     "    </thead>\n" +
+			     
+			     "    <tbody>\n" +
+
+				 "        <tr>\n " +
+				 "             <td>" + transactions.transactions[i]["datetime"]+ "</td>\n " +
+				 "             <td>" + transactions.transactions[i]["category"]+ "</td>\n " +
+				 "             <td>$" + parseFloat(transactions.transactions[i]["price"]).toFixed(2)+ "</td>\n " +
+				 "             <td>$" + transactions.transactions[i]["amount"] + "</td>\n " +
+				 "            <td>" + ( parseFloat(transactions.transactions[i]["amount"]) / parseFloat(transactions.transactions[i]["price"]) ).toFixed(2) + "</td>\n " +
+				 "        </tr>\n " +
+				 "    </tbody>\n" +
 				 "</table>\n";
 			
 		}

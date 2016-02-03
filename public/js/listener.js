@@ -185,7 +185,7 @@ var li = {
 			 	umail: $("#newUserEmail").val()
 			 }, 
 			 url = 'changepassword',
-			 request = new mo.requestObject(url, "POST", ca.resetPasswordSuccess, ca.rresetPasswordFailure, data);
+			 request = new mo.requestObject(url, "POST", ca.resetPasswordSuccess, ca.resetPasswordFailure, data);
 		 
 		 mo.asynch(request);
 	},
@@ -196,7 +196,35 @@ var li = {
 	},
 	
 	contact: function(){
-		console.log("Show contact form");
+		//console.log("Show contact form");
+		var contactView = buildContact();
+		
+		//throw it into a dialog and display
+		$("#modals").html(contactView).dialog(
+			{
+				modal: true,
+				width: 800,
+				height: 500,
+				dialogClass: 'modalDialog',
+				title: "Contact Us"
+			}
+		);
+		
+		$(".ui-dialog-titlebar-close").html("X");
 	},
+	
+    sendContact: function(){
+    	
+    	var data = {
+    		cAddress : $("#cAddress").val(),
+    		cSubject : $("#cSubject").val(),
+    		cMessage : $("#cMessage").val()
+    		
+    	},
+    	    url = "submitcontact",
+    	    request = new mo.requestObject(url, "GET", ca.sendContactSuccess, ca.sendContactFailure, data);
+    	    
+    	mo.asynch(request);
+    },
 	
 };

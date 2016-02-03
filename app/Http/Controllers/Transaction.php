@@ -371,6 +371,18 @@ class Transaction extends Controller{
 				                        'balance' => ((int)$balance - 1),
 
 					));
+					
+		//don't forget to record a transaction.
+		$transaction = array( "owner_id"=>$this->bot->id,
+							"category"=>"sell",
+							"price"=>$this->ticker->last,
+							"amount"=>$cost,
+							"fee"=>$this->bot->exchange_fee,
+							"currency"=>"BTC",
+							"order_id"=>-1
+		);
+	
+		$this->addTransaction($transaction);
 		 
          return 1;
     }
@@ -438,6 +450,18 @@ class Transaction extends Controller{
 		
 		
 		//don't forget to record a transaction.
+		$transaction = array( "owner_id"=>$this->bot->id,
+							"category"=>"buy",
+							"price"=>$this->ticker->last,
+							"amount"=>$cost,
+							"fee"=>$this->bot->exchange_fee,
+							"currency"=>"BTC",
+							"order_id"=>-1
+		);
+	
+		$this->addTransaction($transaction);
+		
+		
 		return 1;
 	}
 	
@@ -495,14 +519,39 @@ class Transaction extends Controller{
 	
 	public function getTransactions(Request $request){
 		
+		//$s = print_r($this->bot, true);
+		//return $s;
+		
 		if( Session::get('session') == $request->session &&
 		    Session::get('token') == $request->token &&
 			Session::get('authenticated') ){
 				
 				$owner_id = Crypt::decrypt($request->owner_id);
-				$result = (array)$balance = DB::table('transaction')->where('owner_id', $owner_id)->get();
+				$id = DB::table('bot')->where('owner_id', $owner_id)->pluck('id');
+				
+				//return $owner_id;
+				
+				$result = (array)$balance = DB::table('transaction')->where('owner_id', $id[0] )->get();
 				return json_encode( array('transactions'=>$result) );
 			}
+	}
+	
+	public function addTransaction($transaction){
+		
+		$result = DB::table('transaction')->insert([
+		
+			    'owner_id'=>$transaction["owner_id"],
+			    'category'=>$transaction["category"],
+			    'price'=>$transaction["price"],
+			    'amount'=>$transaction["amount"],
+			    'currency'=>$transaction["currency"],
+			    'order_id'=>$transaction["owner_id"],
+			    'fee'=>$transaction["fee"]
+		
+		]);
+		
+		//TODO: something with result. Swallow for now.
+		
 	}
 
 

@@ -66,7 +66,7 @@ var ca = {
 			
 			setTimeout(function(){ //hide
 				$("#waitModal").toggle("fade");
-			    $(".modalMessage").html("");
+			    //$(".modalMessage").html("");
 			    
 			}, 1000);
 		}
@@ -206,4 +206,19 @@ var ca = {
 	},
 	
 	resendValidationFailure: function(xsr, type, excpetion){},
+	
+	sendContactSuccess: function(data){
+		
+		console.log(data);
+		$("#modals").dialog("close");
+		
+		if( data.status == 1){
+			alert("A message has been sent.");
+		}
+	},
+	
+	sendContactFailure: function(xsr, type, exception ){
+		
+		alert("There was an error. Please try again later.");
+	},
 };

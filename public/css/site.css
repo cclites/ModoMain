@@ -1,5 +1,12 @@
+
+
 /*Stylesheet for desktops*/
 
+
+
+/*
+ * font-family: 'Muli', sans-serif;
+ */
 
 /*
 * Global elements
@@ -8,7 +15,8 @@ html, body {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
-	font-family:"News Cycle";
+	/*font-family:"News Cycle";*/
+	font-family: 'Muli';
 }
 
 #botContainer th
@@ -88,9 +96,9 @@ article div{
 
 .logo_wrap {
     background: #fff none repeat scroll 0 0;
-    border: 6px solid #999;
+    border: 6px solid #004976;
     border-radius: 50%;
-    box-shadow: 3px 6px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 7px 5px 10px rgba(0, 0, 0, 0.6);
     display: inline-block;
     height: 250px;
     left: calc(50% - 132px);
@@ -103,14 +111,14 @@ article div{
 {
 	float: left;
     position: relative;
-    right: 40px;
+    right: 130px;
     text-align: right;
-    top: 71px;
-    width: 450px;
+    top: 70px;
+    width: 500px;
 }
 
 #bannerLeft .form{
-	width: 438px;
+	width: 495px;
 }
 
 #logIn
@@ -119,9 +127,7 @@ article div{
     border: medium none;
     color: #fff;
     cursor: pointer;
-    font-family: "Allura",cursive;
-    font-size: 25px;
-    margin-left: 6px;
+    margin-left: 22px;
 }
 
 #bannerCenter
@@ -138,9 +144,9 @@ article div{
 #bannerRight
 {
 	color: #fff;
-    left: 260px;
+    left: 246px;
     position: relative;
-    top: 72px;
+    top: 76px;
     width: 200px;
 }
 
@@ -148,10 +154,8 @@ article div{
 	color: #fff;
     cursor: pointer;
     float: right;
-    font-family: "Allura",cursive;
-    font-size: 25px;
     margin-left: 8px;
-    margin-top: 2px;
+    margin-top: 4px;
     position: relative;
     right: 20px;
 }
@@ -159,16 +163,29 @@ article div{
 #account{
 	float:left;
 	cursor: pointer;
-	font-family: 'Allura', cursive;
-	font-size: 25px;
 }
 
 #newAccount, #forumLink{
 	float:right;
 	cursor: pointer;
-	font-family: 'Allura', cursive;
-	font-size: 25px;
 	color: #fff;
+}
+
+
+#newAccount,
+#forumLink,
+#account,
+#logOut,
+#logIn{
+	font-family: 'Delius', cursive;
+	font-size: 20px;
+}
+
+.form input {
+    height: 29px;
+    width: 165px;
+    font-family: 'Muli';
+    font-size: 20px;
 }
 
 #forumLink
@@ -222,7 +239,7 @@ footer div{
     border: 3px solid #f47521;
     border-radius: 6px;
     color: #8a8c8f;
-    font-family: "News Cycle";
+    font-family: "Muli";
     height: 406px;
     line-height: 22px;
     padding: 32px 8px 4px;
@@ -432,8 +449,9 @@ table.historyTable tbody tr td
 ********************************/
 .transactionTable
 {
-	width: 745px;
 	margin-bottom: 5px;
+    text-align: center;
+    width: 745px;
 }
 
 .transactionTable tbody tr
@@ -670,18 +688,21 @@ table.historyTable tbody tr td
 }
 */
 
+
 #contactModal h3{
-  text-align: center;
+    text-align: center;
 	margin-bottom: 40px;
 }
 
 #contactModal form{
-  margin: 0 auto;
-	width: 565px;
+    height: 325px;
+    margin: 0 auto;
+    width: 408px;
 }
 
 #contactModal form div label{
-  width: 160px;
+    display: inline-block;
+    width: 168px;
 }
 
 #contactModal form textarea{
@@ -689,14 +710,33 @@ table.historyTable tbody tr td
 	height: 100px;
 }
 
+#contactModal form div label,
+#contactModal form div input,
+#contactModal form div textarea{,
+.divAsButton
+	font-size: 20px;
+	font-family: 'Muli';
+}
+
+.modalDialog.ui-draggable.ui-resizable div.ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix.ui-draggable-handle button.ui-dialog-titlebar-close{
+	bottom: -2px;
+    left: 60px;
+    position: relative;
+}
+
 .divAsButton{
+    background-color: #004976;
+    color: white;
+    cursor: pointer;
+    height: 38px;
+    line-height: 38px;
+    margin: 0 auto;
+    text-align: center;
     width: 120px;
-	margin: 0 auto;
-	cursor: pointer;
 }
 
 .divAsButton:hover{
-  color: #666;
+  color: #bbb;
 }
 
 .contact {
@@ -721,6 +761,10 @@ table.historyTable tbody tr td
 
 .modalDialog {
 	
+}
+
+.modalDialog .ui-dialog .ui-dialog-titlebar-close{
+	bottom: 4px;
 }
 
 .modalDialog .ui-dialog-titlebar.ui-widget-header{
