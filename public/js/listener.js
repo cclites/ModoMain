@@ -226,5 +226,24 @@ var li = {
     	    
     	mo.asynch(request);
     },
+    
+    confighandle: function(){
+    	
+    	$(".confighandle .handle").click(function(){
+    		//alert("clicked");
+    		
+    		if( $(this).hasClass('rotate') ){
+    			$(this).removeClass('rotate', 800);
+    			$(".bothelp").removeClass('bothelpShow', 800);
+    			$(".handle").attr("title", "Show Bot configuration options");
+
+    		}else{
+    			$(this).addClass('rotate', 800);
+    			$(".bothelp").addClass('bothelpShow', 800);
+    			$(".handle").attr("title", "Hide Bot configuration options");
+    		}
+    		
+    	});
+    },
 	
 };

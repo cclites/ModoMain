@@ -104,14 +104,14 @@ function buildConfigView(){
 	
 	temp = myB.decrease*100;
 	str += "                     <td><input id='decrease' onkeyup='mo.updateMargins()' size='8' value='" + parseFloat(temp).toFixed(2) + "' type='text'></td>\n"; 
-	str += "                     <td class='configLabel'>Sell Limit Btc</td>\n";
+	
+	str += "                     <td class='configLabel' colspan='2'>Sell Limit Btc</td>\n";
 	
 	temp = myB.sell_limit_btc;
-	str += "                     <td><input id='sellLimitBtc' size='6' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n"; 
-	str += "                     <td class='configLabel'>Buy Limit Btc</td>\n";
+	str += "                     <td><input id='sellLimitBtc' size='6' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
 	
-	temp = myB.buy_limit_btc;
-	str += "                     <td><input id='buyLimitBtc' size='6' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
+	 
+	
 	str += "                 </tr>\n";
 	
 	
@@ -131,6 +131,11 @@ function buildConfigView(){
 	
 	temp = myB.fixed_sell_amount;
 	str += "                     <td class='configLabel'>Sell Price $</td><td><input id='fixed_sell_amount' size='8' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
+	
+	str += "                     <td class='configLabel' colspan='2'>Buy Limit Btc</td>\n";
+	temp = myB.buy_limit_btc;
+	str += "                     <td><input id='buyLimitBtc' size='6' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
+	
 	str += "                 </tr>\n";
 	
 	str += "                 <tr>\n";

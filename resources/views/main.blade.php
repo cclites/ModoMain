@@ -45,6 +45,8 @@
 		</div>
 		<br>
 		
+		
+		
 		<div class='statusIndicator'>
 		    <span>Configuration Saved.<i class="fa fa-heart saveStatus"></i></span>	
 		</div>
@@ -79,7 +81,7 @@
 		
 		
 		
-		
+		@include('partials/bothelp') 
 
 		<div id="modals"></div>
 		<div id="waitModal">

@@ -138,6 +138,7 @@ $(function() {
     ko.applyBindings(ko_models);
     
     //$( "#mail" ).draggable();
+    li.confighandle();
     
 });
 

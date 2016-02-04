@@ -334,13 +334,13 @@ class AuthenticateHandler extends Controller {
 		
 		//add user
 		DB::table('validation')->insert(
-		    ['owner_id'=>$recordId, 'hash'=>$validationToken]
+		    ['owner_id'=>$owner_id, 'hash'=>$validationToken]
 		);
 		
 		//assign wallet
 		$address = DB::table('wallet')->where('owner_id', 0)->take(1)->pluck('address');
 		DB::table('wallet')->where('address', $address)->update(array(
-		   'owner_id'=>$recordId
+		   'owner_id'=>$owner_id
 		));
 		
 		$t = json_encode( array('umail'=>$umail, 'token'=>$token, 'id'=>$id) );
