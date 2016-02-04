@@ -339,7 +339,7 @@ class AuthenticateHandler extends Controller {
 		
 		//assign wallet
 		$address = DB::table('wallet')->where('owner_id', 0)->take(1)->pluck('address');
-		DB::table('wallet')->where('address', $address)->update(array(
+		DB::table('wallet')->where('addr', $address)->update(array(
 		   'owner_id'=>$owner_id
 		));
 		
