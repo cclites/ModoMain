@@ -190,7 +190,13 @@ var ca = {
 	activateAccountFailure: function(xsr, type, exception){},
 	
 	addNewMemberSuccess:function(data){
-		console.log(data);
+		if(data.status == 1){
+		  alert("An activation email has been sent to the provided email.");
+		}else{
+			alert("We are unable to create your account at this moment. Please try again.");
+		}
+		
+		$(".ui-dialog-titlebar-close").trigger("click");
 	},
 	
 	addNewMemberFailure: function(xsr, type, exception){},

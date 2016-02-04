@@ -108,6 +108,15 @@ class Bot extends Controller{
 			
 			$configs["base"] = str_replace(",", "", $request->base);
 			
+			//I need a check here to see if the bot has been activated
+			$activated = DB::table('member')->where('id',$id[0] )->pluck('activated');
+		
+			
+			//Do not allow a bot to be updted to live it it has not yet been validated.
+			if($activated[0] == 0 ){
+				$configs["is_active"] = 0;
+			}
+			
 
 			
 			$s = print_r($configs, true);

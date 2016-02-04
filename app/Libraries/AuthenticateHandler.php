@@ -47,9 +47,12 @@ class AuthenticateHandler extends Controller {
 		$record = $member -> getMemberInfo($token);
 		
 		//TODO: make sure member has been validated, otherwise do not allow login
+		/*
 		if($record->activated == 0){
 			return json_encode( array("status"=> "0", 'message'=>'Check your email inbox for a confirmation email. You will not be allowed to log in until your email address is verified.') );
 		}
+		 * 
+		 */
 
 		if ( gettype($record) === "object" ) {
 			//writeLog("Member exists", AUTHENTICATE);
@@ -306,7 +309,7 @@ class AuthenticateHandler extends Controller {
 	
 		//add user to the database.
 		$owner_id = DB::table('member')->insertGetId(
-		    ['email' => $umail, 'token' => $token, 'display_name'=>""]
+		    ['email' => $umail, 'token' => $token, 'display_name'=>$this -> uName]
 		);
 		
 		//give it a bot
@@ -338,12 +341,12 @@ class AuthenticateHandler extends Controller {
 		);
 		
 		//assign wallet
-		$address = DB::table('wallet')->where('owner_id', 0)->take(1)->pluck('address');
+		$address = DB::table('wallet')->where('owner_id', 0)->take(1)->pluck('addr');
 		DB::table('wallet')->where('addr', $address)->update(array(
 		   'owner_id'=>$owner_id
 		));
 		
-		$t = json_encode( array('umail'=>$umail, 'token'=>$token, 'id'=>$id) );
+		$t = json_encode( array('umail'=>$umail, 'token'=>$token, 'id'=>$owner_id) );
 		$message = Crypt::encrypt($t);
 
         return $this->sendValidationEmail($umail, $validationToken);
