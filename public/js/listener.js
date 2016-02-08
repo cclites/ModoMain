@@ -229,21 +229,105 @@ var li = {
     
     confighandle: function(){
     	
-    	$(".confighandle .handle").click(function(){
-    		//alert("clicked");
+    	$(".confighandle").click(function(){
     		
-    		if( $(this).hasClass('rotate') ){
-    			$(this).removeClass('rotate', 800);
+    		//NOTE:: 'open' is a fake class used for view manipulation. There should not be an
+    		//       actual css class
+    		
+    		if( $(this).hasClass('open') ){
+    			$(".confighandle").removeClass('handleshow', 800);
     			$(".bothelp").removeClass('bothelpShow', 800);
-    			$(".handle").attr("title", "Show Bot configuration options");
+    			$(this).removeClass('open', 800);
+    			$(".confighandle .handle").attr("title", "Show Bot configuration options");
+    			$(this).find("i").removeClass("rotate");
 
     		}else{
-    			$(this).addClass('rotate', 800);
+    			$(".confighandle").addClass('handleshow', 800);
     			$(".bothelp").addClass('bothelpShow', 800);
-    			$(".handle").attr("title", "Hide Bot configuration options");
+    			$(this).addClass('open', 800);
+    			$(".confighandle .handle").attr("title", "Hide Bot configuration options");
+    			$(this).find("i").addClass("rotate");
     		}
     		
     	});
     },
+    
+    accounthandle: function(){
+    	
+    	$(".accounthandle").click(function(){
+    		
+    		//NOTE:: 'open' is a fake class used for view manipulation. There should not be an
+    		//       actual css class
+    		
+    		if( $(this).hasClass('open') ){
+    			$(".accounthandle").removeClass('handleshow', 800);
+    			$(".accounthelp").removeClass('bothelpShow', 800);
+    			$(this).removeClass('open', 800);
+    			$(".accounthandle .handle").attr("title", "Open Registration Steps");
+    			$(this).find("i").removeClass("rotate");
+
+    		}else{
+    			$(".accounthandle").addClass('handleshow', 800);
+    			$(".accounthelp").addClass('bothelpShow', 800);
+    			$(this).addClass('open', 800);
+    			$(".accounthandle .handle").attr("title", "Close Registration Steps");
+    			$(this).find("i").addClass("rotate");
+    		}
+    		
+    	});
+    	
+    },
+    
+    reviewshandle: function(){
+    	
+    	$(".reviewshandle").click(function(){
+    		
+    		//NOTE:: 'open' is a fake class used for view manipulation. There should not be an
+    		//       actual css class
+    		
+    		if( $(this).hasClass('open') ){
+    			$(".reviewshandle").removeClass('handleshow', 800);
+    			$(".reviews").removeClass('bothelpShow', 800);
+    			$(this).removeClass('open', 800);
+    			$(".reviewshandle .handle").attr("title", "Open Reviews");
+    			$(this).find("i").removeClass("rotate");
+
+    		}else{
+    			$(".reviewshandle").addClass('handleshow', 800);
+    			$(".reviews").addClass('bothelpShow', 800);
+    			$(this).addClass('open', 800);
+    			$(".reviewshandle .handle").attr("title", "Hide Reviews");
+    			$(this).find("i").addClass("rotate");
+    		}
+    		
+    	});
+    	
+    },
+    
+    privacyhandle: function(){
+    	
+    	$(".privacyhandle").click(function(){
+    		
+    		//NOTE:: 'open' is a fake class used for view manipulation. There should not be an
+    		//       actual css class
+    		
+    		if( $(this).hasClass('open') ){
+    			$(".privacyhandle").removeClass('handleshow', 800);
+    			$(".privacypolicy").removeClass('bothelpShow', 800);
+    			$(this).removeClass('open', 800);
+    			$(".privacyhandle .handle").attr("title", "Open Privacy Policy");
+    			$(this).find("i").removeClass("rotate");
+
+    		}else{
+    			$(".privacyhandle").addClass('handleshow', 800);
+    			$(".privacypolicy").addClass('bothelpShow', 800);
+    			$(this).addClass('open', 800);
+    			$(".privacyhandle .handle").attr("title", "Hide Privacy Policy");
+    			$(this).find("i").addClass("rotate");
+    		}
+    		
+    	});
+    	
+    }
 	
 };

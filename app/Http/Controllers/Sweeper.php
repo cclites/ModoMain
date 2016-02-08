@@ -24,10 +24,10 @@ class Sweeper extends Controller{
 	   
 	   echo("\n\n################################################\n");
 
-	   echo ( count($wallets) . "\n" );
+	   //echo ( count($wallets) . "\n" );
 	   
-	   print_r($wallets);
-	   echo "\n";
+	   //print_r($wallets);
+	   //echo "\n";
 	   
 	   //Now that I have the wallets, get the balances for each
 	   if( count($wallets) > 0){
@@ -74,13 +74,7 @@ class Sweeper extends Controller{
 	//result represents the object being returned from the addr api call
 	public function processBalanceQuery($balance){
 		
-		echo "Processing balance query\n";
-
 		$addr = $balance->address;
-		
-		$balance->balance = 500000;
-		$balance->n_tx = 1;
-		
         $wallets = DB::table('wallet')->where('sweep', 1)->get();
 		
 		for ($i=0; $i< count($wallets); $i += 1){
@@ -90,13 +84,9 @@ class Sweeper extends Controller{
 				$bal = $balance->balance;
 				$n_tx = $balance->n_tx;
 				
-				echo "Balance is $bal\n";
-				echo "n_tx is $n_tx\n";
-				
+
 				if( $bal > 0 && $n_tx > 0 ){
-					
-					echo "testing balance\n";
-					
+
 					$owner_id = $wallets[$i]->owner_id;
 
 					$response = DB::table('wallet')
@@ -105,23 +95,26 @@ class Sweeper extends Controller{
 					                        'sweep' => 0
 								));	
 								
-					print_r($response);
-					echo "\n";
+				    //need to update the lifetime balance
+				    $lifetime = DB::table("member")->where('id', $owner_id)->pluck('lifetime_balance');
+					$lifetime = $lifetime[0] + $bal;
+					
+					
+					
 												
 					//calculate how many credits there are available based ont he balance.
 					//Not sure how the balance will be returned for sure though.
-					$playsBalance = $bal/100000;
-					
-					echo $playsBalance . "\n";
+					$playsBalance = $bal/200000;  //This needs to be a core config
 					
 					$response = DB::table('member')
 					            ->where('id', $owner_id)
 					            ->update(array(
-					                        'balance' => $playsBalance
+					                        'balance' => $playsBalance,
+					                        'lifetime_balance' => $lifetime
 								));
-					
-					print_r($response);
-					echo "\n";
+								
+					//Send notification
+
 				}
 				
 			}else{
@@ -131,16 +124,7 @@ class Sweeper extends Controller{
 				
 			}
 			
-			/*
-			if(  $addr  == $wallets[$i]->addr){
-			    
-			}else{
-				echo "Wallets[i] " . $wallets[$i]->addr . "\n";
-				echo "addr " . $addr . "\n";
-				echo ( "**    " . $addr . " = " . $wallets[$i]->addr . "\n");
-				echo "Addresses do not match.\n";
-			}
-            */
+
 			
 		}
 		

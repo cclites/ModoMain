@@ -12,7 +12,10 @@
 * Global elements
 */
 
-body{ overflow-x: none;}
+body{ 
+	overflow-x: none;
+	background-image:url('../Images/nuts2.png');
+}
 
 html, body {
 	margin: 0px;
@@ -59,7 +62,7 @@ article div{
     bottom: 0;
     left: 0;
     right: 0;
-	background-image:url('../Images/nuts2.png');
+	
     opacity: .08;
     width: 100%;
     /*height: 180px;*/
@@ -71,7 +74,7 @@ article div{
     z-index: -1;
     bottom: 10px;
     /*background: url(test.jpg) center center;*/
-	background-image:url('../Images/nuts2.png');
+	/*background-image:url('../Images/nuts2.png');*/
     opacity: .15;
     width: 100%;
     height: 120%;
@@ -253,7 +256,7 @@ footer div{
 
 #historyContainer{
 	margin-top: 25px;
-    width: 1034px;
+    width: 1044px;
 }
 
 
@@ -613,9 +616,9 @@ table.historyTable tbody tr td
 
 #newAccountDisclaimer
 {
-    font-family:"Tahoma";
-	font-size: 12px;
-	font-weight: bold;
+    font-family: "Muli";
+    font-size: 17px;
+    font-weight: bold;
 }
 
 #passwordRecovery
@@ -840,11 +843,11 @@ table.historyTable tbody tr td
 #mail{
 	bottom: auto;
     height: 65px;
-    left: 96%;
     position: absolute;
-    right: auto;
+    right: 12px;
     top: 24px;
     width: 65px;
+    color: rgba(0,73,118, 0.9);
 }
 
 /********************
@@ -856,24 +859,42 @@ table.historyTable tbody tr td
     top: 174px;
 }
 
-.bothelp{
+.privacypolicy,
+.bothelp,
+.accounthelp,
+.reviews{
     height: 800px;
     overflow-y: auto;
-    padding: 8px;
+    padding: 8px 8px 0 8px;
     position: absolute;
-    right: -432px;
+    right: -444px;
     top: 175px;
-    width: 486px;
+    width: 425px;
 }
 
 .bothelpShow{
-	right: 24px;
+	right: 2px;
 }
 
+.privacypolicy,
+.reviews,
+.accounthelp .panel,
 .bothelp .panel{
-	width: 400px;
-	float: right;
-	border-color: gray;
+	background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    float: right;
+    padding: 6px;
+    width: 400px;
+}
+
+.reviews{
+	text-align: center;
+	height: 400px;
+}
+
+.reviews img{
+	margin: 0 auto;
 }
 
 /*
@@ -938,12 +959,80 @@ table.historyTable tbody tr td
 }
 */
 
+.handle{
+	z-index: 50;
+	font-weight: bold;
+	
+}
+
+
+
 .confighandle{
-	color: #000;
-    height: 60px;
-    left: 1px;
+	color: #004976;
+    cursor: pointer;
+    display: inline-block;
+    height: 30px;
+    opacity: 0.7;
     position: absolute;
-    top: 15px;
+    right: 12px;
+    top: 194px;
+    width: 100px;
+
+}
+
+.accounthandle{
+	color: #004976;
+    height: 30px;
+    right: 12px;
+    position: absolute;
+    top: 230px;
+    cursor: pointer;
+    opacity: 0.7;
+    display: inline-block;
+    width: 100px;
+}
+
+.reviewshandle{
+	color: #004976;
+    height: 30px;
+    right: 12px;
+    position: absolute;
+    top: 266px;
+    cursor: pointer;
+    opacity: 0.7;
+    display: inline-block;
+    width: 100px;
+}
+
+.privacyhandle{
+	color: #004976;
+    height: 30px;
+    right: 12px;
+    position: absolute;
+    top: 300px;
+    cursor: pointer;
+    opacity: 0.7;
+    display: inline-block;
+    width: 100px;
+}
+
+.handleshow{
+	right: 450px;
+}
+
+.privacyhandle i,
+.confighandle i,
+.accounthandle i,
+.reviewshandle i{
+	color:#dc7224;
+}
+
+.privacyhandle:hover,
+.reviewshandle:hover;
+.accounthandle:hover,
+.confighandle:hover{
+	opacity: .95;
+	text-decoration: underline;
 }
 
 .rotate{
@@ -954,4 +1043,126 @@ table.historyTable tbody tr td
 	box-shadow: 0 0 12px rgba(0,0,0, 0,5);
 	border: 1px solid purple;
 	padding: none;
+}
+
+/*
+.tincan{
+	left: 33px;
+    position: absolute;
+    top: 685px;
+}
+*/
+
+.quicksignup{
+	width: 300px;
+	height: 500px;
+	position: absolute;
+	left: 12px;
+	top: 220px;
+	border-radius: 4px;
+	background-color: #dfdfdf;
+	box-shadow: 0 0 1px 3px rgba(0,73,118, 0.9);
+}
+
+.quicksignup .configLabel {
+    font-size: 20px;
+    text-align: right;
+    width: 300px;
+}
+
+.quicksignup input{
+	height: 28px;
+	border-radius: 4px;
+}
+
+.quicksignup ol{
+	margin: 0 auto;
+    text-align: left;
+    width: 207px;
+}
+
+.policyContainer{
+	width: 360px;
+	height: 500px;
+	overflow: auto;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 4px;
+}
+
+@media screen and (max-width: 1650px) {
+    
+    .quicksignup{
+    	left: calc(50% - 150px);
+    	top: 300px;
+    }
+    
+    article{
+    	margin: 540px auto 12px;
+    }
+    
+    .badgeContent img{
+    	width: 300px;
+    	height: auto;
+    }
+    
+    .splashContent{
+    	width: 800px;
+    }
+    
+    /*
+    .tincan{
+    	top: 178px;
+    }
+    */
+    
+    .badgeContent {
+	    left: calc(50% - 492px);
+        position: absolute;
+        top: 440px;
+        width: 970px;
+	}
+    
+    #priceboard {
+        float: left;	
+    }
+    
+    #freeboard {
+    	float: right;
+    }
+    
+    /*
+    #priceboard {
+    	left: 310px;
+    	position: absolute;
+    	top: 400px;	
+    }
+    
+    #freeboard{
+    	left: 961px;
+	    position: absolute;
+	    top: 400px;
+    }
+    */
+    
+}
+
+@media screen and (max-width: 1300px) {
+	
+/*  Will need to fix header and menus */
+
+    
+    #frame{
+    	margin-top:0;
+    }
+    
+    .statusIndicator{
+    	margin-top: 40px;
+    }
+
+}
+
+.quicksignup button{
+	margin-top: 7px;
+    width: auto;
 }

@@ -1,9 +1,7 @@
 <div class="bothelp">
 	
 	
-	<div class="confighandle">
-		<i class="fa fa-arrow-circle-left fa-3x handle" title="Show Bot configuration options"></i>
-	</div>
+	
 	
 	
 	<!--div class='panel'-->

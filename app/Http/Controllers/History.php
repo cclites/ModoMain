@@ -36,6 +36,69 @@ class History extends Controller{
 		
 	}
 	
+	function getHistoryById($owner_id){
+		
+		$result = DB::table('historic')->where( 'owner_id', $owner_id )->get();
+		return $result;
+	}
+	
+	function checkUpdateHistory($bot, $last){
+		
+		//LOG::info( "Type is " . gettype($bot) );
+		//return;
+		//LOG::info($bot);
+		
+		//$s = print_r($bot, true);
+		//echo $s . "\n";
+		
+		//LOG::info( "BOT ID + " . $bot->id . "\n" );
+		//echo "\n\n\nLast is $last\n";
+		//return;
+		
+		$history = $this->getHistoryById( $bot->owner_id );
+		
+		
+		LOG::info( "Length = " . count($history) );
+		
+		
+		
+		$currentVal = $bot->usd + ($last * $bot->btc);
+		$doUpdate = false;
+		$nLow = 0;
+		$nHigh = 0;
+		$date = date("y/m/d");
+		
+		
+		$historicalData = array(
+				    'high'=> $history[0]->high,
+				    'low'=> $history[0]->low,
+				    'date_low'=>$history[0]->date_low,
+				    'date_high'=>$history[0]->date_high,
+				    'start_usd'=>$history[0]->start_usd,
+				    'start_btc'=>$history[0]->start_btc,
+				    'owner_id'=>$bot->owner_id,
+				    'currency'=>"BTC"
+				);
+		
+		if( $currentVal < $history[0]->low ){
+			
+			$historicalData["date_low"] = $date;
+			$historicalData["low"] = $currentVal;
+			$doUpdate = true;
+			
+		}else if($currentVal > $history[0]->high){
+			
+			$historicalData["date_high"] = $date;
+			$historicalData["high"] = $currentVal;
+			$doUpdate = true;
+		}
+		
+		if( $doUpdate ){
+			$this->updateHistorical($historicalData, $bot->owner_id);
+		}
+				
+	}
+	
 	function resetBotHistory(Request $request)	//need the bot id to reset
 	{
 
@@ -44,16 +107,10 @@ class History extends Controller{
 			Session::get('authenticated') ){
 				
 				
-				$ticker = $this->getPrevTicker();
-				
+				$ticker = $this->getPrevTicker();		
 				$this->id = Crypt::decrypt($request->id);
-				$this->owner_id = Crypt::decrypt($request->owner_id);
-				
-				LOG::info("This->id = " . $this->id);
-				LOG::info("This->owner_id = " . $this->owner_id);
-				
-				$bot = $this->getBotById($this->id);
-				
+				$this->owner_id = Crypt::decrypt($request->owner_id);				
+				$bot = $this->getBotById($this->id);		
 				$usd = $bot[0]->btc * $ticker->previous + $bot[0]->usd;
 				$date = date("y/m/d");
 				$high = str_replace(",", "", number_format($usd,2));
@@ -70,10 +127,9 @@ class History extends Controller{
 				    'currency'=>"BTC"
 				);
 				
-				$this->updateHistorical($historicalData, $this->id);
+				$this->updateHistorical($historicalData, $this->owner_id);
 				
-			}
-			
+			}	
 	}
 
 	function updateHistorical($historicalData, $id)

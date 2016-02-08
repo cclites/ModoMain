@@ -139,7 +139,9 @@ $(function() {
     
     //$( "#mail" ).draggable();
     li.confighandle();
-    
+    li.accounthandle();
+    li.reviewshandle();
+    li.privacyhandle();
 });
 
 

@@ -352,6 +352,28 @@ class Transaction extends Controller{
 					));
 				
 			}
+			
+			$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
+		    $balance = $balance[0];
+		
+		    $response = DB::table('member')
+				            ->where('id', $this->bot->owner_id)
+				            ->update(array(
+				                        'balance' => ((int)$balance - 1),
+
+					));
+					
+			//don't forget to record a transaction.
+			$transaction = array( "owner_id"=>$this->bot->id,
+								"category"=>"sell",
+								"price"=>$this->ticker->last,
+								"amount"=>$cost,
+								"fee"=>$this->bot->exchange_fee,
+								"currency"=>"BTC",
+								"order_id"=>-1
+			);
+			
+			$this->addTransaction($transaction);
 		}
 		
 		$response = DB::table('bot')
@@ -360,30 +382,7 @@ class Transaction extends Controller{
 				                        'fixed_sell' => 0,
 				                        'can_sell' => 0
 					));	
-		
-				
-		$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
-		$balance = $balance[0];
-		
-		$response = DB::table('member')
-				            ->where('id', $this->bot->owner_id)
-				            ->update(array(
-				                        'balance' => ((int)$balance - 1),
 
-					));
-					
-		//don't forget to record a transaction.
-		$transaction = array( "owner_id"=>$this->bot->id,
-							"category"=>"sell",
-							"price"=>$this->ticker->last,
-							"amount"=>$cost,
-							"fee"=>$this->bot->exchange_fee,
-							"currency"=>"BTC",
-							"order_id"=>-1
-		);
-	
-		$this->addTransaction($transaction);
-		 
          return 1;
     }
 	
@@ -425,7 +424,32 @@ class Transaction extends Controller{
 					));
 				
 			}
+			
+			//THIS CODE HANDLES THE BALANCE
+		
+			$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
+			$balance = $balance[0];
+			
+			$response = DB::table('member')
+					            ->where('id', $this->bot->owner_id)
+					            ->update(array(
+					                        'balance' => ((int)$balance - 1),
+	
+						));
+						
+			//don't forget to record a transaction.
+			$transaction = array( "owner_id"=>$this->bot->id,
+								"category"=>"buy",
+								"price"=>$this->ticker->last,
+								"amount"=>$cost,
+								"fee"=>$this->bot->exchange_fee,
+								"currency"=>"BTC",
+								"order_id"=>-1
+			);
+		
+			$this->addTransaction($transaction);
 		}
+		
 		
 		$response = DB::table('bot')
 				            ->where('id', $this->bot->id)
@@ -433,35 +457,7 @@ class Transaction extends Controller{
 				                        'fixed_buy' => 0,
 				                        'can_buy' => 0
 					)); 
-		
-		
-		
-		//THIS CODE HANDLES THE BALANCE
-		
-		$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
-		$balance = $balance[0];
-		
-		$response = DB::table('member')
-				            ->where('id', $this->bot->owner_id)
-				            ->update(array(
-				                        'balance' => ((int)$balance - 1),
 
-					));
-		
-		
-		//don't forget to record a transaction.
-		$transaction = array( "owner_id"=>$this->bot->id,
-							"category"=>"buy",
-							"price"=>$this->ticker->last,
-							"amount"=>$cost,
-							"fee"=>$this->bot->exchange_fee,
-							"currency"=>"BTC",
-							"order_id"=>-1
-		);
-	
-		$this->addTransaction($transaction);
-		
-		
 		return 1;
 	}
 	
@@ -492,7 +488,7 @@ class Transaction extends Controller{
 		
 	}
 	
-	//doesnt belong here, but don't wqant to create a separate class yet.
+	//doesnt belong here, but don't want to create a separate class yet.
 	public function updateHistory(){
 					
         $usd = $this->bot->btc * $this->ticker->previous + $this->bot->usd;
@@ -503,7 +499,7 @@ class Transaction extends Controller{
 			
 		
 					
-		$historicalData = array(
+		$hd = array(
 						    'high'=> $high,
 						    'low'=> $low,
 						    'date_low'=>$date,
@@ -512,9 +508,19 @@ class Transaction extends Controller{
 						    'start_btc'=>$this->bot[0]->btc,
 						    'owner_id'=>$this->id,
 						    'currency'=>"BTC"
-						);		
-			
-		
+						);
+						
+						
+		$result = DB::table('historic')->where('owner_id', $this->bot->id)->insert([
+				    'high'=> $high,
+				    'low'=> $low,
+				    'date_low'=>$date,
+				    'date_high'=>$date,
+				    'start_usd'=>$this->bot[0]->usd,
+				    'start_btc'=>$this->bot[0]->btc,
+				    'owner_id'=>$this->id,
+				    'currency'=>"BTC"
+				]);		
 	}
 	
 	public function getTransactions(Request $request){
@@ -556,4 +562,4 @@ class Transaction extends Controller{
 
 
 }
-	
+

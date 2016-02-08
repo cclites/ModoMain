@@ -55,10 +55,10 @@ var tem = {
 		      "      <li><span onclick=\"li.showAccountConfig('#accountEmail')\">Update Email</span></li>" +
 		      "      <li><span onclick=\"li.showAccountConfig('#activateAccount')\">Activate Account</span></li>";
 	
-		//if(ko_models.bot.live == 1)
-		//{
+		if(ko_models.bot.bot[0].live == 1)
+		{
 		    str += "      <li><span onclick=\"li.showAccountConfig('#bitstampCfgs')\">Update Bitstamp Configs</span></li>";
-		//}
+		}
 		
 		str += '    </ul>' +
 			   '  </nav>' +
@@ -73,12 +73,16 @@ var tem = {
 		         tem.buildAccountActivate() +
 		         '    </div>';
 		
-		//if(ko_models.bot.live == 1)
-		//{
+		//live gets set when the email is validated.
+
+		if(ko_models.bot.bot[0].live == "1")
+		{
+			
 		    str += '    <div class="accountAction" id="bitstampCfgs">' +
 		           tem.buildBitstampCfg() +
 		           '    </div>';
-		//}
+		           
+		}
 		
 		str += '</div>';
 		
@@ -137,7 +141,9 @@ var tem = {
 			'    <tr>' +
 			'      <td colspan="2"><button type="button" class="action accountButton" onclick="li.updateBitstampConfigs()">Save Configs</button></td>' +	
 			'    </tr>' +
-			'  </table>';	
+			'  </table>' +
+			'  <br><br>' + 
+			'<div><span>Wallet Adress: </span><span>' + ko_models.bot.bot[0].wallet + "<\span><\div>";
 	
 	    return str;
 	},
@@ -155,15 +161,20 @@ var tem = {
 	buildNewAccountView : function(){
 		
 		var str = '<form>' +
-		          '  <div id="accountMessage">' +
-		          '    Once your account is registered, you will receive an auto-generated email with a validation url. Please click on the link in the email to validate your account. Once validated, you will be able to log in.' +
-		          '</div>' +
+		          
 		
 		          '    <br>' +
 		
 		          '<div id="newAccountDisclaimer">' +
 		          'Modobot is provided for entertainment purposes only, and is not intended as a viable investment strategy. Bot performance is dependant on market conditions and individual operation. No claims of profitability are implied. It is the responsibility of the  operator to familiarize themselves with ModoBot functionality before making live trades. Please select a secure password that is unique to this site.<br><br>Modobot.com requires a linked Bitstamp account for live trading.' +
+		          
 		          '  </div>' +
+		          
+		          '  <div id="accountMessage">' +
+		          '    Once your account is registered, you will receive an auto-generated email with a validation url. ModoBot will only work in test mode until your email has been validated.' +
+		          '  <br><br>' +
+		          '<b>For more information, check out the sidebar menu.</b>' +
+		          '</div>' +
 		
 		          '    <br>' +
 		          '        ' +

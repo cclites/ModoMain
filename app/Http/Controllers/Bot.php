@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Libraries\Bitstamp;
 use App\Libraries\AuthenticateHandler;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\History;
 use Illuminate\Http\Request;
 use App\Libraries\Member;
 use Log;
@@ -51,6 +52,10 @@ class Bot extends Controller{
 				$bot[0]->usd = $result[0]->usd;
 				$bot[0]->btc = $result[0]->btc;	
 			}
+			
+			//get the wallet for this bot
+			$wallet = DB::table('wallet')->where('owner_id', $id)->pluck('addr');
+			$bot[0]->wallet = $wallet[0];
 
 			return json_encode( array("bot"=>$bot) );
 					
@@ -109,18 +114,21 @@ class Bot extends Controller{
 			$configs["base"] = str_replace(",", "", $request->base);
 			
 			//I need a check here to see if the bot has been activated
-			$activated = DB::table('member')->where('id',$id[0] )->pluck('activated');
-		
 			
-			//Do not allow a bot to be updted to live it it has not yet been validated.
-			if($activated[0] == 0 ){
+			$member = DB::table('member')->where('id',$id[0] )->get();
+			$member = $member[0];
+			
+			$live = DB::table('bot')->where('owner_id', $id)->pluck('live');
+			
+			LOG::info($live[0] . " live");
+			
+			$live = $live[0];
+			
+			//No matter what, these conditions have to be true.
+			if( $member->balance < 1 || $live < 1){
 				$configs["is_active"] = 0;
 			}
 			
-
-			
-			$s = print_r($configs, true);
-			//LOG::info("CONFIGS: " . $s);
 			
 			$response = DB::table('bot')
             ->where('owner_id', $id[0])
@@ -156,20 +164,36 @@ class Bot extends Controller{
 
 		for($i=0; $i<count($bots); $i += 1){
 			
-			//call bot balance update routine here
-			
 			//only do this if the bot is not in testing mode
 			if(!$bots[$i]->testing_mode){
 				$this->getBitstampBalance($bots[$i]);
 			}
 			
-			
 			$bots[$i] = $this->calculatePricePoints($bots[$i]);
-			$bots[$i] = app('App\Http\Controllers\Transaction')->updateTransaction($bots[$i], $ticker);
+			app('App\Http\Controllers\Transaction')->updateTransaction($bots[$i], $ticker);
+			$history = new History();
+			
+			//also need to check the history of each owner by passing in bot.
+			$history->checkUpdateHistory($bots[$i], $ticker->last);
+			
+			$this->checkAutoDisable($bots[$i]);
 			
 		}
 		
 		//echo "Finished processing";
+	}
+	
+	//if no available balance, disable the bot
+	public function checkAutoDisable($bot){
+		
+		LOG::info ("Bot balance is " . $bot->balance);
+		
+		if( $bot->balance < 1 ){
+			
+			$result = DB::table('bot')->where('id', $bot->id)->update(['is_active'=> 0]);
+			
+		}
+		
 	}
 	
 	public function getBitstampBalance($bot){

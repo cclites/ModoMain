@@ -16,7 +16,7 @@ function pingDaemon(){
 	sleep(65);
 	
 	pingDaemon();
-	//pingSweeper();
+	pingSweeper();
 }
 
 
@@ -26,12 +26,13 @@ function pingSweeper(){
 	
 	$url = "http://localhost/ModoMain/public/sweep";
 	
-	print_r( _ping($url) );
+	_ping($url);
+	//print_r( _ping($url) );
 	
 	echo "Sweeper Sleeping\n";
-	//sleep(30);
+	sleep(30);
 	
-	//pingSweeper();
+	pingSweeper();
 }
 
 function _ping($url){
@@ -41,8 +42,8 @@ function _ping($url){
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	$result = curl_exec($ch);
 	
-	echo "ping\n";
-	print_r($result);
+	//echo "ping\n";
+	//print_r($result);
 	
 	if(curl_errno($ch))
 	{

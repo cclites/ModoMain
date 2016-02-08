@@ -49,7 +49,7 @@ class AuthenticateHandler extends Controller {
 		//TODO: make sure member has been validated, otherwise do not allow login
 		/*
 		if($record->activated == 0){
-			return json_encode( array("status"=> "0", 'message'=>'Check your email inbox for a confirmation email. You will not be allowed to log in until your email address is verified.') );
+			return json_encode( array("status"=> "0", 'message'=>'Check your email inbox for a confirmation email. You will not be allowed to conduct live trades until your email address has been verified.') );
 		}
 		 * 
 		 */
@@ -305,6 +305,10 @@ class AuthenticateHandler extends Controller {
 		
 		$token = $this -> createToken();
 		$this -> token = $token;
+		
+		if ($request->umail == "" || $request->umail == "" || $request->upass == ""){
+			return json_encode(array('status'=>0, 'message'=> 'Please make sure to fill all fields') );
+		}
 
 	
 		//add user to the database.
@@ -437,7 +441,10 @@ class AuthenticateHandler extends Controller {
 		
 		if( count($result) > 0){
 			//This is a valid result, so set the bot as active.
-			$nResult = DB::table('member')->where( 'id',$id)->update(["activated"=> 1]);
+			
+			//I want to update bot.live, not member activated
+			//$nResult = DB::table('member')->where( 'id',$id)->update(["activated"=> 1]);
+			$nResult = DB::table("bot")->where('owner_id', $id)->update(["live"=>1]);
 			
 			if($nResult == 1){
 				return json_encode( array('status'=> 1, 'message'=>'Thank you! Your account has been activated, and your ModoBot is being prepared.') );

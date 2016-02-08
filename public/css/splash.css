@@ -300,3 +300,11 @@
 	height: 80px;
 	margin: 0 auto;
 }
+
+@media screen and (max-width: 1650px){
+	.splashContent{
+		width: 800px;
+	}
+}
+
+

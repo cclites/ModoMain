@@ -5,18 +5,22 @@
 	</div>
 	
 	<div class="badgeContent">
-		<img src="images/priceBoard.png">
-        <img src="images/freeBoard.png">
+		<img id="priceboard" src="images/priceBoard.png">
+        <img id="freeboard" src="images/freeBoard.png">
 	</div>
 	
-	
+	@include('partials/signup')
 
 
 	<div class="splashContent">
 		Select 'New Accounts' in the menu bar to build your own free automated trading bot.
 	</div>
 
+    <!--img class="tincan" src="images/tincan.png"-->
+    
 </article>
+
+
 
 <script>
 	function flicker(flag) {

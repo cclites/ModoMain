@@ -45,7 +45,7 @@
 		</div>
 		<br>
 		
-		
+		@include('partials/handles')
 		
 		<div class='statusIndicator'>
 		    <span>Configuration Saved.<i class="fa fa-heart saveStatus"></i></span>	
@@ -79,9 +79,10 @@
 
 		</div>
 		
-		
-		
-		@include('partials/bothelp') 
+		@include('partials/bothelp')
+		@include('partials/accounthelp')
+		@include('partials/reviews')
+		@include('partials/privacypolicy')
 
 		<div id="modals"></div>
 		<div id="waitModal">
@@ -121,7 +122,6 @@
 		<script type="text/javascript" src="{{ asset('js/ViewModels/Action.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/ViewModels/History.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/ViewModels/Ledger.js') }}"></script>
-		<script type="text/javascript" src="{{ asset('js/ViewModels/NewAccount.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/ViewModels/StatusLog.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/ViewModels/Ticker.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/ViewModels/Transact.js') }}"></script>

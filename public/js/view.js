@@ -52,7 +52,7 @@ var view = {
 			{
 				modal: true,
 				width: 800,
-				height: 500,
+				height: 550,
 				dialogClass: 'modalDialog',
 				title: "New Account"
 			}

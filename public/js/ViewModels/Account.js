@@ -113,12 +113,11 @@ var buildAccountActivate = function()
 	    regFee = reg/last,
 		mnthFee = mnth/last;
 		
-	str = '';
-	str += "<div id='disclaimer'><b>Disclaimer:</b> Modobot.com is for entertainment purposes only. Performance is dependent on market conditions and operator performance."+
-	       "This service is provided as-is, with no guarantees or warranties. All accounts will be manually activated.</div>";
-    str += "<br>";
+	str = "<div id='disclaimer'><b>Disclaimer:</b> Modobot.com is for entertainment purposes only. Performance is dependent on market conditions and operator performance."+
+	      "This service is provided as-is, with no guarantees or warranties. All accounts will be manually activated.</div>" +
+          "<br>";
 	
-	str += "<div><b>Pricing:</b> During beta-testing, a limited number of bots will be allowed free limited live access. In order to activate your bot for live trades, you must sign up for an account on the support forum and respond to the Bot Activation Request thread. Activation may take up to 24 hours. Bots will be limited to 1฿ per trade on free accounts.</div>";
+	//str += "<div><b>Pricing:</b> During beta-testing, a limited number of bots will be allowed free limited live access. In order to activate your bot for live trades, you must sign up for an account on the support forum and respond to the Bot Activation Request thread. Activation may take up to 24 hours. Bots will be limited to 1฿ per trade on free accounts.</div>";
 	
 	//str += "<div><b>Pricing:</b> During beta-testing, registration will be " + regFee.toFixed(3) + "฿, and monthly service fees will be " + mnthFee.toFixed(3)+ "฿ </div>";
 	//str += "<br>";
