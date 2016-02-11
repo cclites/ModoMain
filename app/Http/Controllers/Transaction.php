@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\AuthenticateHandler;
+use App\Libraries\Bitstamp;
 use Illuminate\Http\Request;
 use App\Libraries\Member;
 use Log;
@@ -73,7 +75,7 @@ class Transaction extends Controller{
 		//echo $this->bot->total_usd_can_purchase . "\n";
 		
 		//not convinced that this logic is correct.
-		$this->bot->total_usd_can_purchase = ( $this->bot->total_usd_can_purchase < $usd )? $usd : $this->bot->total_usd_can_purchase;
+		$this->bot->total_usd_can_purchase = ( $this->bot->total_usd_can_purchase > $usd )? $usd : $this->bot->total_usd_can_purchase;
 		
 		if ( $this->bot->total_usd_can_purchase  == 0){
 			$this->bot->total_btc_can_purchase = 0;
@@ -88,8 +90,10 @@ class Transaction extends Controller{
 		}
 		
 		//Make sure not selling more than I have.
-		$this->bot->total_btc_can_sell = ($this->bot->btc < $sellLimitBtc) ? $this->bot->btc : $sellLimitBtc;
+		
 		$this->bot->total_usd_can_sell = $totes - ($totes * $fee);
+		
+		$this->bot->total_btc_can_sell = ($this->bot->btc < $sellLimitBtc) ? $this->bot->btc : $sellLimitBtc;
 		
 	}
 	
@@ -340,40 +344,55 @@ class Transaction extends Controller{
 
 			
 		}else{
+			
+			//I actually need to know what the result contains because I am going to get a result
+			//regardless.
+			
 			$result = $this->sellBitstampTransaction();
 			
-			if($result){
-				
+			LOG::info("**************************************************************");
+			LOG::info( gettype($result) );
+			LOG::info("**************************************************************");
+			
+			
+			$result = json_decode($result);
+			
+			if(  isset($result["error"])  ){
+						
 				$response = DB::table('bot')
 				            ->where('id', $this->bot->id)
 				            ->update(array(
 				                        'btc' => $this->bot->btc,
 				                        'usd' => $this->usd->usd
 					));
-				
-			}
-			
-			$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
-		    $balance = $balance[0];
-		
-		    $response = DB::table('member')
-				            ->where('id', $this->bot->owner_id)
-				            ->update(array(
-				                        'balance' => ((int)$balance - 1),
-
-					));
 					
-			//don't forget to record a transaction.
-			$transaction = array( "owner_id"=>$this->bot->id,
-								"category"=>"sell",
-								"price"=>$this->ticker->last,
-								"amount"=>$cost,
-								"fee"=>$this->bot->exchange_fee,
-								"currency"=>"BTC",
-								"order_id"=>-1
-			);
+				$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
+			    $balance = $balance[0];
 			
-			$this->addTransaction($transaction);
+			    $response = DB::table('member')
+					            ->where('id', $this->bot->owner_id)
+					            ->update(array(
+					                        'balance' => ((int)$balance - 1),
+	
+						));
+						
+				//don't forget to record a transaction.
+				$transaction = array( "owner_id"=>$this->bot->id,
+									"category"=>"sell",
+									"price"=>$this->ticker->last,
+									"amount"=>$cost,
+									"fee"=>$this->bot->exchange_fee,
+									"currency"=>"BTC",
+									"order_id"=>-1
+				);
+				
+				$this->addTransaction($transaction);
+				
+			}else{
+				
+				return json_encode(array('status'=>'0', 'Unable to complete transaction.'));
+			}
+	
 		}
 		
 		$response = DB::table('bot')
@@ -414,40 +433,56 @@ class Transaction extends Controller{
 			
 			$result = $this->buyBitstampTransaction();
 			
-			if($result){
+			//LOG::info("Result from BuyBitstampTransaction");
+			//$s = print_r($result);
+			//LOG::info($result);
+			
+			//LOG::info($result["error"]);
+
+			//$result = json_decode($result);
+			
+			if(  isset($result["error"])  ){
+				
+				LOG::info("THERE IS NO ERROR");
 				
 				$response = DB::table('bot')
 				            ->where('id', $this->bot->id)
 				            ->update(array(
 				                        'btc' => $this->bot->btc,
-				                        'usd' => $this->usd->usd
+				                        'usd' => $this->bot->usd
 					));
+					
+					
+					
+			    //THIS CODE HANDLES THE BALANCE
+		
+				$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
+				$balance = $balance[0];
 				
+				$response = DB::table('member')
+						            ->where('id', $this->bot->owner_id)
+						            ->update(array(
+						                        'balance' => ((int)$balance - 1),
+		
+							));
+							
+				//don't forget to record a transaction.
+				$transaction = array( "owner_id"=>$this->bot->id,
+									"category"=>"buy",
+									"price"=>$this->ticker->last,
+									"amount"=>$cost,
+									"fee"=>$this->bot->exchange_fee,
+									"currency"=>"BTC",
+									"order_id"=>-1
+				);
+		
+			    $this->addTransaction($transaction);
+				
+			}else{
+				LOG::info("THERE IS AN ERROR");
+				return json_encode(array('status'=>'0', 'Unable to complete transaction.'));
 			}
-			
-			//THIS CODE HANDLES THE BALANCE
-		
-			$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
-			$balance = $balance[0];
-			
-			$response = DB::table('member')
-					            ->where('id', $this->bot->owner_id)
-					            ->update(array(
-					                        'balance' => ((int)$balance - 1),
-	
-						));
-						
-			//don't forget to record a transaction.
-			$transaction = array( "owner_id"=>$this->bot->id,
-								"category"=>"buy",
-								"price"=>$this->ticker->last,
-								"amount"=>$cost,
-								"fee"=>$this->bot->exchange_fee,
-								"currency"=>"BTC",
-								"order_id"=>-1
-			);
-		
-			$this->addTransaction($transaction);
+
 		}
 		
 		
@@ -469,8 +504,9 @@ class Transaction extends Controller{
 		$decrypted_token = json_decode( $ah->dCrypt($temp) );
 		
 		$bs = new Bitstamp( $decrypted_token->utoken, $decrypted_token->usecret, $decrypted_token->uid );
-		$result = $bs->bitstamp_query("sell", array('amount'=>($this->bot->sell_order_size_in_btc),'price'=>$this->ticker->last));
-		return result;
+		$result = $bs->bitstamp_query("sell", array('amount'=>($this->bot->total_btc_can_sell),'price'=>$this->ticker->last));
+		//$result = $bs->bitstamp_query("sell", array('amount'=>10,'price'=>$this->ticker->last));  //this should cause an error message
+		return $result;
 	}
 	
 	public function buyBitstampTransaction(){
@@ -482,9 +518,16 @@ class Transaction extends Controller{
 		
 		$bs = new Bitstamp( $decrypted_token->utoken, $decrypted_token->usecret, $decrypted_token->uid );
 		
-		$result = $bs->bitstamp_query("sell", array('amount'=>($this->bot->total_usd_can_purchase),'price'=>$this->ticker->last));
+		LOG::info("total_usd_can_purchase " . $this->bot->total_usd_can_purchase);
 		
-		return result;
+		$purchaseAmnt = $this->bot->total_btc_can_purchase;
+		
+		$purchaseAmnt = number_format($purchaseAmnt, 8);
+		
+		//$result = $bs->bitstamp_query("buy", array('amount'=>5,'price'=>$this->ticker->last));  //this should cause an error message
+		$result = $bs->bitstamp_query("buy", array('amount'=>($purchaseAmnt),'price'=>$this->ticker->last));
+		
+		return $result;
 		
 	}
 	

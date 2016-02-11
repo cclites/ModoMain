@@ -44,6 +44,8 @@ class History extends Controller{
 	
 	function checkUpdateHistory($bot, $last){
 		
+		LOG::info("Check update history");
+		
 		//LOG::info( "Type is " . gettype($bot) );
 		//return;
 		//LOG::info($bot);
@@ -58,7 +60,7 @@ class History extends Controller{
 		$history = $this->getHistoryById( $bot->owner_id );
 		
 		
-		LOG::info( "Length = " . count($history) );
+		//LOG::info( "Length = " . count($history) );
 		
 		
 		

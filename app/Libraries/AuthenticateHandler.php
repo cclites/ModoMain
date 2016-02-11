@@ -42,29 +42,18 @@ class AuthenticateHandler extends Controller {
 		
 		//LOG::info("Token in auth is " . $token);
 
-		
+		//The $record was used in another check that has since been removed. I may
+		//still need the member record for authentication, so I am leaving this here.
 		$member = new Member();
 		$record = $member -> getMemberInfo($token);
-		
-		//TODO: make sure member has been validated, otherwise do not allow login
-		/*
-		if($record->activated == 0){
-			return json_encode( array("status"=> "0", 'message'=>'Check your email inbox for a confirmation email. You will not be allowed to conduct live trades until your email address has been verified.') );
-		}
-		 * 
-		 */
+	
 
 		if ( gettype($record) === "object" ) {
-			//writeLog("Member exists", AUTHENTICATE);
 
 			$this -> message = "Credentials Validated.";
 			$this -> registered = true;
 
-			//************************************
-			//****  Prevent session hijacking ****
-			//************************************
-			//Session::put('someKey', 'someValue');
-			
+			//anti-session hijacking.
             Session::put('authenticated', true);
 			Session::put('token', $token);
 
@@ -76,10 +65,13 @@ class AuthenticateHandler extends Controller {
 			$encryptedSession = htmlentities($encryptedSession);
 			$this->token = htmlentities($this->token);
 			
+			//special token just for this session, saved to session
 			Session::put('session', $encryptedSession);
 			
-
+            //also return the special token to the client. That token will be returned by the user
+            //with any request so that it can be compared to the token stored in the session. 
 			return json_encode( array('token'=>$this->token, 'session'=>Session::get('session') ) );
+			
 		} else {
 			//writeLog("Member does not exist", AUTHENTICATE);
 			return json_encode( array('status'=>0) );
@@ -137,61 +129,89 @@ class AuthenticateHandler extends Controller {
 				
 			$id = Crypt::decrypt($request->owner_id);
 			
-			//LOG::info("token is $token");
-			//LOG::info("session is $session");
-			//LOG::info("ID is $id");
+			$owner_id= CRYPT::decrypt($request->owner_id);
 			
-			$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+			$member = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
 			
-			if($result == 0){
+			if($member == 0){
 				
 				return json_encode(array('status'=>$result, 'message'=>'Unable to change log-on credentials at the moment.'));
 				
+			}else if( count($member) == 1 ){
+				
+				$this->uPass = $pass1;
+				$this->uName = $member[0]->display_name;
+				
+				$newToken = $this->createToken();  //this is where I am having a problem. I do not have the uname to encrypt with the
+				                                   //token, 
+				                                   
+				//need to recreate session
+				$this->userId = $member[0]->id;
+				
+				LOG::info("This user id is " . $this->userId);
+				
+				$toEncrypt = $member[0]->id . "|" . $newToken . "|" . time();
+				
+				LOG::info("To encrypt = " . $toEncrypt);
+				$encryptedSession = $this->eCrypt($toEncrypt );
+				$this->session = $encryptedSession;                                   
+				                                   
+				  
+				
+				//LOG::info("New token: $newToken");
+				//LOG::info("uName = " . $this->uName );
+				//LOG::info("uPass = " . $this->uPass);
+				LOG::info("Encrypted session = $encryptedSession");
+				LOG::info("session = " . $this->session);
+				
+				//return;
+				
+				//now update the database
+				$result = DB::table('member')->where('id', $owner_id)
+				          ->update(array(
+		                        'token' => $newToken,
+		                        'session' => $this->session
+							));
+							
+				//return json_encode( array('status'=>$result) );
+				if($result == 0){
+					
+					return json_encode(array('status'=>0, 'message'=>'Unable to change log-on credentials at the moment.'));
+					
+				}else{
+					return json_encode(array('status'=>1, 'token'=> $newToken ));
+				}
+	
 			}
 			
 			$this->uName = $result[0]->display_name;
 			$this->uPass = $pass1;
 			
 
-			if( count($result) > 0 ){
-				
-				$newToken = $this->createToken();
-				
-				//LOG::info("New token: $newToken");
-				
-				
-				//now update the database
-				$result = DB::table('member')->where('id', $id)
-				          ->update(array(
-		                        'token' => $newToken
-							));
-							
-				return json_encode( array('status'=>$result) );
-			}
+			
 		}
 
 	}
 	
 	function updateEmail($request){
 		
+		LOG::info("Updating email");
+		
 		$token = $request -> token;
 		$session = $request -> session;
 		$newMail = $request->newMail;
-		
 		
 		if( Session::get('session') == $session &&
 		    Session::get('token') == $token &&
 			Session::get('authenticated') ){
 				
-				$id = Crypt::decrypt($request->id);
-				
-				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+				$owner_id= CRYPT::decrypt($request->owner_id);
 				
 				//save new email
-				if( count($result) > 0 ){
+				if( count($owner_id) > 0 ){
 					
 					//now update the database
-					$result = DB::table('member')->where('id', $id)
+					$result = DB::table('member')->where('id', $owner_id)
 					          ->update(array(
 			                        'email' => $newMail
 								));

@@ -110,8 +110,14 @@ var li = {
 		    url = "updatelogin",
 		    request = new mo.requestObject(url, "POST", ca.updateLoginSuccess, ca.updateLoginFailure, data);
 		    
-		mo.asynch(request);
-		
+		if( pass1 === pass2){
+			mo.asynch(request);
+		}else if(pass1 == "" || pass2 == ""){
+			alert("Please fill in both fields.");
+		}else{
+			alert("Passwords do not match.");
+		}
+
 	},
 	
 	showAccountConfig: function(section){
@@ -127,7 +133,13 @@ var li = {
 		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, newMail: newMail},
 		    request = new mo.requestObject(url, "POST", ca.updateEmailSuccess, ca.updateEmailFailure, data);
 		    
-		mo.asynch(request);
+		if(newEmail == ""){
+			alert("You must provide an email address.");
+		}else{
+			mo.asynch(request);
+		}
+		    
+		
 	},
 	
 	updateBitstampConfigs: function(){
@@ -138,7 +150,12 @@ var li = {
 		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, utoken:utoken, usecret: usecret, uid: uid},
 		    request = new mo.requestObject(url, "POST", ca.updateBsCongigsSuccess, ca.updateeBsCongigsFailure, data);
 		    
-		mo.asynch(request);
+		if(utoken == "" || usecret == "" || uid == ""){
+			alert("Please fill in all BitStamp congigs");
+		}else{
+			mo.asynch(request);
+		}
+
 	},
 	
 	activateAccount: function(){
@@ -164,8 +181,14 @@ var li = {
 			 }, 
 			 url = 'addnewuser',
 			 request = new mo.requestObject(url, "POST", ca.addNewMemberSuccess, ca.activeAccountFailure, data);
+			 
+	    if(data.email == "" || data.uname == "" || data.upass == ""){
+	    	alert("Please fill in all information.");
+	    }else{
+	    	mo.asynch(request);
+	    }
 		 
-        mo.asynch(request);
+        
 	},
 	
 	resendValidation: function(){
@@ -175,10 +198,19 @@ var li = {
 			 }, 
 			 url = 'resendvalidation',
 			 request = new mo.requestObject(url, "POST", ca.resendValidationSuccess, ca.resendValidationFailure, data);
+			 
+	     if(data.email == ""){
+	     	alert("Please provide an email address.");
+	     }else{
+	     	mo.asynch(request);
+	     }
 		 
-		 mo.asynch(request);
+		 
 	},
 	
+	
+	//Possibly not used.
+	/*
 	changePassword: function(){
 		
 		var data = {
@@ -189,6 +221,7 @@ var li = {
 		 
 		 mo.asynch(request);
 	},
+	*/
 	
 	clearLog: function(){
 		
@@ -224,7 +257,13 @@ var li = {
     	    url = "submitcontact",
     	    request = new mo.requestObject(url, "GET", ca.sendContactSuccess, ca.sendContactFailure, data);
     	    
-    	mo.asynch(request);
+    	if(  date.cAddress == "" || date.cSubject == "" || date.cMessage == ""){
+    		alert("Please fill in all fields.");
+    	}else{
+    		mo.asynch(request);
+    	}
+    	    
+    	
     },
     
     confighandle: function(){
@@ -327,6 +366,23 @@ var li = {
     		}
     		
     	});
+    	
+    },
+    
+    showHidePassword: function(){
+    	
+    	//showHidePassword
+    	//console.log( $("#showHidePassword" ).is(":checked") );
+    	
+    	if(  $("#showHidePassword" ).is(":checked") ){
+    		//show password
+    		$("#newUserPass").attr("type", "text");
+    		//$("#showHidePassword").val(false);
+    	}else{	
+    		//hide password
+    		$("#newUserPass").attr("type", "password");
+    		//$("#showHidePassword").val(true);
+    	}
     	
     }
 	

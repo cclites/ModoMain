@@ -1071,8 +1071,8 @@ table.historyTable tbody tr td
 }
 
 .quicksignup input{
-	height: 28px;
 	border-radius: 4px;
+    height: 22px;
 }
 
 .quicksignup ol{
@@ -1165,4 +1165,22 @@ table.historyTable tbody tr td
 .quicksignup button{
 	margin-top: 7px;
     width: auto;
+}
+
+#update, #getTransactions{
+	display: none;
+}
+
+#showPasswordTag {
+    color: #888;
+    font-size: 15px;
+    line-height: 15px;
+    padding-bottom: 4px;
+}
+
+#showHidePassword {
+    border-color: #888;
+    height: 10px;
+    margin-top: 4px;
+    opacity: 0.4;
 }

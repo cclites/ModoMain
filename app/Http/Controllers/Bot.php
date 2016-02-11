@@ -20,6 +20,8 @@ class Bot extends Controller{
 	
 	public function getBotState(Request $request){
 		
+		LOG::info("Get bot state");
+		
 		$this -> token = $request -> token;
 		$this -> session = $request -> session;
 		
@@ -68,6 +70,8 @@ class Bot extends Controller{
 	}
 
 	public function updateConfigs(Request $request){
+		
+		LOG::info("Update Configs");
 		
 		//echo "Client side configs\n";
 		//print_r($request);
@@ -120,8 +124,6 @@ class Bot extends Controller{
 			
 			$live = DB::table('bot')->where('owner_id', $id)->pluck('live');
 			
-			LOG::info($live[0] . " live");
-			
 			$live = $live[0];
 			
 			//No matter what, these conditions have to be true.
@@ -156,7 +158,7 @@ class Bot extends Controller{
 	//Main entry point for updating bots via daemon
 	public function processBotRules($bots){
 
-        //LOG::info("Processing bot rules");
+        LOG::info("Processing bot rules");
 
         $id = 1;
 
@@ -171,12 +173,11 @@ class Bot extends Controller{
 			
 			$bots[$i] = $this->calculatePricePoints($bots[$i]);
 			app('App\Http\Controllers\Transaction')->updateTransaction($bots[$i], $ticker);
-			$history = new History();
 			
-			//also need to check the history of each owner by passing in bot.
+			$history = new History();
 			$history->checkUpdateHistory($bots[$i], $ticker->last);
 			
-			$this->checkAutoDisable($bots[$i]);
+			$this->checkAutoDisable($bots[$i]->owner_id);
 			
 		}
 		
@@ -184,19 +185,25 @@ class Bot extends Controller{
 	}
 	
 	//if no available balance, disable the bot
-	public function checkAutoDisable($bot){
+	public function checkAutoDisable($id){
 		
-		LOG::info ("Bot balance is " . $bot->balance);
+		//LOG::info ("Bot balance is " . $bot->balance);
+		$balance = DB::table('member')->where('id', $id)->pluck('balance');
+		$balance = $balance[0];
 		
-		if( $bot->balance < 1 ){
+		//return;
+		
+		if( $balance < 1 ){
 			
-			$result = DB::table('bot')->where('id', $bot->id)->update(['is_active'=> 0]);
+			$result = DB::table('bot')->where('owner_id', $id)->update(['is_active'=> 0]);
 			
 		}
 		
 	}
 	
 	public function getBitstampBalance($bot){
+		
+		LOG::info("Get Bitstamp balance");
 		
 		//I need to get the bot api_token first.
 		$api_token = DB::table('user')->where('owner_id', $bot->id)->pluck('api_key');	

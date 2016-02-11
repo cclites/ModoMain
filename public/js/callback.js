@@ -5,19 +5,25 @@ var ca = {
 		//No bot for that member
 		if(data.status == 0){
 			mo.log("Unable to find a user with those credentials.");
+			alert("Unable to find a user with those credentials.");
+			$("#waitModal").hide("fade");  //Just in case modal is open
 		}else{
+			
+			console.log("Log in succeeded");
+			
 			model.token = data.token;
 			model.session = data.session;
 			
 			$(".modalMessage").html("Loading content"); //show modal
-		    $("#waitModal").toggle("fade");
-		    
-			
+			$("#waitModal").toggle("fade");
+
 			//Get the bot
 			mo.getBotState();
 			mo.pollDirty();   //poll the dirty flag.
 			mo.log("Ready....");
 		}
+		
+		
 	},
 	
 	loginFailure: function(xhr, type, exception){},
@@ -70,9 +76,6 @@ var ca = {
 			    
 			}, 1000);
 		}
-		
-		
-		
 		
 	},
 	
@@ -138,9 +141,21 @@ var ca = {
 	updateLoginSuccess: function(data){
 			
 		if(data.status == 1){
-			mo.log("Your password has been updated.");
+			
+			
+			//mo.log("Your password has been updated.");
+			alert("Your password has been updated. You will be logged out now.");
+			//model.token = data.token;
+			//model.session = data.session;
+			setTimeout(function(){
+				
+				li.logout();
+				
+			}, 800);
+			
 		}else{
 			mo.log("Unable to update password at this time. Please try later.");
+			alert("Unable to update password at this time. Please try later.");
 		}
 		
 		$(".ui-dialog-titlebar-close").trigger("click");
@@ -152,8 +167,10 @@ var ca = {
 		
 		if(data.status == 1){
 			mo.log("Your email address has been updated.");
+			alert("Your email address has been updated.");
 		}else{
 			mo.log("Your email address could not be validated at this time. Please try later.");
+			alert("Your email address could not be validated at this time. Please try later.");
 		}
 		
 		$(".ui-dialog-titlebar-close").trigger("click");
@@ -166,9 +183,11 @@ var ca = {
 		
 		if(data.status == 1){
 			mo.log("Your Bitstamp info has been updated.");
+			alert("Your Bitstamp info has been updated.");
 			
 		}else{
 			mo.log("Your Bitstamp info could not be updated at this time. Please try later.");
+			alert("Your Bitstamp info could not be updated at this time. Please try later.");
 		}
 		
 		$(".ui-dialog-titlebar-close").trigger("click");
@@ -180,8 +199,10 @@ var ca = {
 
 		if(data.status == 1){
 			mo.log("Notification to activate account has been sent.");
+			alert("Notification to activate account has been sent.");
 		}else{
 			mo.log("Unable to activate account at this time.");
+			alert("Unable to activate account at this time.");
 		}
 		
 		$(".ui-dialog-titlebar-close").trigger("click");

@@ -13,7 +13,9 @@
 		
 		<li>
 			<span class="configLabel">Create a passcode for your bot:</span></span>
-		    <input id="newUserPass" val="">
+		    <input type="password" id="newUserPass" val="">
+		    <br>
+		    <input type="checkbox" id="showHidePassword" onclick="li.showHidePassword();"><span id="showPasswordTag">Show password</span>
 		</li>
 		
 		<li>
