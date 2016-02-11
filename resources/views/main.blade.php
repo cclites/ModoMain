@@ -30,8 +30,8 @@
 			<div class="bannerContent">
 				<div id="bannerLeft">
 					<div class="form">
-						<input id="banner_uname" type="text" required="required" autofocus="" placeholder="Username" value="ModoBoss">
-						<input id="banner_upass" type="password" required="required" placeholder="Password" value=">Y9pgtdtz>">
+						<input id="banner_uname" type="text" required="required" autofocus="" placeholder="Username" value="">
+						<input id="banner_upass" type="password" required="required" placeholder="Password" value="">
 						<button id="logIn" type="submit">
 							Log In
 						</button>
