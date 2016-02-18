@@ -85,6 +85,7 @@
 		@include('partials/privacypolicy')
 
 		<div id="modals"></div>
+		<div id="alertModals"></div>
 		<div id="waitModal">
 			<div class='waitContainer'>
 				<div class='modalMessage'></div>
@@ -139,6 +140,6 @@
 
 		</script>
 	</body>
-
+	
 </html>
 

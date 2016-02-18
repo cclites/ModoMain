@@ -5,7 +5,7 @@ var ca = {
 		//No bot for that member
 		if(data.status == 0){
 			mo.log("Unable to find a user with those credentials.");
-			alert("Unable to find a user with those credentials.");
+			li.alertModal("Unable to find a user with those credentials.");
 			$("#waitModal").hide("fade");  //Just in case modal is open
 		}else{
 			
@@ -144,7 +144,7 @@ var ca = {
 			
 			
 			//mo.log("Your password has been updated.");
-			alert("Your password has been updated. You will be logged out now.");
+			li.alertModal("Your password has been updated. You will be logged out now.");
 			//model.token = data.token;
 			//model.session = data.session;
 			setTimeout(function(){
@@ -167,10 +167,10 @@ var ca = {
 		
 		if(data.status == 1){
 			mo.log("Your email address has been updated.");
-			alert("Your email address has been updated.");
+			li.alertModal("Your email address has been updated.");
 		}else{
 			mo.log("Your email address could not be validated at this time. Please try later.");
-			alert("Your email address could not be validated at this time. Please try later.");
+			li.alertModal("Your email address could not be validated at this time. Please try later.");
 		}
 		
 		$(".ui-dialog-titlebar-close").trigger("click");
@@ -183,11 +183,11 @@ var ca = {
 		
 		if(data.status == 1){
 			mo.log("Your Bitstamp info has been updated.");
-			alert("Your Bitstamp info has been updated.");
+			li.alertModal("Your Bitstamp info has been updated.");
 			
 		}else{
 			mo.log("Your Bitstamp info could not be updated at this time. Please try later.");
-			alert("Your Bitstamp info could not be updated at this time. Please try later.");
+			li.alertModal("Your Bitstamp info could not be updated at this time. Please try later.");
 		}
 		
 		$(".ui-dialog-titlebar-close").trigger("click");
@@ -199,10 +199,10 @@ var ca = {
 
 		if(data.status == 1){
 			mo.log("Notification to activate account has been sent.");
-			alert("Notification to activate account has been sent.");
+			li.alertModal("Notification to activate account has been sent.");
 		}else{
 			mo.log("Unable to activate account at this time.");
-			alert("Unable to activate account at this time.");
+			li.alertModal("Unable to activate account at this time.");
 		}
 		
 		$(".ui-dialog-titlebar-close").trigger("click");
@@ -212,9 +212,9 @@ var ca = {
 	
 	addNewMemberSuccess:function(data){
 		if(data.status == 1){
-		  alert("An activation email has been sent to the provided email.");
+		  li.alertModal("An activation email has been sent to the provided email.");
 		}else{
-			alert("We are unable to create your account at this moment. Please try again.");
+			li.alertModal("We are unable to create your account at this moment. Please try again.");
 		}
 		
 		$(".ui-dialog-titlebar-close").trigger("click");
@@ -240,12 +240,13 @@ var ca = {
 		$("#modals").dialog("close");
 		
 		if( data.status == 1){
-			alert("A message has been sent.");
+			li.alertModal("A message has been sent.");
 		}
 	},
 	
 	sendContactFailure: function(xsr, type, exception ){
 		
-		alert("There was an error. Please try again later.");
+		li.alertModal("There was an error. Please try again later.");
 	},
+	
 };

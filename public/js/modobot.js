@@ -96,16 +96,21 @@ var mo = {
     
     updateMargins: function(){
     	
-    	var base = $("#base").val(),
-    	    increase = $("#increase").val(),
-    	    decrease = $("#decrease").val();
+    	var base = $("#base").val().replace(/[^\d.]/g,""),
+    	    increase = $("#increase").val().replace(/[^\d.]/g,""),
+    	    decrease = $("#decrease").val().replace(/[^\d.]/g,"");
     	    
+    	$("#base").val(base);
+    	$("#increase").val(increase);
+    	$("#decrease").val(decrease);    
+    	
     	base = base.replace("$", "");
     	//base = base*100;
     	increase = increase/100;
     	decrease = decrease/100;
 
-   
+   		
+    	
     	$("#marginSalePrice").html( "$" + ( base * (1 + increase) ).toFixed(2) );
     	$("#marginPurchasePrice").html( "$" + ( base * (1 - decrease) ).toFixed(2) );
     },

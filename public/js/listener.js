@@ -106,16 +106,16 @@ var li = {
 		
 		var pass1 = $("#newPass1").val(),
 		    pass2 = $("#newPass1").val(),
-		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, pass1: pass1, pass2: pass2},
 		    url = "updatelogin",
-		    request = new mo.requestObject(url, "POST", ca.updateLoginSuccess, ca.updateLoginFailure, data);
-		    
-		if( pass1 === pass2){
+		  	data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, pass1: pass1, pass2: pass2},
+			request = new mo.requestObject(url, "POST", ca.updateLoginSuccess, ca.updateLoginFailure, data);
+		 
+		if( pass1 === pass2){  
 			mo.asynch(request);
 		}else if(pass1 == "" || pass2 == ""){
-			alert("Please fill in both fields.");
+			li.alertModal("Please fill in both fields.");
 		}else{
-			alert("Passwords do not match.");
+			li.alertModal("Passwords do not match.");
 		}
 
 	},
@@ -151,7 +151,7 @@ var li = {
 		    request = new mo.requestObject(url, "POST", ca.updateBsCongigsSuccess, ca.updateeBsCongigsFailure, data);
 		    
 		if(utoken == "" || usecret == "" || uid == ""){
-			alert("Please fill in all BitStamp congigs");
+			li.alertModal("Please fill in all BitStamp congigs");
 		}else{
 			mo.asynch(request);
 		}
@@ -183,7 +183,7 @@ var li = {
 			 request = new mo.requestObject(url, "POST", ca.addNewMemberSuccess, ca.activeAccountFailure, data);
 			 
 	    if(data.email == "" || data.uname == "" || data.upass == ""){
-	    	alert("Please fill in all information.");
+	    	li.alertModal("Please fill in all information.");
 	    }else{
 	    	mo.asynch(request);
 	    }
@@ -200,7 +200,7 @@ var li = {
 			 request = new mo.requestObject(url, "POST", ca.resendValidationSuccess, ca.resendValidationFailure, data);
 			 
 	     if(data.email == ""){
-	     	alert("Please provide an email address.");
+	     	li.alertModal("Please provide an email address.");
 	     }else{
 	     	mo.asynch(request);
 	     }
@@ -258,7 +258,7 @@ var li = {
     	    request = new mo.requestObject(url, "GET", ca.sendContactSuccess, ca.sendContactFailure, data);
     	    
     	if(  date.cAddress == "" || date.cSubject == "" || date.cMessage == ""){
-    		alert("Please fill in all fields.");
+    		li.alertModal("Please fill in all fields.");
     	}else{
     		mo.asynch(request);
     	}
@@ -384,6 +384,48 @@ var li = {
     		//$("#showHidePassword").val(true);
     	}
     	
-    }
+    },
+    
+  	alertModal : function(message){
+		$('#alertModals').html(message).dialog({
+			width : 325,
+			height : 200,
+			title : "Alert",
+			dialogClass : "modalDialog",
+			buttons : {
+				Close : function(){
+					$(this).dialog("close");
+				}
+			}
+		});
+	},
+	
+	fixed_sell_amount_keyup : function(){
+		$('#fixed_sell_amount').keyup(function() {
+			var fixed_sell_amount = $("#fixed_sell_amount").val().replace(/[^\d.]/g,"");
+    	   	$("#fixed_sell_amount").val(fixed_sell_amount);
+		});
+	},
+	
+	fixed_buy_amount_keyup : function(){
+		$('#fixed_buy_amount').keyup(function() {
+			var fixed_buy_amount = $("#fixed_buy_amount").val().replace(/[^\d.]/g,"");
+    	   	$("#fixed_buy_amount").val(fixed_buy_amount);
+		});
+	},
+	
+	sellLimitBtc_keyup : function(){
+		$('#sellLimitBtc').keyup(function() {
+			var sellLimitBtc = $("#sellLimitBtc").val().replace(/[^\d.]/g,"");
+    	   	$("#sellLimitBtc").val(sellLimitBtc);
+		});
+	},
+	
+	buyLimitBtc_keyup : function(){
+		$('#buyLimitBtc').keyup(function() {
+			var buyLimitBtc = $("#buyLimitBtc").val().replace(/[^\d.]/g,"");
+    	   	$("#buyLimitBtc").val(buyLimitBtc);
+		});
+	},
 	
 };

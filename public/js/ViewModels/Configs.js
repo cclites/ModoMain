@@ -108,7 +108,7 @@ function buildConfigView(){
 	str += "                     <td class='configLabel' colspan='2'>Sell Limit Btc</td>\n";
 	
 	temp = myB.sell_limit_btc;
-	str += "                     <td><input id='sellLimitBtc' size='6' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
+	str += "                     <td><input id='sellLimitBtc' onkeyup='li.sellLimitBtc_keyup()'size='6' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
 	
 	 
 	
@@ -130,11 +130,11 @@ function buildConfigView(){
 	}
 	
 	temp = myB.fixed_sell_amount;
-	str += "                     <td class='configLabel'>Sell Price $</td><td><input id='fixed_sell_amount' size='8' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
+	str += "                     <td class='configLabel'>Sell Price $</td><td><input id='fixed_sell_amount' onkeyup='li.fixed_sell_amount_keyup()' size='8' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
 	
 	str += "                     <td class='configLabel' colspan='2'>Buy Limit Btc</td>\n";
 	temp = myB.buy_limit_btc;
-	str += "                     <td><input id='buyLimitBtc' size='6' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
+	str += "                     <td><input id='buyLimitBtc' onkeyup='li.buyLimitBtc_keyup()' size='6' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
 	
 	str += "                 </tr>\n";
 	
@@ -152,7 +152,7 @@ function buildConfigView(){
 	     str += "                     <td><input id='fixed_buy' type='checkbox'></td>\n"; 	
 	}
 	temp = myB.fixed_buy_amount;
-	str += "                     <td class='configLabel'>Buy Price $</td><td><input id='fixed_buy_amount' size='8' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
+	str += "                     <td class='configLabel'>Buy Price $</td><td><input id='fixed_buy_amount' onkeyup='li.fixed_buy_amount_keyup()' size='8' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
 	str += "                 </tr>\n";
 	 
 	
