@@ -9,13 +9,13 @@ function pingDaemon(){
 	
     echo "Daemon is running\n";
 	
-	$url = "http://localhost/ModoMain/public/daemon";
+	$url = "http://modobot.com/ModoMain/public/daemon";
 	_ping($url);
 
-	echo "Daemon Sleeping\n";
-	sleep(65);
+	//echo "Daemon Sleeping\n";
+	//sleep(65);
 	
-	pingDaemon();
+	//pingDaemon();
 	pingSweeper();
 }
 
@@ -24,7 +24,7 @@ function pingSweeper(){
 	
 	echo "Sweeper is running\n";
 	
-	$url = "http://localhost/ModoMain/public/sweep";
+	$url = "http://modobot.com/ModoMain/public/sweep";
 	
 	_ping($url);
 	//print_r( _ping($url) );
