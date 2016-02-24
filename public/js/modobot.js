@@ -6,7 +6,7 @@ var mo = {
 	asynch: function(request) {
 	
 		var typeFlag = request.type;
-	
+
 		$.ajax({
 			type : typeFlag,
 			url : request.url,

@@ -326,7 +326,7 @@ class AuthenticateHandler extends Controller {
 		$token = $this -> createToken();
 		$this -> token = $token;
 		
-		if ($request->umail == "" || $request->umail == "" || $request->upass == ""){
+		if ($request->umail == "" || $request->uname == "" || $request->upass == ""){
 			return json_encode(array('status'=>0, 'message'=> 'Please make sure to fill all fields') );
 		}
 
@@ -394,7 +394,7 @@ class AuthenticateHandler extends Controller {
 		DB::table("validation")->insert( ['owner_id'=>$id[0], 'hash'=>$validationToken]);
 		
 		$message = "Click on the following link to reset your password." .
-		           "https://modobot.com/resetaccountpass?token=" . $validationToken;
+		           Config::get('core.BASEPATH')."/resetaccountpass?token=" . $validationToken;
 				   
 	     $this->sendEmail($umail, $message);
 		
@@ -426,10 +426,10 @@ class AuthenticateHandler extends Controller {
 	function sendValidationEmail( $umail, $validationToken ){
 		
 		LOG::info("umail is $umail");
-		LOG::info("validation token is $validationToken[0]");
+		LOG::info("validation token is $validationToken");
 		
 		$message = "Click on the following link to validate your email address and activate your bot." .
-		           "https://modobot.com/validateaccount?token=" . $validationToken[0];
+		           Config::get('core.BASEPATH')."/validateaccount?token=" . $validationToken;
 				   
 	     $this->sendEmail($umail, $message);
 		 
@@ -438,7 +438,7 @@ class AuthenticateHandler extends Controller {
 	}
 	
 	function sendEmail($email, $message){
-		
+		//mail($email, 'MoDoBot', $message);
 		LOG::info("Sending email\n $message");
 	}
 	
