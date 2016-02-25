@@ -394,7 +394,7 @@ class AuthenticateHandler extends Controller {
 		DB::table("validation")->insert( ['owner_id'=>$id[0], 'hash'=>$validationToken]);
 		
 		$message = "Click on the following link to reset your password." .
-		           Config::get('core.BASEPATH')."/resetaccountpass?token=" . $validationToken;
+		           config('core.BASEPATH')."/resetaccountpass?token=" . $validationToken;
 				   
 	     $this->sendEmail($umail, $message);
 		
@@ -426,10 +426,10 @@ class AuthenticateHandler extends Controller {
 	function sendValidationEmail( $umail, $validationToken ){
 		
 		LOG::info("umail is $umail");
-		LOG::info("validation token is $validationToken");
+		LOG::info("validation token is $validationToken[0]");
 		
-		$message = "Click on the following link to validate your email address and activate your bot." .
-		           Config::get('core.BASEPATH')."/validateaccount?token=" . $validationToken;
+		$message = "Click on the following link to validate your email address and activate your bot. " .
+		           config('core.BASEPATH')."/validateaccount?token=" . urlencode($validationToken);
 				   
 	     $this->sendEmail($umail, $message);
 		 
@@ -438,15 +438,16 @@ class AuthenticateHandler extends Controller {
 	}
 	
 	function sendEmail($email, $message){
-		//mail($email, 'MoDoBot', $message);
+		mail($email, 'MoDoBot', $message);
 		LOG::info("Sending email\n $message");
 	}
 	
 	function validateAccount($request){
-
-		$token = $this->dCrypt($request->token);
+		//LOG::info("I am here");
+		$token = $this->dCrypt($request->token);//LOG::info($token);
 		$tuples = explode("|", $token);
-
+		
+		//LOG::info($tuples);
 		$umail = $tuples[0];
 		$token = $tuples[1];
 		$id = $tuples[2];
@@ -467,9 +468,9 @@ class AuthenticateHandler extends Controller {
 			$nResult = DB::table("bot")->where('owner_id', $id)->update(["live"=>1]);
 			
 			if($nResult == 1){
-				return json_encode( array('status'=> 1, 'message'=>'Thank you! Your account has been activated, and your ModoBot is being prepared.') );
+				return "Thank you! Your account has been activated, and your ModoBot is being prepared. <br><br> <button><a href='http://www.modobot.com' style='text-decoration:none'>ModoBot</a></button>";
 			}else{
-				return json_encode( array('status'=> 0, 'message'=>'Ooops! We are unable to activate your account at this time. Please try again later, or contact support@modobot.com.') );
+				return "Ooops! We are unable to activate your account at this time. Please try again later, or contact support@modobot.com. <br><br> <button><a href='http://www.modobot.com' style='text-decoration:none'>ModoBot</a></button>";
 			}
 		}
 
