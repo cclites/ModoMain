@@ -61,6 +61,7 @@ Route::group(['middleware' => ['web']], function () {
 	
 	Route::post('/addnewuser', 'Auth\ModoAuth@addNewUser');
 	Route::post('/resetpassword', 'Auth\ModoAuth@resetPassword');
+	Route::post('/updateresetpassword', 'Auth\ModoAuth@updateResetPassword');
 	Route::post('/resendvalidation', 'Auth\ModoAuth@resendValidation');
 	
 	Route::get('/daemon', 'Daemon\Daemon@main');

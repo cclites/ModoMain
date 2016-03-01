@@ -224,11 +224,17 @@ var ca = {
 	
 	addNewMemberFailure: function(xsr, type, exception){},
 	
-	resetPasswordSuccess: function(data){
+	resetPasswordSuccess: function(data){ alert();
 		console.log(data);
 	},
 	
 	resetPasswordFailure: function(xsr, type, exception){},
+	
+	resetPasswordViewSuccess: function(data){ alert();
+		console.log(data);
+	},
+	
+	resetPasswordViewFailure: function(xsr, type, exception){},
 	
 	resetValidationSuccess: function(data){
 		console.log(data);

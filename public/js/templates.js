@@ -178,15 +178,15 @@ var tem = {
 		
 		          '    <br>' +
 		          '        ' +
-		          '  <input type="text" id="newUserName" placeholder="Enter User Name" required="required">' +
+		          '  <input type="text" class="_newUserName" id="newUserName" placeholder="Enter User Name">' +
 		          '    <br>' +
-		          '  <input type="text" id="newUserEmail" placeholder="Enter Email Address" required="required">' +
+		          '  <input type="text" class="_newUserEmail" id="newUserEmail" placeholder="Enter Email Address">' +
 		          '    <br>' +
-		          '  <input type="password" id="newUserPass" placeholder="Enter Password" required="required">' +
+		          '  <input type="password" id="newUserPass" placeholder="Enter Password" >' +
 		          '    <br>' +
 		          '  <input type="button" class="action" id="createAccount" onclick="li.addNewMember()" value=" Submit "/>' +
 		          '  <button class="action" id="resendValidate" onclick="li.resendValidation()">Resend Validation</button>' +
-		          '  <button class="action" id="changePassword" onclick="li.changePassword()">Reset Password</button>' +
+		          '  <button class="action" id="changePassword" onclick="li.resetPassword()">Reset Password</button>' +
 		          '</form>';
 		
 		

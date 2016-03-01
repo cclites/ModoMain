@@ -210,19 +210,34 @@ var li = {
 	},
 	
 	
-	//Possibly not used.
-	/*
-	changePassword: function(){
+	
+	
+	resetPassword: function(){
 		
 		var data = {
-			 	umail: $("#newUserEmail").val()
+			 	umail: $("._newUserEmail").val() //Change to use both id and class
 			 }, 
-			 url = 'changepassword',
+			 url = 'resetpassword',
 			 request = new mo.requestObject(url, "POST", ca.resetPasswordSuccess, ca.resetPasswordFailure, data);
 		 
 		 mo.asynch(request);
 	},
-	*/
+	
+	resetPasswordView:function(){ 
+		var data = {
+			uname : $('#passResetUsername').val(),
+			pass1 : $('#resetPass1').val(),
+			pass2 : $('#resetPass2').val()
+		},
+		url = 'updateresetpassword';
+		alert(window.location);
+		if(pass1===pass2 && pass1!="" && uname !=""){ //fix password, unknown error.
+			var request = new mo.requestObject(url, "POST", ca.resetPasswordViewSuccess, ca.resetPasswordViewFailure, data);
+			mo.asynch(request);
+		 }else{
+		 	li.alertModal("Input is invalid");
+		 }
+	},
 	
 	clearLog: function(){
 		
