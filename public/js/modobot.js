@@ -6,7 +6,7 @@ var mo = {
 	asynch: function(request) {
 	
 		var typeFlag = request.type;
-	
+
 		$.ajax({
 			type : typeFlag,
 			url : request.url,
@@ -50,10 +50,13 @@ var mo = {
 				  uname: document.getElementById("banner_uname").value,
 				  upass: document.getElementById("banner_upass").value
 				},
-		    url = "account",
-	        request = new mo.requestObject(url, "POST", ca.loginSuccess, ca.loginFailure, data);
-	        
-		mo.asynch(request);
+		    url = "account";
+		    if(data.uname != "" && data.upass != ""){
+		    	var request = new mo.requestObject(url, "POST", ca.loginSuccess, ca.loginFailure, data);
+		    	mo.asynch(request);
+		    }else{
+		    	li.alertModal("Invalid Credentials");
+		    }
 	
 	},
 	

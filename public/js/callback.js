@@ -21,17 +21,18 @@ var ca = {
 			mo.getBotState();
 			mo.pollDirty();   //poll the dirty flag.
 			mo.log("Ready....");
+			
 		}
 		
 		
 	},
 	
-	loginFailure: function(xhr, type, exception){},
+	loginFailure: function(xhr, type, exception){S},
 	
 	getBotStateSuccess: function(data){
 		
 		if(data.bot == 0){
-			mo.log("Unable to retrieve bot");
+			mo.log("Unable to retrieve bot"); 
 		}else{
 			
 			model.id = data.bot[0].id;
@@ -75,6 +76,7 @@ var ca = {
 			    //$(".modalMessage").html("");
 			    
 			}, 1000);
+			
 		}
 		
 	},
@@ -149,7 +151,7 @@ var ca = {
 			//model.session = data.session;
 			setTimeout(function(){
 				
-				li.logout();
+				li.logOut();
 				
 			}, 800);
 			
@@ -222,11 +224,17 @@ var ca = {
 	
 	addNewMemberFailure: function(xsr, type, exception){},
 	
-	resetPasswordSuccess: function(data){
+	resetPasswordSuccess: function(data){ alert();
 		console.log(data);
 	},
 	
 	resetPasswordFailure: function(xsr, type, exception){},
+	
+	resetPasswordViewSuccess: function(data){ alert();
+		console.log(data);
+	},
+	
+	resetPasswordViewFailure: function(xsr, type, exception){},
 	
 	resetValidationSuccess: function(data){
 		console.log(data);

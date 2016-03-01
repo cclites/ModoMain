@@ -68,7 +68,7 @@ var li = {
 	
 	logOut: function(){
 		//TODO: Put into .env
-		location.href = "//localhost/ModoMain/public/";
+		location.reload();
 	},
 	
 	updateAccount: function(){
@@ -105,12 +105,13 @@ var li = {
 	saveNewPass: function(){
 		
 		var pass1 = $("#newPass1").val(),
-		    pass2 = $("#newPass1").val(),
-		    url = "updatelogin",
-		  	data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, pass1: pass1, pass2: pass2},
-			request = new mo.requestObject(url, "POST", ca.updateLoginSuccess, ca.updateLoginFailure, data);
+		    pass2 = $("#newPass1").val();
+		
 		 
-		if( pass1 === pass2){  
+		if( pass1 === pass2 && (pass1 != "" && pass2 != "")){  
+			var url = "updatelogin",
+				data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, pass1: pass1, pass2: pass2},
+				request = new mo.requestObject(url, "POST", ca.updateLoginSuccess, ca.updateLoginFailure, data);
 			mo.asynch(request);
 		}else if(pass1 == "" || pass2 == ""){
 			li.alertModal("Please fill in both fields.");
@@ -133,7 +134,7 @@ var li = {
 		    data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id, newMail: newMail},
 		    request = new mo.requestObject(url, "POST", ca.updateEmailSuccess, ca.updateEmailFailure, data);
 		    
-		if(newEmail == ""){
+		if(newMail == ""){
 			alert("You must provide an email address.");
 		}else{
 			mo.asynch(request);
@@ -209,19 +210,34 @@ var li = {
 	},
 	
 	
-	//Possibly not used.
-	/*
-	changePassword: function(){
+	
+	
+	resetPassword: function(){
 		
 		var data = {
-			 	umail: $("#newUserEmail").val()
+			 	umail: $("._newUserEmail").val() //Change to use both id and class
 			 }, 
-			 url = 'changepassword',
+			 url = 'resetpassword',
 			 request = new mo.requestObject(url, "POST", ca.resetPasswordSuccess, ca.resetPasswordFailure, data);
 		 
 		 mo.asynch(request);
 	},
-	*/
+	
+	resetPasswordView:function(){ 
+		var data = {
+			uname : $('#passResetUsername').val(),
+			pass1 : $('#resetPass1').val(),
+			pass2 : $('#resetPass2').val()
+		},
+		url = 'updateresetpassword';
+		alert(window.location);
+		if(pass1===pass2 && pass1!="" && uname !=""){ //fix password, unknown error.
+			var request = new mo.requestObject(url, "POST", ca.resetPasswordViewSuccess, ca.resetPasswordViewFailure, data);
+			mo.asynch(request);
+		 }else{
+		 	li.alertModal("Input is invalid");
+		 }
+	},
 	
 	clearLog: function(){
 		

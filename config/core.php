@@ -1,6 +1,6 @@
 <?php
 	//echo Config::get('core.SEED');
-	
+	//Config::get('core.BASEPATH');
 	return [
 	    'SEED' => '636861646c6f7665737374616379',
 	    "BITSTAMP_GET_TICKER"=>"https://www.bitstamp.net/api/ticker/",
@@ -10,5 +10,6 @@
 	    "BITSTAMP_OPEN_ORDERS"=>"https://www.bitstamp.net/api/open_orders/",
 	    "BITSTAMP_CLOSE_ORDER"=>"https://www.bitstamp.net/api/cancel_order/",
 	    "BITSTAMP_TRANSACTIONS"=>"https://www.bitstamp.net/api/user_transactions/",
-	    "SWEEP_ONCE"=>true
+	    "SWEEP_ONCE"=>true,
+	    "BASEPATH"=>"localhost/ModoMain/public",
 	];

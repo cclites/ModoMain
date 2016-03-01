@@ -44,6 +44,11 @@ class ModoAuth extends Controller{
 		return $ah->resetPassword($request);
 	}
 	
+	function updateResetPassword(Request $request){
+		$ah = new AuthenticateHandler();
+		return $ah->updateResetPassword($request);
+	}
+	
 	function resendValidation(Request $request){
 		$ah = new AuthenticateHandler();
 		return $ah->resendValidation($request);
