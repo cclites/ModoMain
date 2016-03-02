@@ -14,7 +14,16 @@ class General extends Controller{
 	
 	public function submitContact(Request $request){
 		
-		$this->mail($request, 'submitContact');
+		$cAddress = $request -> cAddress;
+		$cMessage = $request -> cMessage;
+		$cSubject = $request -> cSubject;
+		$to = "chad@extant.digital";  // will need to be a modobot email eventually
+		
+		$message = "Message from: $cAddress\n" . $cMessage;
+		
+		 mail ($to , $cSubject ,  $message);
+		
+		//$this->mail($request, 'submitContact');
         return json_encode(array( 'status'=>1, 'message'=>'Contact Submitted') );		
 	}
 	
@@ -24,6 +33,11 @@ class General extends Controller{
 	public function mail($mailObject, $type){
 		//TODO: do something with the email, like actually email it, for instance.
 		LOG::info("{Sending an email}");
+		
+		//$recipient = ""
+		
+		
+		
 	}
 	
 }

@@ -11,48 +11,8 @@
 	
 	@include('partials/signup')
 
-
-	<div class="splashContent">
-		Select 'New Accounts' in the menu bar to build your own free automated trading bot.
-	</div>
-
-    <!--img class="tincan" src="images/tincan.png"-->
     
 </article>
 
-
-
-<script>
-	function flicker(flag) {
-
-		if (flag == "on") {
-
-			$("#neon").removeClass("flickerOn");
-			$("#box1").removeClass("brighten").addClass("dim");
-			$("#neon").addClass("flickerOff");
-
-			var rand = Math.random() * (400 - 50) + 50;
-			setTimeout(function() {
-				flicker("off");
-			}, rand);
-		} else {
-
-			$("#neon").removeClass("flickerOff");
-			$("#box1").removeClass("dim").addClass("brighten");
-			$("#neon").addClass("flickerOn");
-
-			var rand = Math.random() * (6500 - 10) + 10;
-			setTimeout(function() {
-				flicker("on");
-			}, rand);
-		}
-	}
-
-
-
-	var rand = Math.random() * (400 - 40) + 10
-	setTimeout(function() {
-		flicker("on");
-	}, rand);
 
 </script>

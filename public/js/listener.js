@@ -273,7 +273,7 @@ var li = {
     	    url = "submitcontact",
     	    request = new mo.requestObject(url, "GET", ca.sendContactSuccess, ca.sendContactFailure, data);
     	    
-    	if(  date.cAddress == "" || date.cSubject == "" || date.cMessage == ""){
+    	if(  data.cAddress == "" || data.cSubject == "" || data.cMessage == ""){
     		li.alertModal("Please fill in all fields.");
     	}else{
     		mo.asynch(request);
