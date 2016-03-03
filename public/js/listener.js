@@ -247,7 +247,8 @@ var li = {
 	
 	resetPassUpdate:function(){
 		var locat = ""+window.location;
-		locat = locat.replace("http://localhost/ModoMain/public/resetaccountpass?token=","");
+		local = locat.replace("http://modobot.com/ModoMain/public/ModoMain/public/resetaccountpass?token=","");
+		//locat = locat.replace("http://localhost/ModoMain/public/ModoMain/public/resetaccountpass?token=","");
 		var data = {
 			uname : $('#passResetUsername').val(),
 			upass : encodeURIComponent($('#resetPass1').val()),
