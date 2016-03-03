@@ -135,7 +135,7 @@ var li = {
 		    request = new mo.requestObject(url, "POST", ca.updateEmailSuccess, ca.updateEmailFailure, data);
 		    
 		if(newMail == ""){
-			alert("You must provide an email address.");
+			li.alertModal("You must provide an email address.");
 		}else{
 			mo.asynch(request);
 		}
@@ -202,8 +202,7 @@ var li = {
 			 }, 
 			 url = 'addnewuser',
 			 request = new mo.requestObject(url, "POST", ca.addNewMemberSuccess, ca.activeAccountFailure, data);
-			 alert(data.umail);
-			 
+			
 	    if(data.email == "" || data.uname == "" || data.upass == ""){
 	    	li.alertModal("Please fill in all information.");
 	    }else{
