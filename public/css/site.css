@@ -885,7 +885,7 @@ table.historyTable tbody tr td
     border-radius: 4px;
     float: right;
     padding: 6px;
-    width: 400px;
+    width: 428px;
 }
 
 .reviews{
@@ -1183,4 +1183,14 @@ table.historyTable tbody tr td
     height: 10px;
     margin-top: 4px;
     opacity: 0.4;
+}
+
+.socMediaButtons{
+	left: 12px;
+    position: absolute;
+    top: 118px;
+}
+
+.fa-facebook-square{
+	color: #fff;
 }

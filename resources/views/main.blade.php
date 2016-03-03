@@ -19,6 +19,9 @@
 
 	</head>
 	<body>
+		<span class="socMediaButtons">
+			<a href="https://www.facebook.com/ModoAdmin" target="_blank"><i class="fa fa-facebook-square fa-3x"></i></a>
+		</span>
 		<span class="logo_wrap">
 			<img class="bannerLogo" src="images/ModoBotcom_x_200.png" alt="modo dot com logo" />
 		</span>
