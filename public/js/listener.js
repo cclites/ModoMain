@@ -173,7 +173,7 @@ var li = {
         view.buildNewAccountView();
 	},
 	
-	addNewMember: function(){
+	addNewMemberHome: function(){
 		
 		var data = {
 			 	umail: $("#newUserEmail").val(),
@@ -182,10 +182,32 @@ var li = {
 			 }, 
 			 url = 'addnewuser',
 			 request = new mo.requestObject(url, "POST", ca.addNewMemberSuccess, ca.activeAccountFailure, data);
+			
+	    if(data.email == "" || data.uname == "" || data.upass == ""){
+	    	li.alertModal("Please fill in all information.");
+	    }else{
+	    	li.alertModal("Account is being built.");
+	    	mo.asynch(request);
+	    }
+		 
+        
+	},
+	
+	addNewMember: function(){
+		
+		var data = {
+			 	umail: $("._newUserEmail").val(),
+			 	uname: $("._newUserName").val(),
+			 	upass: $("._newUserPass").val()
+			 }, 
+			 url = 'addnewuser',
+			 request = new mo.requestObject(url, "POST", ca.addNewMemberSuccess, ca.activeAccountFailure, data);
+			 alert(data.umail);
 			 
 	    if(data.email == "" || data.uname == "" || data.upass == ""){
 	    	li.alertModal("Please fill in all information.");
 	    }else{
+	    	li.alertModal("Account is being built.");
 	    	mo.asynch(request);
 	    }
 		 
@@ -195,7 +217,7 @@ var li = {
 	resendValidation: function(){
 		
 		var data = {
-			 	umail: $("#newUserEmail").val()
+			 	umail: $("._newUserEmail").val()
 			 }, 
 			 url = 'resendvalidation',
 			 request = new mo.requestObject(url, "POST", ca.resendValidationSuccess, ca.resendValidationFailure, data);
@@ -223,15 +245,17 @@ var li = {
 		 mo.asynch(request);
 	},
 	
-	resetPasswordView:function(){ 
+	resetPassUpdate:function(){
+		var locat = ""+window.location;
+		locat = locat.replace("http://localhost/ModoMain/public/resetaccountpass?token=","");
 		var data = {
 			uname : $('#passResetUsername').val(),
-			pass1 : $('#resetPass1').val(),
-			pass2 : $('#resetPass2').val()
+			upass : encodeURIComponent($('#resetPass1').val()),
+			upass2 :encodeURIComponent($('#resetPass2').val()),
+			token : locat
 		},
-		url = 'updateresetpassword';
-		alert(window.location);
-		if(pass1===pass2 && pass1!="" && uname !=""){ //fix password, unknown error.
+		url = 'resetpassupdate';
+		if(data.upass===data.upass2 && data.upass!="" && data.uname !=""){
 			var request = new mo.requestObject(url, "POST", ca.resetPasswordViewSuccess, ca.resetPasswordViewFailure, data);
 			mo.asynch(request);
 		 }else{

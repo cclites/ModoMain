@@ -496,8 +496,27 @@ class AuthenticateHandler extends Controller {
 		}
 		
 	}
-	function updateResetPassword($request){
+	
+	function resetPassUpdate($request){ 
+		$token = urldecode($request->token); 
+		LOG::info($token);
+		$this -> uName = $request->uname;
+		$this -> uPass = $request->upass;
+		LOG::info('Pass: ' . $this->uPass);
+		LOG::info('Name: ' . $this->uName);
+		$uId = DB::table('validation')->where(['hash'=>$token])->pluck('owner_id');
+		DB::table('validation')->where(['hash'=>$token, 'owner_id'=>$uId])->delete();
+		$result = DB::table('member')->where( ['id'=> $uId, 'display_name'=>$this->uName] )->get();
 		
+		if( count($result[0]) > 0){
+			$token = $this -> createToken();
+			LOG::info($token);
+			DB::table('member')->where(['id'=>$uId, 'display_name'=>$this->uName ])->update(['token'=>$token]);
+			return json_encode( array('status'=> 1, 'message'=>'Your new password is updated. Click on the logo to return to the main menu.') );
+		}else{
+			return json_encode( array('status'=> 0, 'message'=>'The token is invalid. Please contact support@modobot.com for assistance.') );
+		}
+	
 	}
 
 }

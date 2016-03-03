@@ -17,7 +17,7 @@
 	</head>
 	<body>
 		<span class="logo_wrap">
-			<img class="bannerLogo" src="images/ModoBotcom_x_200.png" alt="modo dot com logo" />
+			<a href="http://modobot.com/ModoMain/public/"><img class="bannerLogo" src="images/ModoBotcom_x_200.png" alt="modo dot com logo" /></a>
 		</span>
 		<div id="banner_background"></div>
 		<div class="banner"></div>
@@ -44,7 +44,7 @@
 				</li>
 			</ol>
 			<br>
-			<button onclick="li.resetPasswordView()" class="action">Reset Password</button>
+			<button onclick="li.resetPassUpdate()" class="action">Reset Password</button>
 
 		</div>
 		</article>

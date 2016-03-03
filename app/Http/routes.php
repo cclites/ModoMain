@@ -28,6 +28,7 @@ Route::get('/routetest', function(){
 Route::get('/ticker', 'Ticker@getTicker');
 Route::get('/validateaccount', 'Auth\ModoAuth@validateAccount');
 Route::get('/resetaccountpass', 'Auth\ModoAuth@resendAccountPass');
+Route::post('/resetpassupdate', 'Auth\ModoAuth@resetPassUpdate');
 Route::get('/sweep', 'Sweeper@sweep');
 Route::get('/submitcontact', 'General@submitContact');
 
@@ -61,7 +62,6 @@ Route::group(['middleware' => ['web']], function () {
 	
 	Route::post('/addnewuser', 'Auth\ModoAuth@addNewUser');
 	Route::post('/resetpassword', 'Auth\ModoAuth@resetPassword');
-	Route::post('/updateresetpassword', 'Auth\ModoAuth@updateResetPassword');
 	Route::post('/resendvalidation', 'Auth\ModoAuth@resendValidation');
 	
 	Route::get('/daemon', 'Daemon\Daemon@main');

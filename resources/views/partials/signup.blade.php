@@ -24,6 +24,6 @@
 		</li>
 	</ol>
 	
-	<button onclick="li.addNewMember()" class="action">Sign me up!</button>
+	<button onclick="li.addNewMemberHome()" class="action">Sign me up!</button>
 
 </div>

@@ -230,7 +230,8 @@ var ca = {
 	
 	resetPasswordFailure: function(xsr, type, exception){},
 	
-	resetPasswordViewSuccess: function(data){ alert();
+	resetPasswordViewSuccess: function(data){ 
+		li.alertModal(data.message);
 		console.log(data);
 	},
 	

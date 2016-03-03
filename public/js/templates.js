@@ -182,7 +182,7 @@ var tem = {
 		          '    <br>' +
 		          '  <input type="text" class="_newUserEmail" id="newUserEmail" placeholder="Enter Email Address">' +
 		          '    <br>' +
-		          '  <input type="password" id="newUserPass" placeholder="Enter Password" >' +
+		          '  <input type="password" class="_newUserPass" id="newUserPass" placeholder="Enter Password" >' +
 		          '    <br>' +
 		          '  <input type="button" class="action" id="createAccount" onclick="li.addNewMember()" value=" Submit "/>' +
 		          '  <button class="action" id="resendValidate" onclick="li.resendValidation()">Resend Validation</button>' +
