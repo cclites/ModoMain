@@ -246,8 +246,12 @@ var li = {
 	
 	resetPassUpdate:function(){
 		var locat = ""+window.location;
-		local = locat.replace("http://modobot.com/ModoMain/public/ModoMain/public/resetaccountpass?token=","");
-		//locat = locat.replace("http://localhost/ModoMain/public/ModoMain/public/resetaccountpass?token=","");
+		locat = locat.replace("modobot.com/ModoMain/public/resetaccountpass?token=","");
+		//locat = locat.replace("http://localhost/ModoMain/public/resetaccountpass?token=","");
+		locat = locat.replace("://","");
+		locat = locat.replace("https","");
+		locat = locat.replace("https","");
+		
 		var data = {
 			uname : $('#passResetUsername').val(),
 			upass : encodeURIComponent($('#resetPass1').val()),
@@ -258,6 +262,9 @@ var li = {
 		if(data.upass===data.upass2 && data.upass!="" && data.uname !=""){
 			var request = new mo.requestObject(url, "POST", ca.resetPasswordViewSuccess, ca.resetPasswordViewFailure, data);
 			mo.asynch(request);
+			$('#passResetUsername').val("");
+			$('#resetPass1').val("");
+			$('#resetPass2').val("");
 		 }else{
 		 	li.alertModal("Input is invalid");
 		 }

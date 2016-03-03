@@ -502,15 +502,17 @@ class AuthenticateHandler extends Controller {
 		LOG::info($token);
 		$this -> uName = $request->uname;
 		$this -> uPass = $request->upass;
-		LOG::info('Pass: ' . $this->uPass);
-		LOG::info('Name: ' . $this->uName);
-		$uId = DB::table('validation')->where(['hash'=>$token])->pluck('owner_id');
-		DB::table('validation')->where(['hash'=>$token, 'owner_id'=>$uId])->delete();
-		$result = DB::table('member')->where( ['id'=> $uId, 'display_name'=>$this->uName] )->get();
+		//LOG::info('Pass: ' . $this->uPass);
+		//LOG::info('Name: ' . $this->uName);
+		$uId = DB::table('validation')->where('hash',$token)->pluck('owner_id');
+		//LOG::info ($uId);
+		$result = DB::table('member')->where('id', $uId)->where('display_name',$this->uName)->get();
+		//LOG::info($result[0]);
+		DB::table('validation')->where('hash',$token)->delete();
 		
 		if( count($result[0]) > 0){
 			$token = $this -> createToken();
-			LOG::info($token);
+			//LOG::info($token);
 			DB::table('member')->where(['id'=>$uId, 'display_name'=>$this->uName ])->update(['token'=>$token]);
 			return json_encode( array('status'=> 1, 'message'=>'Your new password is updated. Click on the logo to return to the main menu.') );
 		}else{
