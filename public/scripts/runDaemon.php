@@ -7,16 +7,22 @@ pingDaemon();
 
 function pingDaemon(){
 	
+	$key = file_get_contents("run.txt");
+
+	if ($key != "1"){
+		exit("Daemon was stopped");
+	}
+	
     echo "Daemon is running\n";
 	
 	$url = "http://modobot.com/ModoMain/public/daemon";
 	_ping($url);
 
-	//echo "Daemon Sleeping\n";
-	//sleep(65);
+	echo "Daemon Sleeping\n";
+	sleep(65);
 	
-	//pingDaemon();
-	pingSweeper();
+	pingDaemon();
+	//pingSweeper();
 }
 
 
