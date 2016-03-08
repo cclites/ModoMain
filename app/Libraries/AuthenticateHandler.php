@@ -467,8 +467,11 @@ class AuthenticateHandler extends Controller {
 			//$nResult = DB::table('member')->where( 'id',$id)->update(["activated"=> 1]);
 			$nResult = DB::table("bot")->where('owner_id', $id)->update(["live"=>1]);
 			
+			//remove entry from validation table
+			DB::table("validation")->where("owner_id", $id)->delete();
+			
 			if($nResult == 1){
-				return "Thank you! Your account has been activated, and your ModoBot is being prepared. <br><br> <button><a href='http://www.modobot.com' style='text-decoration:none'>ModoBot</a></button>";
+				return "<div class='thankyou'>Thank you! Your account has been activated, and your ModoBot is being prepared. <br><br> <a href='http://www.modobot.com' style='text-decoration:none'><button>Go to ModoBot.com</button></a></div>";
 			}else{
 				return "Ooops! We are unable to activate your account at this time. Please try again later, or contact support@modobot.com. <br><br> <button><a href='http://www.modobot.com' style='text-decoration:none'>ModoBot</a></button>";
 			}

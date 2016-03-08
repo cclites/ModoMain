@@ -15,7 +15,7 @@ function pingDaemon(){
 	
     echo "Daemon is running\n";
 	
-	$url = "http://modobot.com/ModoMain/public/daemon";
+	$url = "http://modobot.com/daemon";
 	_ping($url);
 
 	echo "Daemon Sleeping\n";

@@ -27,7 +27,7 @@ var ca = {
 		
 	},
 	
-	loginFailure: function(xhr, type, exception){S},
+	loginFailure: function(xhr, type, exception){},
 	
 	getBotStateSuccess: function(data){
 		
@@ -37,9 +37,7 @@ var ca = {
 			
 			model.id = data.bot[0].id;
 			model.owner_id = data.bot[0].owner_id;
-			
-			//ko_models.bot = ko.mapping.fromJS(data);  //save model
-			
+
 			ko_models.bot = data;
 				
 			mo.getTicker();  //get the ticker
@@ -213,13 +211,20 @@ var ca = {
 	activateAccountFailure: function(xsr, type, exception){},
 	
 	addNewMemberSuccess:function(data){
+		
 		if(data.status == 1){
-		  li.alertModal("An activation email has been sent to the provided email.");
+		  li.alertModal("An activation email has been sent. Modobot will only work in test mode until your email address has been validated." +
+		                "Close this window, and log in now.");
+		  
+		  $(".modalDialog ").dialog("close");           
+		  
 		}else{
 			li.alertModal("We are unable to create your account at this moment. Please try again.");
 		}
 		
-		$(".ui-dialog-titlebar-close").trigger("click");
+		
+		
+		//$(".ui-dialog-titlebar-close").trigger("click");
 	},
 	
 	addNewMemberFailure: function(xsr, type, exception){},

@@ -71,13 +71,7 @@ class Bot extends Controller{
 
 	public function updateConfigs(Request $request){
 		
-		LOG::info("Update Configs");
-		
-		//echo "Client side configs\n";
-		//print_r($request);
-		//return;
-		//LOG::info("FIXED SELL AMOUNT " . $request->fixed_sell_amount);
-		//LOG::info("FIXED BUY AMOUNT " . $request->fixed_buy_amount);
+		//LOG::info("Update Configs");
 		
 	    $token = $request -> token;
 		$session = $request -> session;
@@ -94,12 +88,12 @@ class Bot extends Controller{
 			
 			//return;
 			
-			LOG::info($request->is_active);
-			LOG::info($request->testing_mode);
-			LOG::info($request->buying);
-			LOG::info($request->selling);
-			LOG::info($request->fixed_sell);
-			LOG::info($request->fixed_buy);
+			//LOG::info($request->is_active);
+			//LOG::info($request->testing_mode);
+			//LOG::info($request->buying);
+			//LOG::info($request->selling);
+			//LOG::info($request->fixed_sell);
+			//LOG::info($request->fixed_buy);
 				
             $configs = array();
 
@@ -127,8 +121,16 @@ class Bot extends Controller{
 			$live = $live[0];
 			
 			//No matter what, these conditions have to be true.
+			
+			
+			/*
 			if( $member->balance < 1 || $live < 1){
 				$configs["is_active"] = 0;
+			}
+			 * */
+			
+			if( $live < 1 ){
+				$configs["testing_mode"] = 1;
 			}
 			
 			
