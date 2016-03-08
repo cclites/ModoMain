@@ -14,6 +14,7 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         '/account',
         '/state',
+        '/messages',
         '/history',
         '/update',
         '/resetbalance',

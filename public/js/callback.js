@@ -44,8 +44,9 @@ var ca = {
 			
 			setTimeout(function(){
 				mo.getBotHistory();  //get the history
+				
 			}, 200);
-			
+			mo.getMessages();//get the messages
 		}
 		
 	},
@@ -58,6 +59,14 @@ var ca = {
 	},
 	
 	getTickerFailure: function(xhr, type, exception){},
+	
+	getMessagesSuccess: function(data){
+		for(var i=0;i<data.message.length;i++){
+			mo.log(data.message[i]);//create for loop to display all messages
+		}
+	},
+	
+	getMessagesFailure: function(xhr, type, exception){console.log(xhr+"  "+type+"  "+exception);},
 	
 	getHistorySuccess: function(data){
 		
