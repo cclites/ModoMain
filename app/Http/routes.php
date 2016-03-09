@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web']], function () {
 	
     Route::post('/account', 'Auth\ModoAuth@validateLogin');
     Route::post('/state', 'Bot@getBotState');
+	Route::post('/messages', 'Messages@getMessages');
     Route::post('/history', 'History@getHistory');
 	Route::post('/update', 'Bot@updateConfigs');
 	Route::post('/resetbalance', 'Ledger@resetTestBalance');

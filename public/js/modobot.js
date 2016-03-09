@@ -70,6 +70,15 @@ var mo = {
 		mo.asynch(request);
 		
 	},
+	
+	getMessages: function(){
+		
+		var data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id},
+		    url = "messages",
+		    request = new mo.requestObject(url, "POST", ca.getMessagesSuccess, ca.getMessagesFailure, data);
+		    
+		mo.asynch(request);
+	},
 
     getBotHistory: function(){
     	
