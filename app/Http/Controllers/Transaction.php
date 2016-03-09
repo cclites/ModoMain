@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Libraries\AuthenticateHandler;
-use App\Libraries\Bitstamp;
+use App\Libraries\bitstamp;
 use Illuminate\Http\Request;
 use App\Libraries\Member;
 use Log;
@@ -352,10 +352,11 @@ class Transaction extends Controller{
 			
 			LOG::info("**************************************************************");
 			LOG::info( gettype($result) );
+			LOG::info(  $result );
 			LOG::info("**************************************************************");
 			
 			
-			$result = json_decode($result);
+			//$result = json_decode($result);
 			
 			if(  isset($result["error"])  ){
 						
