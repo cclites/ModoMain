@@ -101,7 +101,7 @@ var mo = {
     	
     	if( mo.tickerTimer === null){
 	    	mo.tickerTimer = setInterval(function(){
-	    		mo.getBotState();
+	    		mo.getBotState(); 
 	    	}, 60000);
 	    }
     },

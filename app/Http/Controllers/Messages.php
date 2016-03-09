@@ -30,8 +30,7 @@ class Messages extends Controller{
 				$this->id = Crypt::decrypt($this->owner_id);
 			    $messages = DB::table('message')->where('owner_id', $this->id)->pluck('message');
 				$types = DB::table('message')->where('owner_id', $this->id)->pluck('type');
-			    LOG::info($messages);
-				LOG::info($types);
+			    DB::table('message')->where('owner_id', $this->id)->delete();
 		        return json_encode( array('type'=>$types , 'message'=> $messages) );
 		}
 		

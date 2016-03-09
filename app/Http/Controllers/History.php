@@ -31,6 +31,7 @@ class History extends Controller{
 				
 				$this->id = Crypt::decrypt($this->owner_id);
 			    $history = DB::table('historic')->where('owner_id', $this->id)->get();
+				
 		        return json_encode( array('history'=> $history) );
 		}
 		
@@ -128,8 +129,8 @@ class History extends Controller{
 				    'owner_id'=>$this->id,
 				    'currency'=>"BTC"
 				);
-				
-				$this->updateHistorical($historicalData, $this->owner_id);
+				//LOG::info($historicalData);
+				return $this->updateHistorical($historicalData, $this->owner_id);
 				
 			}	
 	}
@@ -151,7 +152,7 @@ class History extends Controller{
                         'start_btc' => $historicalData["start_btc"]
 					));
 			
-	        return json_encode( array('status'=>1) );
+	        return json_encode( array('status'=>1, 'message'=>'History reset') );
 
 	}
 	

@@ -44,9 +44,12 @@ var ca = {
 			
 			setTimeout(function(){
 				mo.getBotHistory();  //get the history
-				
 			}, 200);
-			mo.getMessages();//get the messages
+			
+			setTimeout(function(){
+				mo.getMessages();//get the messages
+			}, 700);
+			
 		}
 		
 	},
@@ -62,11 +65,11 @@ var ca = {
 	
 	getMessagesSuccess: function(data){
 		for(var i=0;i<data.message.length;i++){
-			mo.log(data.message[i]);//create for loop to display all messages
+			mo.log("---"+data.message[i]+"---");//loop to display all messages
 		}
 	},
 	
-	getMessagesFailure: function(xhr, type, exception){console.log(xhr+"  "+type+"  "+exception);},
+	getMessagesFailure: function(xhr, type, exception){},
 	
 	getHistorySuccess: function(data){
 		
@@ -105,6 +108,7 @@ var ca = {
 	},
 	
 	resetBalanceSuccess: function(data){
+		mo.log("Balance has been reset");
 		mo.getBotState();
 	},
 	
@@ -118,7 +122,7 @@ var ca = {
 	
 	
 	resetHistoryFailure: function(xsr, type, exception){
-		console.log(xsr);
+		console.log(xsr); 
 		mo.getBotState();
 	},
 	
