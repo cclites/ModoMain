@@ -157,6 +157,7 @@ article div{
     width: 200px;
 }
 
+
 #logOut{
 	color: #fff;
     cursor: pointer;
@@ -169,6 +170,11 @@ article div{
 
 #account{
 	float:left;
+	cursor: pointer;
+}
+
+#adminPort{
+	float:right;
 	cursor: pointer;
 }
 

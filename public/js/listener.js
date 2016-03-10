@@ -475,4 +475,13 @@ var li = {
 		});
 	},
 	
+	getEmails : function(){
+		
+		var data = {session: model.session, token: model.token, id: model.id, owner_id: model.owner_id},
+		    url = "getEmails",
+		    request = new mo.requestObject(url, "GET", ca.getEmailsSuccess, ca.getEmailsFailure, data);
+		    
+		mo.asynch(request);
+	}
+	
 };

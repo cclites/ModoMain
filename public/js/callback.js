@@ -30,7 +30,6 @@ var ca = {
 	loginFailure: function(xhr, type, exception){},
 	
 	getBotStateSuccess: function(data){
-		
 		if(data.bot == 0){
 			mo.log("Unable to retrieve bot"); 
 		}else{
@@ -42,13 +41,21 @@ var ca = {
 				
 			mo.getTicker();  //get the ticker
 			
+			
 			setTimeout(function(){
 				mo.getBotHistory();  //get the history
 			}, 200);
 			
 			setTimeout(function(){
+				if(data.ring[0]===0){
+					tem.buildAdminButton();
+				}
+			}, 500);
+			
+			setTimeout(function(){
 				mo.getMessages();//get the messages
 			}, 700);
+			
 			
 		}
 		
@@ -275,5 +282,12 @@ var ca = {
 		
 		li.alertModal("There was an error. Please try again later.");
 	},
+	
+	getEmailsSuccess: function(data){
+		console.log(data.email);
+		console.log(data.id);
+	},
+	
+	getEmailsFailure : function(xsr, type, exception ){},
 	
 };

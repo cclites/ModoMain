@@ -219,6 +219,11 @@ var tem = {
 			      "  </form>\n";
 	},
 	
+	buildAdminButton : function(){
+		var str = "<div id='adminView' onclick='li.getEmails()'>Admin</div>";
+		$('#adminPort').html(str);
+	},
+	
 	
 };
 
