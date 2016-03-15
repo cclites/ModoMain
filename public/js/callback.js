@@ -47,15 +47,14 @@ var ca = {
 			}, 200);
 			
 			setTimeout(function(){
-				if(data.ring[0]===0){
-					tem.buildAdminButton();
-				}
-			}, 500);
-			
-			setTimeout(function(){
 				mo.getMessages();//get the messages
 			}, 700);
 			
+			setTimeout(function(){
+				if(data.ring[0]===0){
+					tem.buildAdminButton(); //Adds an admin button.
+				}
+			}, 1200);			
 			
 		}
 		
@@ -284,8 +283,9 @@ var ca = {
 	},
 	
 	getEmailsSuccess: function(data){
-		console.log(data.email);
-		console.log(data.id);
+		//console.log(data.users[0]);
+		//console.log(data.id);
+		li.adminMessage(data);
 	},
 	
 	getEmailsFailure : function(xsr, type, exception ){},

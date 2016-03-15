@@ -482,6 +482,42 @@ var li = {
 		    request = new mo.requestObject(url, "GET", ca.getEmailsSuccess, ca.getEmailsFailure, data);
 		    
 		mo.asynch(request);
+	},
+	
+	adminMessage: function(data){
+
+		var buildAdminView = tem.buildAdminView(data);
+		$('#alertModals').html(buildAdminView).dialog({
+			width : 375,
+			height : 600,
+			title : "Send Message",
+			dialogClass : "modalDialog",
+			buttons : {
+				Submit : function(){
+					//add function
+					$(this).dialog("close");
+				},
+				Close : function(){
+					$(this).dialog("close");
+				}
+			}
+		});
+	},
+	
+	selectNormalUsers : function(){
+		if(document.getElementById('selectNormalUsers').checked){
+			$('.nullring').prop("checked",true);
+		}else{
+			$('.nullring').prop("checked",false);
+		}
+	},
+	
+	selectAdminUsers : function(){
+		if(document.getElementById('selectAdminUsers').checked){
+			$('.0ring').prop("checked",true);
+		}else{
+			$('.0ring').prop("checked",false);
+		}
 	}
 	
 };

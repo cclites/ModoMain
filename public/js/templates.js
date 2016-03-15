@@ -221,8 +221,28 @@ var tem = {
 	
 	buildAdminButton : function(){
 		var str = "<div id='adminView' onclick='li.getEmails()'>Admin</div>";
-		$('#adminPort').html(str);
+		$('#bannerRight').append(str);
 	},
+	
+	buildAdminView:function(data){	  
+	    var str = "  <div>"+
+	    		  "  	<div> <label>Message: </label><input id='adminMessage'></input></div>\n" +
+	    		  "  	<br>\n"+
+			      "  	<div> <label>Type: </label><input id='adminMessageType'></input></div>\n"+
+			      "  	<br>\n"+
+			      "  </div>\n"+
+			      "	 <div id='userEmails'>\n";
+					
+		for(var i=0;i<data.users.length;i++){
+			str += "<input type='checkbox' class='allUserEmails' class='"+data.users[i].ring+"ring' id='"+data.users[i].id+"user'>"+data.users[i].email+"<br>\n";
+		}
+		
+	    str += 	  "  </div><br>\n"+
+	    		  "<input type='checkbox' id='selectNormalUsers' onclick='li.selectNormalUsers()'>Select Normal Users<br>\n"+
+	    		  "<input type='checkbox' id='selectAdminUsers' onclick='li.selectAdminUsers()'>Select Admin Users<br>\n";
+		return str;
+	},
+
 	
 	
 };

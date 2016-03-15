@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Session;
 
 class AdminView extends Controller{
 	public function getEmails(){
-		$emails =DB::table('member')->pluck('email');
-		$ids = DB::table('member')->pluck('id');
-		return json_encode(array("email"=>$emails,"id"=>$ids));
+		$users =DB::table('member')->select('id', "email","ring")->get();
+		//$ids = DB::table('member')->pluck('id');
+		return json_encode(array("users"=>$users));
 	}
 }
 

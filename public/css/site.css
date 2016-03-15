@@ -147,7 +147,10 @@ article div{
     margin-right: 10px;
 }
 
-
+#adminView
+{
+    margin-right: 10px;
+}
 #bannerRight
 {
 	color: #fff;
@@ -173,7 +176,7 @@ article div{
 	cursor: pointer;
 }
 
-#adminPort{
+#adminView{
 	float:right;
 	cursor: pointer;
 }
@@ -188,6 +191,7 @@ article div{
 #newAccount,
 #forumLink,
 #account,
+#adminView,
 #logOut,
 #logIn{
 	font-family: 'Delius', cursive;
@@ -1223,4 +1227,10 @@ table.historyTable tbody tr td
     height: 30px;
     margin: 0 auto;
     width: 200px;
+}
+
+#userEmails{
+	overflow-y: scroll;
+	overflow-x: hidden;
+	max-height: 300px;
 }
