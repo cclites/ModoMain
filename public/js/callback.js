@@ -51,7 +51,7 @@ var ca = {
 			}, 700);
 			
 			setTimeout(function(){
-				if(data.ring[0]===0){
+				if(data.ring[0]==0){
 					tem.buildAdminButton(); //Adds an admin button.
 				}
 			}, 1200);			
@@ -71,7 +71,7 @@ var ca = {
 	
 	getMessagesSuccess: function(data){
 		for(var i=0;i<data.message.length;i++){
-			mo.log("---"+data.message[i]+"---");//loop to display all messages
+			mo.log(data.message[i]);//loop to display all messages
 		}
 	},
 	
