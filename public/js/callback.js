@@ -290,4 +290,12 @@ var ca = {
 	
 	getEmailsFailure : function(xsr, type, exception ){},
 	
+	sendMessageToUsersFailure: function(xsr, type, exception ){
+		console.log(xsr + type + exception);
+		li.alertModal("There was an error sending messages.");
+	},
+	
+	sendMessageToUsersSuccess: function(data){
+		console.log(data);
+	},
 };

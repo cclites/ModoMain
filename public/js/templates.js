@@ -234,7 +234,7 @@ var tem = {
 			      "	 <div id='userEmails'>\n";
 					
 		for(var i=0;i<data.users.length;i++){
-			str += "<input type='checkbox' class='allUserEmails' class='"+data.users[i].ring+"ring' id='"+data.users[i].id+"user'>"+data.users[i].email+"<br>\n";
+			str += "<input type='checkbox' class='allUserEmails "+data.users[i].ring+"ring' id='"+data.users[i].id+"user'>"+data.users[i].email+"<br>\n";
 		}
 		
 	    str += 	  "  </div><br>\n"+

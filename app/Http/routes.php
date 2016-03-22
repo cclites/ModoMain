@@ -32,6 +32,7 @@ Route::post('/resetpassupdate', 'Auth\ModoAuth@resetPassUpdate');
 Route::get('/sweep', 'Sweeper@sweep');
 Route::get('/submitcontact', 'General@submitContact');
 Route::get('/getEmails', 'AdminView@getEmails');
+Route::post('/sendMessageToUsers', 'AdminView@sendMessages');
 
 //Route::get('/addwallets' , 'Wallet@addWallets');
 

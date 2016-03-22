@@ -494,7 +494,7 @@ var li = {
 			dialogClass : "modalDialog",
 			buttons : {
 				Submit : function(){
-					//add function
+					li.sendMessageToUsers();
 					$(this).dialog("close");
 				},
 				Close : function(){
@@ -518,6 +518,26 @@ var li = {
 		}else{
 			$('.0ring').prop("checked",false);
 		}
-	}
+	},
+	
+	sendMessageToUsers : function(){
+		var ids = [];
+		var checkboxes = $(".allUserEmails");
+		for(var i=0; i<checkboxes.length;i++){
+			if(checkboxes[i].checked){
+				ids.push(checkboxes[i].id.replace("user",""));
+			}
+		}
+
+		var data = {
+			 	message:$("#adminMessage").val(), 
+			 	type:$("#adminMessageType").val(), 
+			 	id:ids
+			 }, 
+		url = 'sendMessageToUsers',
+		request = new mo.requestObject(url, "POST", ca.sendMessageToUsersSuccess, ca.sendMessageToUsersFailure, data);
+		mo.asynch(request);
+	},
+	
 	
 };
