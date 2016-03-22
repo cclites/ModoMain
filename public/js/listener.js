@@ -488,8 +488,8 @@ var li = {
 
 		var buildAdminView = tem.buildAdminView(data);
 		$('#alertModals').html(buildAdminView).dialog({
-			width : 375,
-			height : 600,
+			width : 430,
+			height : 465,
 			title : "Send Message",
 			dialogClass : "modalDialog",
 			buttons : {
@@ -502,6 +502,16 @@ var li = {
 				}
 			}
 		});
+	},
+	
+	selectAllUsers : function(){
+		if(document.getElementById('selectAllUsers').checked){
+			$('.nullring').prop("checked",true);
+			$('.0ring').prop("checked",true);
+		}else{
+			$('.nullring').prop("checked",false);
+			$('.0ring').prop("checked",false);
+		}
 	},
 	
 	selectNormalUsers : function(){

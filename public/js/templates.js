@@ -225,10 +225,10 @@ var tem = {
 	},
 	
 	buildAdminView:function(data){	  
-	    var str = "  <div>"+
-	    		  "  	<div> <label>Message: </label><input id='adminMessage'></input></div>\n" +
+	    var str = "  <div id='adminViewInputs'>"+
+	    		  "   	<div> <label>Type: </label><input id='adminMessageType'></input></div>\n"+
 	    		  "  	<br>\n"+
-			      "  	<div> <label>Type: </label><input id='adminMessageType'></input></div>\n"+
+			      "  	<div> <label>Message: </label><textarea id='adminMessage'></textarea></div>\n" +
 			      "  	<br>\n"+
 			      "  </div>\n"+
 			      "	 <div id='userEmails'>\n";
@@ -238,8 +238,10 @@ var tem = {
 		}
 		
 	    str += 	  "  </div><br>\n"+
+	    		  "<input type='checkbox' id='selectAllUsers' onclick='li.selectAllUsers()'>Select All Users<br>\n"+
 	    		  "<input type='checkbox' id='selectNormalUsers' onclick='li.selectNormalUsers()'>Select Normal Users<br>\n"+
-	    		  "<input type='checkbox' id='selectAdminUsers' onclick='li.selectAdminUsers()'>Select Admin Users<br>\n";
+	    		  "<input type='checkbox' id='selectAdminUsers' onclick='li.selectAdminUsers()'>Select Admin Users<br>";
+	    		  
 		return str;
 	},
 

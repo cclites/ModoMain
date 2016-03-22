@@ -1232,5 +1232,18 @@ table.historyTable tbody tr td
 #userEmails{
 	overflow-y: scroll;
 	overflow-x: hidden;
-	max-height: 300px;
+	max-height: 125px;
+	width: 400px;
+}
+#adminMessageType, #adminMessage{
+	float: right;
+}
+#adminMessage{
+	width:270px;
+}
+
+#adminViewInputs{
+	height:120px;
+	font-family: 'Delius', cursive;
+	font-size: 20px;
 }
