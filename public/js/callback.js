@@ -48,13 +48,11 @@ var ca = {
 			
 			setTimeout(function(){
 				mo.getMessages();//get the messages
-			}, 700);
-			
-			setTimeout(function(){
 				if(data.ring[0]==0){
 					tem.buildAdminButton(); //Adds an admin button.
 				}
-			}, 1200);			
+			}, 700);
+		
 			
 		}
 		
