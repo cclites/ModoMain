@@ -322,11 +322,6 @@ class Transaction extends Controller{
 
     public function createSellTransaction(){
     	
-		//print_r($this->bot);
-    	
-		//LOG::info("* Creating Sell Transaction for bot: " . $this->bot->id . "\n");
-		//limit is actual order size in btc
-		
 		$cost = ($this->bot->total_btc_can_sell * $this->ticker->last); 
 		
 		$this->bot->usd += $cost;
@@ -364,7 +359,7 @@ class Transaction extends Controller{
 				            ->where('id', $this->bot->id)
 				            ->update(array(
 				                        'btc' => $this->bot->btc,
-				                        'usd' => $this->usd->usd
+				                        'usd' => $this->bot->usd
 					));
 					
 				$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
