@@ -329,8 +329,20 @@ class AuthenticateHandler extends Controller {
 		if ($request->umail == "" || $request->uname == "" || $request->upass == ""){
 			return json_encode(array('status'=>0, 'message'=> 'Please make sure to fill all fields') );
 		}
-
-	
+		/*
+		$checkName = DB::table('member')->where('display_name',$this->uName)->pluck('id');
+		
+		if($checkName!=null){
+			return json_encode(array('status'=>0, 'message'=> 'Username already exists') );
+		}
+		
+		$checkEmail = DB::table('member')->where('email',$umail)->pluck('id');
+		if($checkEmail!=null){
+			return json_encode(array('status'=>0, 'message'=> 'Email already exists') );
+		}
+		 */
+		$address = DB::table('wallet')->where('owner_id', 0)->take(1)->pluck('addr');
+		
 		//add user to the database.
 		$owner_id = DB::table('member')->insertGetId(
 		    ['email' => $umail, 'token' => $token, 'display_name'=>$this -> uName]

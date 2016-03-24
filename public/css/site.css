@@ -1232,7 +1232,7 @@ table.historyTable tbody tr td
 #userEmails{
 	overflow-y: scroll;
 	overflow-x: hidden;
-	max-height: 125px;
+	max-height: 128px;
 	width: 400px;
 }
 #adminMessageType, #adminMessage{

@@ -89,6 +89,7 @@
 
 		<div id="modals"></div>
 		<div id="alertModals"></div>
+		<div id="messageModals"></div>
 		<div id="waitModal">
 			<div class='waitContainer'>
 				<div class='modalMessage'></div>

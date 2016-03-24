@@ -185,7 +185,9 @@ var li = {
 			
 	    if(data.email == "" || data.uname == "" || data.upass == ""){
 	    	li.alertModal("Please fill in all information.");
-	    }else{
+	    //}else if(!li.validateEmail(data.email)){
+	    	//li.alertModal("Please enter a valid email.");
+	   	}else{
 	    	li.alertModal("Account is being built.");
 	    	mo.asynch(request);
 	    }
@@ -205,12 +207,19 @@ var li = {
 			
 	    if(data.email == "" || data.uname == "" || data.upass == ""){
 	    	li.alertModal("Please fill in all information.");
+	    //}else if(li.validateEmail(data.email)){
+	    	//li.alertModal("Please enter a valid email.");
 	    }else{
 	    	li.alertModal("Account is being built.");
 	    	mo.asynch(request);
 	    }
 		 
         
+	},
+	
+	validateEmail: function(email){
+		var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,15}(?:\.[a-z]{2})?)$/i;
+		return re.test(email);
 	},
 	
 	resendValidation: function(){
@@ -487,15 +496,15 @@ var li = {
 	adminMessage: function(data){
 
 		var buildAdminView = tem.buildAdminView(data);
-		$('#alertModals').html(buildAdminView).dialog({
+		$('#messageModals').modal({"backdrop":"static"});
+		$('#messageModals').html(buildAdminView).dialog({
 			width : 430,
-			height : 465,
+			height : 475,
 			title : "Send Message",
 			dialogClass : "modalDialog",
 			buttons : {
 				Submit : function(){
 					li.sendMessageToUsers();
-					$(this).dialog("close");
 				},
 				Close : function(){
 					$(this).dialog("close");
