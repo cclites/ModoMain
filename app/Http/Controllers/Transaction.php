@@ -353,7 +353,7 @@ class Transaction extends Controller{
 			
 			//$result = json_decode($result);
 			
-			if(  isset($result["error"])  ){
+			if(  !isset($result["error"])  ){
 						
 				$response = DB::table('bot')
 				            ->where('id', $this->bot->id)
@@ -437,7 +437,7 @@ class Transaction extends Controller{
 
 			//$result = json_decode($result);
 			
-			if(  isset($result["error"])  ){
+			if(  !isset($result["error"])  ){
 				
 				LOG::info("THERE IS NO ERROR");
 				

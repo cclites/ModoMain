@@ -293,6 +293,6 @@ var ca = {
 	},
 	
 	sendMessageToUsersSuccess: function(data){
-		console.log(data);
+		li.alertModal("Messages were sent.");
 	},
 };
