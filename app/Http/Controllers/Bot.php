@@ -199,7 +199,7 @@ class Bot extends Controller{
 		
 		if( $balance < 1 ){
 			
-			$result = DB::table('bot')->where('owner_id', $id)->update(['is_active'=> 0]);
+			$result = DB::table('bot')->where('owner_id', $id)->update(['testing_mode'=> 1]);
 			
 		}
 		

@@ -18,6 +18,12 @@ class Daemon extends Controller{
 	
 	function main(){
 		
+		$key = file_get_contents("run.txt");
+
+		if ($key != "1"){
+			exit("Daemon was stopped");
+		}
+		
 		//echo("\nBot is running\n");
 		LOG::info("Updating the ticker.");
 		
