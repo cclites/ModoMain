@@ -31,7 +31,6 @@ class Ticker extends Controller{
 		
 		$id = 1;
 		$oldTicker = $this->getTickerById($id);
-		
 		$newTicker = $this->updateTrend($newTicker, $oldTicker);
 		
 		//$s = print_r($newTicker, true);
@@ -69,7 +68,6 @@ class Ticker extends Controller{
 	*********************************************************************/
 	function updateTrend($currentMarket, $previousMarket)
 	{
-		
 		if($currentMarket->last < $previousMarket->last){
 			$currentMarket->direction = -1;
 		}else if($currentMarket->last > $previousMarket->last){

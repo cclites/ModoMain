@@ -533,7 +533,7 @@ table.historyTable tbody tr td
 }
 */
 
-#accountPassword, #accountEmail, #bitstampCfgs, #activateAccount
+#accountPassword, #accountEmail, #bitstampCfgs, #activateAccount, #emailNotification
 {
 	display: none;
 }
@@ -1247,3 +1247,13 @@ table.historyTable tbody tr td
 	font-family: 'Delius', cursive;
 	font-size: 20px;
 }
+
+#priceNotification{
+	margin-lef: 50px;
+	width: 50px;
+}
+#priceNotificationSubmit{
+	width: 75px;
+	height: 30px;
+}
+

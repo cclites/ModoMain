@@ -41,8 +41,13 @@ var view = {
 		
 	    $("#bannerLeft").html('<div id="logOut" onclick="li.logOut();">Log Out</div>');
 	    $("#bannerRight").html('<div id="account" onclick="li.updateAccount()">Account</div>');
+	    
+	    if(ko_models.bot.ring[0]==0){
+	    	var str = "<div id='adminView' onclick='li.getEmails()'>Admin</div>";
+			$('#bannerRight').append(str);
+	    }
 	},
-	
+
 	buildNewAccountView: function(){
 		
 		 var newAccountView = tem.buildNewAccountView();

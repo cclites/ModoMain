@@ -57,6 +57,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/resetbalance', 'Ledger@resetTestBalance');
 	Route::post('/resethistory', 'History@resetBotHistory');
 	Route::post('/transactions', 'Transaction@getTransactions');
+	Route::post('/updateuserconfigs','SiteOptions@updateConfigs');
+	Route::post('/priceNotification','SiteOptions@priceNotification');
 	
 	Route::post('/updatelogin', 'Auth\ModoAuth@updateLogin');
 	Route::post('/updateemail', 'Auth\ModoAuth@updateEmail');
@@ -68,6 +70,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/resendvalidation', 'Auth\ModoAuth@resendValidation');
 	
 	Route::get('/daemon', 'Daemon\Daemon@main');
+	
+	Route::get('/notifications', 'Daemon\Notifications@main');
 	
 	
 });
