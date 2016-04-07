@@ -298,18 +298,18 @@ class AuthenticateHandler extends Controller {
 				
 				//LOG::info("Valid account...");
 				
-				$id = Crypt::decrypt($request->id);
-				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+				$id = Crypt::decrypt($request->owner_id);
 				
+				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+
 				if( count($result) > 0 ){
 					//now update the database
 					$result = DB::table('wallet')->where('owner_id', $id)
 					          ->update(array(
 			                        'sweep' => 1
 								));
-					
+								
 					return json_encode( array('status'=>$result) );
-					
 				}
 				else{
 					return json_encode( array('status'=>$result) );
