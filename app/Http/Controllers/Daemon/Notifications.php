@@ -17,6 +17,11 @@ class Notifications extends Controller{
 	
 	function main(){
 		
+		$key = file_get_contents("scripts/run.txt");
+
+		if ($key != "1"){
+			exit("Daemon was stopped");
+		}
 
 		LOG::info("Finding Notifications");
 		
