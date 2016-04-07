@@ -562,7 +562,7 @@ var li = {
 	},
 	
 	checkUserConfigs: function(){
-		console.log(ko_models.bot.userConfigs);
+		//console.log(ko_models.bot.userConfigs);
 		for(var i=0;i<ko_models.bot.userConfigs.length;i++){
 			if(ko_models.bot.userConfigs[i].param=='t'){
 				$("#"+ko_models.bot.userConfigs[i].name).prop("checked",true);
@@ -579,6 +579,12 @@ var li = {
 			val='f';
 		}
 		li.updateUserConfigs(name,val);
+		
+		for(var i=0;i<ko_models.bot.userConfigs.length;i++){
+			if(ko_models.bot.userConfigs[i].name=='transNotify'){
+				ko_models.bot.userConfigs[i].param=val;
+			}
+		}
 	},
 	
 	updateUserConfigs:function(name, val){
