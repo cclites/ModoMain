@@ -580,10 +580,16 @@ var li = {
 		}
 		li.updateUserConfigs(name,val);
 		
+		var dummy=0; //Dummy variable
 		for(var i=0;i<ko_models.bot.userConfigs.length;i++){
 			if(ko_models.bot.userConfigs[i].name=='transNotify'){
 				ko_models.bot.userConfigs[i].param=val;
+				dummy=1;
 			}
+		}
+		
+		if(dummy==0){
+			mo.getBotState(); //updates the user configs if it does not exist.
 		}
 	},
 	
