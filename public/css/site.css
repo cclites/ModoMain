@@ -108,9 +108,14 @@ article div{
     box-shadow: 7px 5px 10px rgba(0, 0, 0, 0.6);
     display: inline-block;
     height: 250px;
-    left: calc(50% - 132px);
+    /*left: calc(50% - 132px);*/
     position: absolute;
     width: 250px;
+    
+    
+    left: 42%;
+    top: 6px;
+    
 }
 
 
