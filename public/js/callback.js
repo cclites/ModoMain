@@ -38,21 +38,14 @@ var ca = {
 			model.owner_id = data.bot[0].owner_id;
 
 			ko_models.bot = data;
-				
+
 			mo.getTicker();  //get the ticker
 			
+			li.checkUserConfigs();
 			
 			setTimeout(function(){
 				mo.getBotHistory();  //get the history
-			}, 200);
-			
-			setTimeout(function(){
-				mo.getMessages();//get the messages
-				if(data.ring[0]==0){
-					tem.buildAdminButton(); //Adds an admin button.
-				}
-			}, 700);
-		
+			}, 200);		
 			
 		}
 		
@@ -295,4 +288,22 @@ var ca = {
 	sendMessageToUsersSuccess: function(data){
 		li.alertModal("Messages were sent.");
 	},
+	
+	updateUserConfigsSuccess:function(data){
+		mo.log("Email Configs updated");
+	},
+	
+	updateUserConfigsFailure:function(xsr, type, exception ){
+		li.alertModal("There was an error. Please try again later.");
+	},
+	
+	priceNotificationSuccess: function(data){
+		li.alertModal(data.message);
+	},
+	
+	priceNotificationFailure : function(xsr, type, exception ){
+		li.alertModal("There was an error. Please try again later.");
+	},
+	
+	
 };

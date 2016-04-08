@@ -54,11 +54,16 @@ var tem = {
 		      "      <li><span onclick=\"li.showAccountConfig('#accountPassword')\" >Update Password</span></li>" +
 		      "      <li><span onclick=\"li.showAccountConfig('#accountEmail')\">Update Email</span></li>" +
 		      "      <li><span onclick=\"li.showAccountConfig('#activateAccount')\">Activate Account</span></li>";
-	
+		      
+		if(ko_models.bot.bot[0].is_active==1 && ko_models.bot.activated[0]==1&& ko_models.bot.bot[0].trades>0){
+			str += "      <li><span onclick=\"li.showAccountConfig('#emailNotification')\">Email Notifications</span></li>";
+		}
+		
 		if(ko_models.bot.bot[0].live == 1)
 		{
 		    str += "      <li><span onclick=\"li.showAccountConfig('#bitstampCfgs')\">Update Bitstamp Configs</span></li>";
 		}
+		
 		
 		str += '    </ul>' +
 			   '  </nav>' +
@@ -73,6 +78,11 @@ var tem = {
 		         tem.buildAccountActivate() +
 		         '    </div>';
 		
+		if(ko_models.bot.bot[0].is_active==1 && ko_models.bot.activated[0]==1&& ko_models.bot.bot[0].trades>0){
+			str += '    <div class="accountAction" id="emailNotification">' +
+		            tem.buildEmailNotification() +
+		           '    </div>';
+		}
 		//live gets set when the email is validated.
 
 		if(ko_models.bot.bot[0].live == "1")
@@ -83,6 +93,7 @@ var tem = {
 		           '    </div>';
 		           
 		}
+		
 		
 		str += '</div>';
 		
@@ -147,7 +158,16 @@ var tem = {
 	
 	    return str;
 	},
-
+	
+	buildEmailNotification : function(){
+		var str = "  <div><br>\n"+
+	    		  "<input type='checkbox' id='transNotify' onclick='li.selectTransactionNotification()'>Notify me when a transaction has been made.<br><br>\n"+
+	    		  "Notify me when price reached. "+
+	    		  "<input type='text' id='priceNotification' name='price'> <input id='priceNotificationSubmit' type='submit' value='Submit' onclick='li.priceNotification()'><br>\n "+
+	    		  "</div>";
+		return str;	
+	},
+	
     buildAccountActivate : function()
 	{
 			
@@ -217,11 +237,6 @@ var tem = {
 			      "      <br>\n" +
 			      "    <div id='contactSubmit' class='divAsButton'>Submit</div>" +
 			      "  </form>\n";
-	},
-	
-	buildAdminButton : function(){
-		var str = "<div id='adminView' onclick='li.getEmails()'>Admin</div>";
-		$('#bannerRight').append(str);
 	},
 	
 	buildAdminView:function(data){	  

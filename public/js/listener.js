@@ -86,9 +86,12 @@ var li = {
 				dialogClass: 'modalDialog',
 				title: "Account"
 			}
+			
 		);
 		
 		$(".ui-dialog-titlebar-close").html("X");
+		
+		li.checkUserConfigs();
 	},
 	
 	initDirtyFlag: function(){
@@ -259,7 +262,7 @@ var li = {
 		//locat = locat.replace("http://localhost/ModoMain/public/resetaccountpass?token=","");
 		locat = locat.replace("://","");
 		locat = locat.replace("https","");
-		locat = locat.replace("https","");
+		locat = locat.replace("http","");
 		
 		var data = {
 			uname : $('#passResetUsername').val(),
@@ -557,6 +560,74 @@ var li = {
 		request = new mo.requestObject(url, "POST", ca.sendMessageToUsersSuccess, ca.sendMessageToUsersFailure, data);
 		mo.asynch(request);
 	},
+	
+	checkUserConfigs: function(){
+		//console.log(ko_models.bot.userConfigs);
+		for(var i=0;i<ko_models.bot.userConfigs.length;i++){
+			if(ko_models.bot.userConfigs[i].param=='t'){
+				$("#"+ko_models.bot.userConfigs[i].name).prop("checked",true);
+			}
+		}
+	},
+	
+	selectTransactionNotification: function(){
+		var val = 'f';
+		var name = 'transNotify';
+		if(document.getElementById('transNotify').checked){
+			val='t';
+		}else{
+			val='f';
+		}
+		li.updateUserConfigs(name,val);
+		
+		var dummy=0; //Dummy variable
+		for(var i=0;i<ko_models.bot.userConfigs.length;i++){
+			if(ko_models.bot.userConfigs[i].name=='transNotify'){
+				ko_models.bot.userConfigs[i].param=val;
+				dummy=1;
+			}
+		}
+		
+		if(dummy==0){
+			mo.getBotState(); //updates the user configs if it does not exist.
+		}
+	},
+	
+	updateUserConfigs:function(name, val){
+		var data = {
+			session: model.session, 
+			token: model.token, 
+			id: model.id,
+			name:name,
+		 	param:val,
+		}, 
+		url = 'updateuserconfigs',
+		request = new mo.requestObject(url, "POST", ca.updateUserConfigsSuccess, ca.updateUserConfigsFailure, data);
+		mo.asynch(request);
+	},
+	
+	priceNotification : function(){
+		var price = $('#priceNotification').val();
+		if(li.isNumeric(price)){
+			var data = {
+				session: model.session, 
+				token: model.token, 
+				id: model.id,
+		 		price:price,
+			}, 
+			url = 'priceNotification',
+			request = new mo.requestObject(url, "POST", ca.priceNotificationSuccess, ca.priceNotificationFailure, data);
+			mo.asynch(request);
+			$('#priceNotification').val("");
+		}else{
+			$('#priceNotification').val("");
+			li.alertModal("Price is invalid");
+		}
+	},
+	
+	isNumeric : function($obj) {
+    	return !jQuery.isArray( $obj ) && ($obj - parseFloat( $obj ) + 1) >= 0;
+	}
 	
 	
 };

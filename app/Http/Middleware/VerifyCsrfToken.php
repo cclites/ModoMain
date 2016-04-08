@@ -26,6 +26,8 @@ class VerifyCsrfToken extends BaseVerifier
         '/activateaccount',
         '/addnewuser',
         '/resetpassword',
-        '/resendvalidation'
+        '/resendvalidation',
+        '/updateuserconfigs',
+        '/priceNotification',
     ];
 }

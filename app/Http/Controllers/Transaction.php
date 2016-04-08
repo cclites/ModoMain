@@ -410,10 +410,10 @@ class Transaction extends Controller{
 		LOG::info("usd can buy = " . $cost . "\n");
 		LOG::info("#btc to buy = " . $this->bot->total_btc_can_purchase);
 	   // echo("btc before = " . $this->bot->btc . "\n");
-		
+
 		$this->bot->usd = $this->bot->usd - $cost;
 		$this->bot->btc += $this->bot->total_btc_can_purchase;
-		
+
 		if($this->bot->testing_mode == 1){
 			
 			$response = DB::table('test_ledger')
@@ -481,7 +481,6 @@ class Transaction extends Controller{
 
 		}
 		
-		
 		$response = DB::table('bot')
 				            ->where('id', $this->bot->id)
 				            ->update(array(
@@ -502,6 +501,12 @@ class Transaction extends Controller{
 		$bs = new Bitstamp( $decrypted_token->utoken, $decrypted_token->usecret, $decrypted_token->uid );
 		$result = $bs->bitstamp_query("sell", array('amount'=>($this->bot->total_btc_can_sell),'price'=>$this->ticker->last));
 		//$result = $bs->bitstamp_query("sell", array('amount'=>10,'price'=>$this->ticker->last));  //this should cause an error message
+		
+		$type = "sell";
+		$id = $this->bot->owner_id;
+		$ah = new AuthenticateHandler();
+		$ah->transactionEmail($id, $type);
+		
 		return $result;
 	}
 	
@@ -522,6 +527,11 @@ class Transaction extends Controller{
 		
 		//$result = $bs->bitstamp_query("buy", array('amount'=>5,'price'=>$this->ticker->last));  //this should cause an error message
 		$result = $bs->bitstamp_query("buy", array('amount'=>($purchaseAmnt),'price'=>$this->ticker->last));
+		
+		$type = "buy";
+		$id = $this->bot->owner_id;
+		$ah = new AuthenticateHandler();
+		$ah->transactionEmail($id, $type);
 		
 		return $result;
 		
@@ -598,6 +608,7 @@ class Transaction extends Controller{
 		//TODO: something with result. Swallow for now.
 		
 	}
+	
 
 
 }

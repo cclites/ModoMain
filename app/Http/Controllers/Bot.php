@@ -60,8 +60,10 @@ class Bot extends Controller{
 			$bot[0]->wallet = $wallet[0];
 			
 			$ring = DB::table('member')->where('id', $id)->pluck('ring');
-
-			return json_encode( array("bot"=>$bot, "ring"=>$ring) );
+			$activated = DB::table('member')->where('id', $id)->pluck('activated');
+			$userConfigs = DB::table('userconfigs')->where('owner_id', $id)->get();
+			
+			return json_encode( array("bot"=>$bot, "ring"=>$ring, "activated"=>$activated, "userConfigs"=>$userConfigs) );
 					
 		}else{
 

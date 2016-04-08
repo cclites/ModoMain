@@ -298,18 +298,18 @@ class AuthenticateHandler extends Controller {
 				
 				//LOG::info("Valid account...");
 				
-				$id = Crypt::decrypt($request->id);
-				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+				$id = Crypt::decrypt($request->owner_id);
 				
+				$result = DB::table('member')->where('token', $request -> token )->where('id', $id)->get();
+
 				if( count($result) > 0 ){
 					//now update the database
 					$result = DB::table('wallet')->where('owner_id', $id)
 					          ->update(array(
 			                        'sweep' => 1
 								));
-					
+								
 					return json_encode( array('status'=>$result) );
-					
 				}
 				else{
 					return json_encode( array('status'=>$result) );
@@ -476,7 +476,7 @@ class AuthenticateHandler extends Controller {
 			//This is a valid result, so set the bot as active.
 			
 			//I want to update bot.live, not member activated
-			//$nResult = DB::table('member')->where( 'id',$id)->update(["activated"=> 1]);
+			$nResult = DB::table('member')->where( 'id',$id)->update(["activated"=> 1]);
 			$nResult = DB::table("bot")->where('owner_id', $id)->update(["live"=>1]);
 			
 			//remove entry from validation table
@@ -535,5 +535,19 @@ class AuthenticateHandler extends Controller {
 		}
 	
 	}
+	
+	function transactionEmail($id, $type){
+		$balance = DB::table('member')->where('id',$id)->pluck('balance');
+		$activated = DB::table('member')->where('id',$id)->pluck('activated');
+		$live = DB::table('bot')->where('owner_id',$id)->pluck('live');
+		$notify = DB::table('userconfigs')->where('owner_id',$id)->where('name', 'transNotify')->pluck('param');
+		if($balance[0]>0 && $activated[0]==1 && $live[0]==1 && $notify[0]=='t'){
+			$message = "A " . $type . " transaction has been initiated on Modobot.";
+			$email = DB::table('member')->where('id',$id)->pluck('email');
+			$this->sendEmail($email[0], $message);
+		}
+		return;
+	}
+
 
 }
