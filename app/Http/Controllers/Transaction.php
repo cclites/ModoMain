@@ -403,13 +403,24 @@ class Transaction extends Controller{
 	
 	public function createBuyTransaction(){
 		
-		$cost = $this->bot->total_usd_can_purchase;
+		//$cost = $this->bot->total_usd_can_purchase;
 		
 		//echo("COST: " . $cost . "\n");
 		
 		LOG::info("usd can buy = " . $cost . "\n");
 		LOG::info("#btc to buy = " . $this->bot->total_btc_can_purchase);
 	   // echo("btc before = " . $this->bot->btc . "\n");
+	   
+
+	   if($this->bot->total_btc_can_purchase > $this->bot->buy_limit_btc){
+	   	  $this->bot->total_btc_can_purchase = $this->bot->buy_limit_btc;
+	   }
+	   
+	    $cost = $this->bot->total_btc_can_purchase * $this->ticker->last;
+		
+		if($cost == 0){
+			$cost = $this->bot->total_usd_can_purchase;
+		}
 
 		$this->bot->usd = $this->bot->usd - $cost;
 		$this->bot->btc += $this->bot->total_btc_can_purchase;
