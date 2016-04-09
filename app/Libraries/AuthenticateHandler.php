@@ -320,6 +320,13 @@ class AuthenticateHandler extends Controller {
 	function addNewUser($request){
 		
 		$umail = $request->umail;
+		
+		//validate email
+		if (!filter_var($umail, FILTER_VALIDATE_EMAIL)) {
+           return json_encode( array('status'=>0, 'message'=>"Please enter a valid email address.") );
+        }
+		
+		
 		$this -> uName = $request->uname;
 		$this -> uPass = $request->upass;
 		

@@ -152,11 +152,8 @@ var ca = {
 			
 		if(data.status == 1){
 			
-			
-			//mo.log("Your password has been updated.");
 			li.alertModal("Your password has been updated. You will be logged out now.");
-			//model.token = data.token;
-			//model.session = data.session;
+
 			setTimeout(function(){
 				
 				li.logOut();
@@ -229,7 +226,8 @@ var ca = {
 		  $(".modalDialog ").dialog("close");           
 		  
 		}else{
-			li.alertModal("We are unable to create your account at this moment. Please try again.");
+			//li.alertModal("We are unable to create your account at this moment. Please try again.");
+			li.alertModal("We are unable to create your account at this moment." + data.message );
 		}
 		
 		
