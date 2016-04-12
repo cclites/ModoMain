@@ -403,7 +403,7 @@ class Transaction extends Controller{
 	
 	public function createBuyTransaction(){
 		
-		//$cost = $this->bot->total_usd_can_purchase;
+		$cost = $this->bot->total_usd_can_purchase;
 		
 		//echo("COST: " . $cost . "\n");
 		
@@ -504,6 +504,11 @@ class Transaction extends Controller{
 	
 	public function sellBitstampTransaction(){
 		
+		$type = "sell";
+		$id = $this->bot->owner_id;
+		$ah = new AuthenticateHandler();
+		$ah->transactionEmail($id, $type);
+		
 		$api_token = DB::table('user')->where('owner_id', $this->bot->id)->pluck('api_key');	
 		$temp = $api_token[0];	
 		$ah = new AuthenticateHandler();
@@ -513,15 +518,15 @@ class Transaction extends Controller{
 		$result = $bs->bitstamp_query("sell", array('amount'=>($this->bot->total_btc_can_sell),'price'=>$this->ticker->last));
 		//$result = $bs->bitstamp_query("sell", array('amount'=>10,'price'=>$this->ticker->last));  //this should cause an error message
 		
-		$type = "sell";
-		$id = $this->bot->owner_id;
-		$ah = new AuthenticateHandler();
-		$ah->transactionEmail($id, $type);
-		
 		return $result;
 	}
 	
 	public function buyBitstampTransaction(){
+		
+		$type = "buy";
+		$id = $this->bot->owner_id;
+		$authHand = new AuthenticateHandler();
+		$authHand->transactionEmail($id, $type);
 		
 		$api_token = DB::table('user')->where('owner_id', $this->bot->id)->pluck('api_key');	
 		$temp = $api_token[0];	
@@ -538,11 +543,6 @@ class Transaction extends Controller{
 		
 		//$result = $bs->bitstamp_query("buy", array('amount'=>5,'price'=>$this->ticker->last));  //this should cause an error message
 		$result = $bs->bitstamp_query("buy", array('amount'=>($purchaseAmnt),'price'=>$this->ticker->last));
-		
-		$type = "buy";
-		$id = $this->bot->owner_id;
-		$ah = new AuthenticateHandler();
-		$ah->transactionEmail($id, $type);
 		
 		return $result;
 		
