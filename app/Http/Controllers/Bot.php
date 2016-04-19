@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\Bitstamp;
+use App\Libraries\bitstamp;
 use App\Libraries\AuthenticateHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\History;
