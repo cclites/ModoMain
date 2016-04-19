@@ -231,6 +231,7 @@ article div{
 {
     display: none;
     margin-right: 20px;
+    margin-top: -27px;
 }
 
 .statusLog div
@@ -270,7 +271,7 @@ footer div{
 }
 
 #historyContainer{
-	margin-top: 25px;
+	margin-top: 48px;
     width: 1044px;
 }
 
@@ -900,7 +901,8 @@ table.historyTable tbody tr td
     border-radius: 4px;
     float: right;
     padding: 6px;
-    width: 428px;
+    width: 395px;
+    font-size: 12px;
 }
 
 .reviews{
@@ -990,9 +992,8 @@ table.historyTable tbody tr td
     opacity: 0.7;
     position: absolute;
     right: 12px;
-    top: 194px;
+    top: 177px;
     width: 100px;
-    z-index: 12;
 }
 
 .accounthandle{
@@ -1000,7 +1001,7 @@ table.historyTable tbody tr td
     height: 30px;
     right: 12px;
     position: absolute;
-    top: 230px;
+    top: 200px;
     cursor: pointer;
     opacity: 0.7;
     display: inline-block;
@@ -1012,7 +1013,7 @@ table.historyTable tbody tr td
     height: 30px;
     right: 12px;
     position: absolute;
-    top: 266px;
+    top: 224px;
     cursor: pointer;
     opacity: 0.7;
     display: inline-block;
@@ -1024,7 +1025,7 @@ table.historyTable tbody tr td
     height: 30px;
     right: 12px;
     position: absolute;
-    top: 300px;
+    top: 249px;
     cursor: pointer;
     opacity: 0.7;
     display: inline-block;
@@ -1260,5 +1261,11 @@ table.historyTable tbody tr td
 #priceNotificationSubmit{
 	width: 75px;
 	height: 30px;
+}
+
+div.clearLog{
+	position: relative;
+    top: 65px;
+    z-index: 10;
 }
 

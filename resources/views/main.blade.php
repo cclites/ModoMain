@@ -13,9 +13,7 @@
 		<link href='https://fonts.googleapis.com/css?family=Delius|Quintessential' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-		
-		
+	
 
 	</head>
 	<body>

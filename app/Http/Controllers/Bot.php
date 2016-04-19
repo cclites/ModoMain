@@ -63,6 +63,16 @@ class Bot extends Controller{
 			$activated = DB::table('member')->where('id', $id)->pluck('activated');
 			$userConfigs = DB::table('userconfigs')->where('owner_id', $id)->get();
 			
+			/*
+			$messages = array();
+			$messages = DB::table('message')->where('owner_id', $id)->pluck("message");
+			 * */
+			
+			//DB::table('message')->where('owner_id', $id)->delete();
+			//$s = print_r($messages, true);
+			//Log::info($s);
+			
+			
 			return json_encode( array("bot"=>$bot, "ring"=>$ring, "activated"=>$activated, "userConfigs"=>$userConfigs) );
 					
 		}else{
