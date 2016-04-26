@@ -558,21 +558,22 @@ table.historyTable tbody tr td
 #accountNav
 {
 	width: 260px;
-	height: 400px;
+	height: 320px;
 	float: left
 }
 
 #accountConfigDivs
 {
 	width: 480px;
-	height: 400px;
+	height: 320px;
 	float: left;
 }
 
 .accountAction table
 {
 	margin: 0 auto;
-	margin-top: 25%;
+	transform: translateY(50%);
+    -webkit-transform: translateY(50%);
 }
 
 #accountManagement
@@ -1261,4 +1262,6 @@ table.historyTable tbody tr td
 	width: 75px;
 	height: 30px;
 }
-
+.accountMenuSelected{
+	text-decoration: underline;
+}

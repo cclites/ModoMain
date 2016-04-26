@@ -72,7 +72,7 @@ var li = {
 	},
 	
 	updateAccount: function(){
-		
+			
 		console.log("Updating account");
 		
 		var accountView = tem.buildAccountView();
@@ -88,7 +88,7 @@ var li = {
 			}
 			
 		);
-		
+		li.showAccountOptions();
 		$(".ui-dialog-titlebar-close").html("X");
 		
 		li.checkUserConfigs();
@@ -627,6 +627,13 @@ var li = {
 	
 	isNumeric : function($obj) {
     	return !jQuery.isArray( $obj ) && ($obj - parseFloat( $obj ) + 1) >= 0;
+	},
+	
+	showAccountOptions:function(){
+		$(".accountMenu").click(function(){
+			$(".accountMenu").removeClass("accountMenuSelected");
+			$(this).addClass("accountMenuSelected");
+		});
 	}
 	
 	
