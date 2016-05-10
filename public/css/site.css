@@ -231,7 +231,6 @@ article div{
 {
     display: none;
     margin-right: 20px;
-    margin-top: -27px;
 }
 
 .statusLog div
@@ -271,7 +270,7 @@ footer div{
 }
 
 #historyContainer{
-	margin-top: 48px;
+	margin-top: 25px;
     width: 1044px;
 }
 
@@ -559,21 +558,22 @@ table.historyTable tbody tr td
 #accountNav
 {
 	width: 260px;
-	height: 400px;
+	height: 320px;
 	float: left
 }
 
 #accountConfigDivs
 {
 	width: 480px;
-	height: 400px;
+	height: 320px;
 	float: left;
 }
 
 .accountAction table
 {
 	margin: 0 auto;
-	margin-top: 25%;
+	transform: translateY(50%);
+    -webkit-transform: translateY(50%);
 }
 
 #accountManagement
@@ -901,8 +901,7 @@ table.historyTable tbody tr td
     border-radius: 4px;
     float: right;
     padding: 6px;
-    width: 395px;
-    font-size: 12px;
+    width: 428px;
 }
 
 .reviews{
@@ -992,8 +991,9 @@ table.historyTable tbody tr td
     opacity: 0.7;
     position: absolute;
     right: 12px;
-    top: 177px;
+    top: 194px;
     width: 100px;
+    z-index: 12;
 }
 
 .accounthandle{
@@ -1001,7 +1001,7 @@ table.historyTable tbody tr td
     height: 30px;
     right: 12px;
     position: absolute;
-    top: 200px;
+    top: 230px;
     cursor: pointer;
     opacity: 0.7;
     display: inline-block;
@@ -1013,7 +1013,7 @@ table.historyTable tbody tr td
     height: 30px;
     right: 12px;
     position: absolute;
-    top: 224px;
+    top: 266px;
     cursor: pointer;
     opacity: 0.7;
     display: inline-block;
@@ -1025,7 +1025,7 @@ table.historyTable tbody tr td
     height: 30px;
     right: 12px;
     position: absolute;
-    top: 249px;
+    top: 300px;
     cursor: pointer;
     opacity: 0.7;
     display: inline-block;
@@ -1262,10 +1262,6 @@ table.historyTable tbody tr td
 	width: 75px;
 	height: 30px;
 }
-
-div.clearLog{
-	position: relative;
-    top: 65px;
-    z-index: 10;
+.accountMenuSelected{
+	text-decoration: underline;
 }
-

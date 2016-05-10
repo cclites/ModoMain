@@ -51,17 +51,17 @@ var tem = {
 		var str = '<div id="accountManagement">' +
 		      '  <nav id="accountNav">' +
 		      '    <ul>' +
-		      "      <li><span onclick=\"li.showAccountConfig('#accountPassword')\" >Update Password</span></li>" +
-		      "      <li><span onclick=\"li.showAccountConfig('#accountEmail')\">Update Email</span></li>" +
-		      "      <li><span onclick=\"li.showAccountConfig('#activateAccount')\">Activate Account</span></li>";
+		      "      <li><span class=\"accountMenu\" onclick=\"li.showAccountConfig('#accountPassword')\" >Update Password</span></li>" +
+		      "      <li><span class=\"accountMenu\" onclick=\"li.showAccountConfig('#accountEmail')\">Update Email</span></li>" +
+		      "      <li><span class=\"accountMenu\" onclick=\"li.showAccountConfig('#activateAccount')\">Activate Account</span></li>";
 		      
 		if(ko_models.bot.bot[0].is_active==1 && ko_models.bot.activated[0]==1&& ko_models.bot.bot[0].trades>0){
-			str += "      <li><span onclick=\"li.showAccountConfig('#emailNotification')\">Email Notifications</span></li>";
+			str += "      <li><span class=\"accountMenu\" onclick=\"li.showAccountConfig('#emailNotification')\">Email Notifications</span></li>";
 		}
 		
 		if(ko_models.bot.bot[0].live == 1)
 		{
-		    str += "      <li><span onclick=\"li.showAccountConfig('#bitstampCfgs')\">Update Bitstamp Configs</span></li>";
+		    str += "      <li><span class=\"accountMenu\"onclick=\"li.showAccountConfig('#bitstampCfgs')\">Update Bitstamp Configs</span></li>";
 		}
 		
 		
