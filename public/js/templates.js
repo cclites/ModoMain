@@ -152,9 +152,7 @@ var tem = {
 			'    <tr>' +
 			'      <td colspan="2"><button type="button" class="action accountButton" onclick="li.updateBitstampConfigs()">Save Configs</button></td>' +	
 			'    </tr>' +
-			'  </table>' +
-			'  <br><br>' + 
-			'<div><span>Wallet Adress: </span><span>' + ko_models.bot.bot[0].wallet + "<\span><\div>";
+			'  </table>';
 	
 	    return str;
 	},
@@ -174,10 +172,14 @@ var tem = {
 		var str = "<div id='disclaimer'><b>Disclaimer:</b> Modobot.com is for entertainment purposes only. Performance is dependent on market conditions and operator performance." +
 		       "This service is provided as-is, with no guarantees or warranties. All accounts will be manually activated.</div>" +
 	           "<br>" +
-	           "<button class='action' onclick='li.activateAccount();'>Activate Account</buton>";
+	           "<button class='action' onclick='li.activateAccount();'>Activate Account</button>";
+	           if(ko_models.bot.activated[0]==1){
+	           	str+="<br><br>"+
+	           	"Wallet Address:  "+ko_models.bot.bot[0].wallet;
+	           }
 		return str;
 	},
-	
+	//'<div><span>Wallet Adress: </span><span>' + ko_models.bot.bot[0].wallet + "<\span><\div>";
 	buildNewAccountView : function(){
 		
 		var str = '<form>' +

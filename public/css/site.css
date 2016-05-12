@@ -541,6 +541,10 @@ table.historyTable tbody tr td
 #accountPassword, #accountEmail, #bitstampCfgs, #activateAccount, #emailNotification
 {
 	display: none;
+	position: relative;
+	transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    top: 50%;
 }
 
 #activateAccount
@@ -567,13 +571,13 @@ table.historyTable tbody tr td
 	width: 480px;
 	height: 320px;
 	float: left;
+	padding-left: 10px;
 }
 
 .accountAction table
 {
+	height: auto;
 	margin: 0 auto;
-	transform: translateY(50%);
-    -webkit-transform: translateY(50%);
 }
 
 #accountManagement
@@ -597,7 +601,10 @@ table.historyTable tbody tr td
 {
 	border:none;
 }
-
+.accountAction
+{
+	
+}
 .accountButton
 {
 	width: 200px;
@@ -655,7 +662,7 @@ table.historyTable tbody tr td
 
 #activateAccount
 {
-	margin-top: 15%;
+
 }
 
 #passwordRecovery:hover
