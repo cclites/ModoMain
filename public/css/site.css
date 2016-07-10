@@ -264,10 +264,20 @@ footer div{
     color: #8a8c8f;
     font-family: "Muli";
     height: 406px;
+    max-height: 406px;
     line-height: 22px;
     padding: 32px 8px 4px;
+    position: relative;
     resize: none;
+    top: 7px;
     width: 300px;
+    overflow-y: auto;
+}
+
+.clearLog {
+    position: relative;
+    top: 4px;
+    z-index: 4;
 }
 
 #historyContainer{
@@ -573,7 +583,7 @@ table.historyTable tbody tr td
 .accountAction table
 {
 	margin: 0 auto;
-	margin-top: 25%;
+	margin-top: 20px;
 }
 
 #accountManagement
@@ -655,7 +665,7 @@ table.historyTable tbody tr td
 
 #activateAccount
 {
-	margin-top: 15%;
+	/*margin-top: 15%;*/
 }
 
 #passwordRecovery:hover
@@ -1265,7 +1275,7 @@ table.historyTable tbody tr td
 
 div.clearLog{
 	position: relative;
-    top: 65px;
+    top: 38px;
     z-index: 10;
 }
 

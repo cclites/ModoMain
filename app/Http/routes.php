@@ -69,6 +69,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/resetpassword', 'Auth\ModoAuth@resetPassword');
 	Route::post('/resendvalidation', 'Auth\ModoAuth@resendValidation');
 	
+	Route::post("/billable", "StripeController@charge");
+    Route::post("/cancelSubscription", "StripeController@cancelSubscription");
+	
 	Route::get('/daemon', 'Daemon\Daemon@main');
 	
 	Route::get('/notifications', 'Daemon\Notifications@main');

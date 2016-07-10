@@ -38,6 +38,7 @@ class Bot extends Controller{
 			$bot[0]->id = Crypt::encrypt($bot[0]->id);
 			$bot[0]->owner_id = Crypt::encrypt($bot[0]->owner_id);
 			
+			//clean up the strings
 			$bot[0]->id = htmlentities($bot[0]->id);
 			$bot[0]->owner_id = htmlentities($bot[0]->owner_id);
 			
@@ -59,6 +60,7 @@ class Bot extends Controller{
 			$wallet = DB::table('wallet')->where('owner_id', $id)->pluck('addr');
 			$bot[0]->wallet = $wallet[0];
 			
+			
 			$ring = DB::table('member')->where('id', $id)->pluck('ring');
 			$activated = DB::table('member')->where('id', $id)->pluck('activated');
 			$userConfigs = DB::table('userconfigs')->where('owner_id', $id)->get();
@@ -71,9 +73,10 @@ class Bot extends Controller{
 			//DB::table('message')->where('owner_id', $id)->delete();
 			//$s = print_r($messages, true);
 			//Log::info($s);
+			$paid = DB::table('member')->where('id', $id)->pluck('paid');
+			$paid = $paid[0];
 			
-			
-			return json_encode( array("bot"=>$bot, "ring"=>$ring, "activated"=>$activated, "userConfigs"=>$userConfigs) );
+			return json_encode( array("bot"=>$bot, "ring"=>$ring, "activated"=>$activated, "userConfigs"=>$userConfigs, "paid"=>$paid) );
 					
 		}else{
 
@@ -204,12 +207,12 @@ class Bot extends Controller{
 	public function checkAutoDisable($id){
 		
 		//LOG::info ("Bot balance is " . $bot->balance);
-		$balance = DB::table('member')->where('id', $id)->pluck('balance');
-		$balance = $balance[0];
+		$paid = DB::table('member')->where('id', $id)->pluck('paid');
+		$paid = $paid[0];
 		
 		//return;
 		
-		if( $balance < 1 ){
+		if( $paid == 0 ){
 			
 			$result = DB::table('bot')->where('owner_id', $id)->update(['testing_mode'=> 1]);
 			

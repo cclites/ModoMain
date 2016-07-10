@@ -17,6 +17,9 @@
 
 	</head>
 	<body>
+		
+		<input type="hidden" id="_token" value="{{ Session::token() }}" />
+		
 		<span class="socMediaButtons">
 			<a href="https://www.facebook.com/ModoAdmin" target="_blank"><i class="fa fa-facebook-square fa-3x"></i></a>
 		</span>
@@ -84,6 +87,9 @@
 		@include('partials/accounthelp')
 		@include('partials/reviews')
 		@include('partials/privacypolicy')
+		
+		@include('partials/order')
+
 
 		<div id="modals"></div>
 		<div id="alertModals"></div>
@@ -116,6 +122,7 @@
 		<!--script type="text/javascript" src="{{ asset('js/calculator.js') }}"></script-->
 		
 		<script type="text/javascript" src="{{ asset('js/templates.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/siteUtils.js') }}"></script>
 		
 		<script type="text/javascript" src="{{ asset('js/ViewModels/Account.js') }}"></script>
 		<!--script type="text/javascript" src="{{ asset('js/ViewModels/Banner.js') }}"></script-->
@@ -128,6 +135,12 @@
 		<script type="text/javascript" src="{{ asset('js/ViewModels/StatusLog.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/ViewModels/Ticker.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/ViewModels/Transact.js') }}"></script>
+		
+		<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+		<script type="text/javascript">
+		  Stripe.setPublishableKey('pk_test_80XO4SKiF6YBB5rylLlAcZTl');
+		</script>
 
 
 		<script>

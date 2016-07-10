@@ -21,7 +21,7 @@ var ca = {
 			mo.getBotState();
 			mo.pollDirty();   //poll the dirty flag.
 			mo.log("Ready....");
-			
+						
 		}
 		
 		
@@ -36,6 +36,7 @@ var ca = {
 			
 			model.id = data.bot[0].id;
 			model.owner_id = data.bot[0].owner_id;
+			model.paid = data.paid;
 
 			ko_models.bot = data;
 

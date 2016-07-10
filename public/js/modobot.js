@@ -143,6 +143,104 @@ var mo = {
     	}, 4000);
     	
     },
+    
+    /******* STRIPE RELATED CONTENT ********/
+    submitOrder: function(){
+        
+        var $form = $('#payment-form');
+    
+        $form.submit(function(event) {
+	      // Disable the submit button to prevent repeated clicks:
+	      event.preventDefault();
+	      $form.find('.submit').prop('disabled', true);
+	
+	      // Request a token from Stripe:
+	      Stripe.card.createToken($form, mo.stripeResponseHandler);
+	
+	      // Prevent the form from being submitted:
+          return false;
+        });
+        
+ 
+    },
+    
+    stripeResponseHandler: function(status, response) {
+        // Grab the form:
+	    var $form = $('#payment-form'),
+	        owner = model.token; //don't believe that I have an email here, do I?
+	                                    //Should be able to embed it on the backside, right?
+	                                    //Clearly I have some info that is important
+	
+	    if (response.error) { // Problem!
+	
+	      // Show the errors on the form:
+	      $form.find('.payment-errors').text(response.error.message);
+	      $form.find('.submit').prop('disabled', false); // Re-enable submission
+	
+	    } else { // Token was created!
+	
+	      // Get the token ID:
+	      var stripeToken = response.id;
+	
+	      // Insert the token ID into the form so it gets submitted to the server:
+	      //$form.append($('<input type="hidden" name="stripeToken">').val(token));
+	      
+	      //console.log("Token is " + token);
+	      var data = {
+	          stripeToken: stripeToken,
+	          owner: owner
+	      };
+	      
+	      mo.submitBillable(data);
+	      
+
+	    }
+	},
+	
+	submitBillable: function(data){
+	    
+	    //delete the record
+	    var record = new su.requestObject('billable', 'POST', mo.billableSuccess, mo.billableFailure, data);
+	    su.asynch(record);
+	},
+	
+	billableSuccess: function(data){
+	    
+	    if(data.status === 1){
+	        alert("Account has been upgraded.");
+	        
+	        //change out the content
+	        
+	        $("#activateAccount").html( $("#cancelSubscriptionTemplate").html() );
+	        
+	        //location.reload();
+	    }else{
+	        alert("Unable to complete your subscription.");
+	        //location.reload();
+	    }
+	
+	},
+	
+	billableFailure: function(){},
+	
+	cancelSubscription: function(){
+	    
+	    var data = {
+	          owner: model.token
+	        };
+	        
+	    var record = new su.requestObject('cancelSubscription', 'POST', mo.cancelSubscriptionSuccess, mo.cancelSubscriptionFailure, data);
+	    su.asynch(record);
+	},
+	
+	cancelSubscriptionSuccess: function(data){
+	    
+	    //console.log(data);
+	    alert("Subscription has been cancelled.");
+	    $("#activateAccount").html( $("#stripeOrder").html() );
+	    model.paid = false;
+	    
+	},
 };
 
 /* Ready, go */
@@ -159,6 +257,9 @@ $(function() {
     li.accounthandle();
     li.reviewshandle();
     li.privacyhandle();
+    
+
+    
 });
 
 

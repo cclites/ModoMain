@@ -45,13 +45,22 @@ class History extends Controller{
 	
 	function checkUpdateHistory($bot, $last){
 		
-		LOG::info("Check update history");
+		//LOG::info("*****************************************************************************");
+		//LOG::info("Check update history");
+		$tempBot = DB::table("bot")->where("id", $bot->id)->get();
+		
+		//$s = print_r($bot, true);
+		//Log::info("Show me the bot");
+		//Log::info($s);
+		
 		
 		//LOG::info( "Type is " . gettype($bot) );
 		//return;
 		//LOG::info($bot);
 		
-		//$s = print_r($bot, true);
+		//$s = print_r($tempBot, true);
+		//Log::info("Show me the tembot");
+		//Log::info($s);
 		//echo $s . "\n";
 		
 		//LOG::info( "BOT ID + " . $bot->id . "\n" );
@@ -61,11 +70,8 @@ class History extends Controller{
 		$history = $this->getHistoryById( $bot->owner_id );
 		
 		
-		//LOG::info( "Length = " . count($history) );
 		
-		
-		
-		$currentVal = $bot->usd + ($last * $bot->btc);
+		$currentVal = $tempBot[0]->usd + ($last * $tempBot[0]->btc);
 		$doUpdate = false;
 		$nLow = 0;
 		$nHigh = 0;
@@ -82,6 +88,11 @@ class History extends Controller{
 				    'owner_id'=>$bot->owner_id,
 				    'currency'=>"BTC"
 				);
+				
+		//Log::info("Show me the history");
+		    //Log::info($s);
+			
+		//Log::info("CurrentVal is " . $currentVal);
 		
 		if( $currentVal < $history[0]->low ){
 			
@@ -97,6 +108,10 @@ class History extends Controller{
 		}
 		
 		if( $doUpdate ){
+			
+			//$s = print_r($historicalData, true);
+		    //Log::info("Show me the history");
+		    //Log::info($s);
 			$this->updateHistorical($historicalData, $bot->owner_id);
 		}
 				

@@ -163,7 +163,7 @@ var tem = {
 		var str = "  <div><br>\n"+
 	    		  "<input type='checkbox' id='transNotify' onclick='li.selectTransactionNotification()'>Notify me when a transaction has been made.<br><br>\n"+
 	    		  "Notify me when price reached. "+
-	    		  "<input type='text' id='priceNotification' name='price'> <input id='priceNotificationSubmit' type='submit' value='Submit' onclick='li.priceNotification()'><br>\n "+
+	    		  "<input type='text' id='priceNotification' name='price'> <button id='' value='Submit' onclick='li.priceNotification()' type='submit'>Submit</button><br>\n "+
 	    		  "</div>";
 		return str;	
 	},
@@ -171,11 +171,13 @@ var tem = {
     buildAccountActivate : function()
 	{
 			
+		/*	
 		var str = "<div id='disclaimer'><b>Disclaimer:</b> Modobot.com is for entertainment purposes only. Performance is dependent on market conditions and operator performance." +
 		       "This service is provided as-is, with no guarantees or warranties. All accounts will be manually activated.</div>" +
 	           "<br>" +
 	           "<button class='action' onclick='li.activateAccount();'>Activate Account</buton>";
 		return str;
+		*/
 	},
 	
 	buildNewAccountView : function(){

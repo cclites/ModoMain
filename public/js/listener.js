@@ -92,6 +92,16 @@ var li = {
 		$(".ui-dialog-titlebar-close").html("X");
 		
 		li.checkUserConfigs();
+		
+		//TODO: This is where I would like to check things
+		if(model.paid == 1){
+			$("#activateAccount").html(  $("#cancelSubscriptionTemplate").html() );
+		}else{
+			$("#activateAccount").html(  $("#stripeOrder").html() );
+		}
+		
+		//Inject the strip order form content
+        //$("#activateAccount").html(  $("#stripeOrder").html() );
 	},
 	
 	initDirtyFlag: function(){

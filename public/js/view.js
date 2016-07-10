@@ -35,6 +35,8 @@ var view = {
 		li.initDirtyFlag();
 		
 		mo.updateMargins();
+		
+		
 	},
 	
 	addAuthMenuItems: function(){
