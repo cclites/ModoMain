@@ -231,7 +231,6 @@ article div{
 {
     display: none;
     margin-right: 20px;
-    margin-top: -27px;
 }
 
 .statusLog div
@@ -281,7 +280,7 @@ footer div{
 }
 
 #historyContainer{
-	margin-top: 48px;
+	margin-top: 25px;
     width: 1044px;
 }
 
@@ -552,6 +551,10 @@ table.historyTable tbody tr td
 #accountPassword, #accountEmail, #bitstampCfgs, #activateAccount, #emailNotification
 {
 	display: none;
+	position: relative;
+	transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    top: 50%;
 }
 
 #activateAccount
@@ -569,21 +572,23 @@ table.historyTable tbody tr td
 #accountNav
 {
 	width: 260px;
-	height: 400px;
+	height: 320px;
 	float: left
 }
 
 #accountConfigDivs
 {
 	width: 480px;
-	height: 400px;
+	height: 320px;
 	float: left;
+	padding-left: 10px;
 }
 
 .accountAction table
 {
-	margin: 0 auto;
+	height: auto;
 	margin-top: 20px;
+
 }
 
 #accountManagement
@@ -607,7 +612,10 @@ table.historyTable tbody tr td
 {
 	border:none;
 }
-
+.accountAction
+{
+	
+}
 .accountButton
 {
 	width: 200px;
@@ -665,7 +673,9 @@ table.historyTable tbody tr td
 
 #activateAccount
 {
+
 	/*margin-top: 15%;*/
+
 }
 
 #passwordRecovery:hover
@@ -911,8 +921,7 @@ table.historyTable tbody tr td
     border-radius: 4px;
     float: right;
     padding: 6px;
-    width: 395px;
-    font-size: 12px;
+    width: 428px;
 }
 
 .reviews{
@@ -1002,8 +1011,9 @@ table.historyTable tbody tr td
     opacity: 0.7;
     position: absolute;
     right: 12px;
-    top: 177px;
+    top: 194px;
     width: 100px;
+    z-index: 12;
 }
 
 .accounthandle{
@@ -1011,7 +1021,7 @@ table.historyTable tbody tr td
     height: 30px;
     right: 12px;
     position: absolute;
-    top: 200px;
+    top: 230px;
     cursor: pointer;
     opacity: 0.7;
     display: inline-block;
@@ -1023,7 +1033,7 @@ table.historyTable tbody tr td
     height: 30px;
     right: 12px;
     position: absolute;
-    top: 224px;
+    top: 266px;
     cursor: pointer;
     opacity: 0.7;
     display: inline-block;
@@ -1035,7 +1045,7 @@ table.historyTable tbody tr td
     height: 30px;
     right: 12px;
     position: absolute;
-    top: 249px;
+    top: 300px;
     cursor: pointer;
     opacity: 0.7;
     display: inline-block;
@@ -1265,7 +1275,7 @@ table.historyTable tbody tr td
 }
 
 #priceNotification{
-	margin-lef: 50px;
+	margin-left: 50px;
 	width: 50px;
 }
 #priceNotificationSubmit{
@@ -1279,3 +1289,7 @@ div.clearLog{
     z-index: 10;
 }
 
+.accountMenuSelected{
+	text-decoration: underline;
+
+}

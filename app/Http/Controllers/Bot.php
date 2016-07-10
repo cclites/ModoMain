@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\bitstamp;
+use App\Libraries\Bitstamp;
 use App\Libraries\AuthenticateHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\History;
@@ -65,18 +65,11 @@ class Bot extends Controller{
 			$activated = DB::table('member')->where('id', $id)->pluck('activated');
 			$userConfigs = DB::table('userconfigs')->where('owner_id', $id)->get();
 			
-			/*
-			$messages = array();
-			$messages = DB::table('message')->where('owner_id', $id)->pluck("message");
-			 * */
-			
-			//DB::table('message')->where('owner_id', $id)->delete();
-			//$s = print_r($messages, true);
-			//Log::info($s);
 			$paid = DB::table('member')->where('id', $id)->pluck('paid');
 			$paid = $paid[0];
 			
 			return json_encode( array("bot"=>$bot, "ring"=>$ring, "activated"=>$activated, "userConfigs"=>$userConfigs, "paid"=>$paid) );
+
 					
 		}else{
 

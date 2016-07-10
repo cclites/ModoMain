@@ -46,11 +46,7 @@ var ca = {
 			
 			setTimeout(function(){
 				mo.getBotHistory();  //get the history
-			}, 200);
-			
-			 setTimeout(function(){
-                mo.getMessages();//get the messages
-            }, 700);	
+			}, 200);		
 			
 		}
 		
@@ -67,7 +63,7 @@ var ca = {
 	
 	getMessagesSuccess: function(data){
 		for(var i=0;i<data.message.length;i++){
-			mo.log(data.message[i] + "<br>");//loop to display all messages
+			mo.log(data.message[i]);//loop to display all messages
 		}
 	},
 	
@@ -79,7 +75,7 @@ var ca = {
 		ko_models.history = data;
 		view.buildBotView();
 		
-		mo.log("Updated.<br>");
+		mo.log("Updated.");
 		
 		if( $("#waitModal").css("display") == "block"){
 			
