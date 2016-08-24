@@ -100,8 +100,7 @@ var li = {
 			$("#activateAccount").html(  $("#stripeOrder").html() );
 		}
 		
-		//Inject the strip order form content
-        //$("#activateAccount").html(  $("#stripeOrder").html() );
+
 	},
 	
 	initDirtyFlag: function(){

@@ -150,6 +150,7 @@ var mo = {
         var $form = $('#payment-form');
     
         $form.submit(function(event) {
+        	
 	      // Disable the submit button to prevent repeated clicks:
 	      event.preventDefault();
 	      $form.find('.submit').prop('disabled', true);
@@ -167,7 +168,7 @@ var mo = {
     stripeResponseHandler: function(status, response) {
         // Grab the form:
 	    var $form = $('#payment-form'),
-	        owner = model.token; //don't believe that I have an email here, do I?
+	        owner = model.token; //do not believe that I have an email here, do I?
 	                                    //Should be able to embed it on the backside, right?
 	                                    //Clearly I have some info that is important
 	
@@ -226,7 +227,8 @@ var mo = {
 	cancelSubscription: function(){
 	    
 	    var data = {
-	          owner: model.token
+	          owner: model.token,
+	          stripeToken : $("#_stripetoken").val()
 	        };
 	        
 	    var record = new su.requestObject('cancelSubscription', 'POST', mo.cancelSubscriptionSuccess, mo.cancelSubscriptionFailure, data);

@@ -55,11 +55,11 @@ var tem = {
 		      "      <li><span class=\"accountMenu\" onclick=\"li.showAccountConfig('#accountEmail')\">Update Email</span></li>" +
 		      "      <li><span class=\"accountMenu\" onclick=\"li.showAccountConfig('#activateAccount')\">Activate Account</span></li>";
 		      
-		if(ko_models.bot.bot[0].is_active==1 && ko_models.bot.activated[0]==1&& ko_models.bot.bot[0].trades>0){
+		if(model.paid == 1){
 			str += "      <li><span class=\"accountMenu\" onclick=\"li.showAccountConfig('#emailNotification')\">Email Notifications</span></li>";
 		}
 		
-		if(ko_models.bot.bot[0].live == 1)
+		if(model.paid == 1)
 		{
 		    str += "      <li><span class=\"accountMenu\"onclick=\"li.showAccountConfig('#bitstampCfgs')\">Update Bitstamp Configs</span></li>";
 		}
@@ -85,7 +85,7 @@ var tem = {
 		}
 		//live gets set when the email is validated.
 
-		if(ko_models.bot.bot[0].live == "1")
+		if(ko_models.bot.bot[0].live == "1" && model.paid == 1)
 		{
 			
 		    str += '    <div class="accountAction" id="bitstampCfgs">' +
@@ -135,6 +135,11 @@ var tem = {
 	},
 
     buildBitstampCfg : function(){
+    	
+    	//do not do this if not paid.
+    	if(model.paid == 0){
+    		return;
+    	}
 
 		var str ='  <table id="bitstampCfgsTable">' +	
 			'    <tr>' +
@@ -158,9 +163,15 @@ var tem = {
 	},
 	
 	buildEmailNotification : function(){
+		
+		//do not do this if not paid.
+    	if(model.paid == 0){
+    		return;
+    	}
+		
 		var str = "  <div><br>\n"+
-	    		  "<input type='checkbox' id='transNotify' onclick='li.selectTransactionNotification()'>Notify me when a transaction has been made.<br><br>\n"+
-	    		  "Notify me when price reached. "+
+	    		  "Notify when transaction occurs.<input type='checkbox' id='transNotify' onclick='li.selectTransactionNotification()'><br><br>\n"+
+	    		  "Notify me at this price (in USD): "+
 	    		  "<input type='text' id='priceNotification' name='price'> <button id='' value='Submit' onclick='li.priceNotification()' type='submit'>Submit</button><br>\n "+
 	    		  "</div>";
 		return str;	

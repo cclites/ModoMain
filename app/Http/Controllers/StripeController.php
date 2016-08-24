@@ -27,12 +27,21 @@ class StripeController extends Controller{
 		//need to look up the user
 		$email = DB::table("member")->where("token", $owner_id)->pluck("email");
 		
+		/*
         $customer = \Stripe\Customer::create(array(
             "source" => $stripetoken,
             "plan" => "modo_tier_1",
             "email" => $email[0])
         );
+		*/
 		
+		
+		$customer = \Stripe\Customer::create(array(
+            "source" => $stripetoken,
+            "plan" => "modo_freemie",
+            "email" => $email[0])
+        );
+		  
 		Log::info(json_encode($customer));
         
         if( get_class($customer) === "Stripe\Customer" ){

@@ -186,10 +186,10 @@
 }
 
 .splashContent {
-	font-size: 35px;
+	font-size: 20px;
     margin: 8px auto;
-    text-align: center;
     width: 1000px;
+    text-align: left
 }
 
 .opsContent {
@@ -302,9 +302,12 @@
 }
 
 @media screen and (max-width: 1650px){
+	
+	/*
 	.splashContent{
 		width: 800px;
 	}
+	*/
 }
 
 

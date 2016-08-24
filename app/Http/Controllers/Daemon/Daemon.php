@@ -18,7 +18,7 @@ class Daemon extends Controller{
 	
 	function main(){
 		
-		$key = file_get_contents("run.txt");
+		$key = file_get_contents("scripts/run.txt");
 
 		if ($key != "1"){
 			exit("Daemon was stopped");
@@ -36,19 +36,29 @@ class Daemon extends Controller{
 	
 	function updatetTicker($id){
 		
+		/*
 		if($id == 1)  //Bitstamp
 		{
 			$url = config('core.BITSTAMP_GET_TICKER');
 		}
 		
-		echo "Getting ticker \n";
-		
+	
 		$result = $this->_get($url);
-		
-		//echo "Should be a ticker here.....\n";
-		//print_r($result);
-		
+		//LOG::INFO(JSON_ENCODE($result));		
+
 		$result = (array)app('App\Http\Controllers\Ticker')->setTicker($result);
+		 */
+		
+		/****************************************************/
+		
+		$url = config('core.BITSTAMP_GET_TICKER_USD');
+		$result = $this->_get($url);
+		$result = (array)app('App\Http\Controllers\Ticker')->setNewTicker($result, "btc", $id);
+		
+		$url = config('core.BITSTAMP_GET_TICKER_EUR');
+		$result = $this->_get($url);
+		$result = (array)app('App\Http\Controllers\Ticker')->setNewTicker($result, "eur", $id);
+		
 
 	}
 	

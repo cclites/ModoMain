@@ -14,6 +14,8 @@ class Wallet extends Controller{
 	
 	
 	public function addWallets(){
+		//This class is no longer even necessary.
+		return;
 		
 		//LOG::info("Found Route");
 		//LOG::info( getcwd ( ) );

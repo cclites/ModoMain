@@ -1,8 +1,16 @@
+<?php
+
+  $user = Auth::user();
+  
+?>
+
 <template id="stripeOrder">
 
     <div class="stripeOrderForm"> 
     
         <form action="" method="POST" id="payment-form">
+        	
+          <input type="hidden" value="" id="_stripetoken">
             
           <!--button type="submit" class="submit submitOrder" onclick="site.submitOrder();">Submit Payment</button>
           <button type="button" class="submit cancelOrder" onclick="site.cancelOrder();">Cancel Payment</button-->
@@ -20,6 +28,7 @@
           <div class="form-row">
             <label>
               <span>Card Number</span>
+              <!--input type="text" size="20" data-stripe="number" value=""-->
               <input type="text" size="20" data-stripe="number" value="4242 4242 4242 4242">
             </label>
           </div>
@@ -29,8 +38,10 @@
               <span>Expiration (MM/YY)</span>
             </label>
               <br>
+            <!--input type="text" size="2" data-stripe="exp_month" value=""-->
             <input type="text" size="2" data-stripe="exp_month" value="01">
             <span> / </span>
+            <!--input type="text" size="2" data-stripe="exp_year" value=""-->
             <input type="text" size="2" data-stripe="exp_year" value="18">
           </div>
 
@@ -38,6 +49,7 @@
             <label>
               <span>CVC</span>
               <br>
+              <!--input type="text" size="4" data-stripe="cvc" value=""-->
               <input type="text" size="4" data-stripe="cvc" value="123">
             </label>
           </div>

@@ -1,9 +1,9 @@
 <div class="quicksignup">
 	
-	<h1>Free Bitcoin Bot</h1>
-	<p>
+	<!--h1>Free Bitcoin Bot</h1-->
+	<h4>
 		Just 3 easy steps to start trading today!
-	</p>
+	</h4>
 	
 	<ol>
 		<li>

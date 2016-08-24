@@ -1,5 +1,4 @@
 
-
 /*Stylesheet for desktops*/
 
 
@@ -26,24 +25,22 @@ html, body {
 	overflow-x: hidden;
 }
 
-#botContainer th
-{
+#botContainer th{
 	text-align: center;
 	font-size: 14px;
 }
 
-.tickerTable td
-{
+.tickerTable td{
 	text-align: center;
 }
 
 article{
-	margin: 40px auto 12px;
+	margin: 0 auto 12px;
 }
 
 article div{
-	font-size: 20px;
-	text-align: center;
+	font-size: 19px;
+    text-align: center;
 }
 
 .banner
@@ -560,8 +557,30 @@ table.historyTable tbody tr td
 #activateAccount
 {
 	font-size: 14px;
-	width: 90%;
-	margin-left: 20px;
+    margin-left: 20px;
+    width: 300px;
+}
+
+#activateAccount .form-row span {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+#activateAccount .form-row input{
+	border-radius: 2px;
+	margin-bottom: 2px;
+}
+
+
+#emailNotification button,
+#activateAccount button{
+	background-color: #004976;
+    border: medium none;
+    border-radius: 4px;
+    color: #fff;
+    height: 28px;
+    margin-top: 8px;
 }
 
 #accountNav ul li
@@ -578,17 +597,16 @@ table.historyTable tbody tr td
 
 #accountConfigDivs
 {
-	width: 480px;
-	height: 320px;
 	float: left;
-	padding-left: 10px;
+    height: 168px;
+    margin-left: 18px;
+    width: 433px;
 }
 
 .accountAction table
 {
 	height: auto;
 	margin-top: 20px;
-
 }
 
 #accountManagement
@@ -998,9 +1016,7 @@ table.historyTable tbody tr td
 .handle{
 	z-index: 50;
 	font-weight: bold;
-	
 }
-
 
 
 .confighandle{
@@ -1013,7 +1029,6 @@ table.historyTable tbody tr td
     right: 12px;
     top: 194px;
     width: 100px;
-    z-index: 12;
 }
 
 .accounthandle{
@@ -1090,14 +1105,21 @@ table.historyTable tbody tr td
 */
 
 .quicksignup{
-	width: 300px;
-	height: 500px;
-	position: absolute;
-	left: 12px;
-	top: 220px;
-	border-radius: 4px;
 	background-color: #dfdfdf;
-	box-shadow: 0 0 1px 3px rgba(0,73,118, 0.9);
+    border-radius: 4px;
+    box-shadow: 0 0 1px 3px rgba(0, 73, 118, 0.9);
+    float: left;
+    height: 459px;
+    padding-top: 19px;
+    width: 328px;
+}
+
+.quicksignup button.action {
+    background: #dc7224 none repeat scroll 0 0;
+    height: 29px;
+    margin-top: 20px;
+    width: 200px;
+    cursor: pointer;
 }
 
 .quicksignup .configLabel {
@@ -1117,6 +1139,22 @@ table.historyTable tbody tr td
     width: 207px;
 }
 
+.topsplashrow .splashrowleft {
+    float: left;
+    text-align: left;
+    width: 700px;
+}
+
+.topsplashrow .splashrowright {
+    float: left;
+    width: 310px;
+}
+
+
+.bottomsplashrow {
+    float: left;
+}
+
 .policyContainer{
 	width: 360px;
 	height: 500px;
@@ -1128,6 +1166,7 @@ table.historyTable tbody tr td
 
 @media screen and (max-width: 1650px) {
     
+    /*
     .quicksignup{
     	left: calc(50% - 150px);
     	top: 300px;
@@ -1151,7 +1190,7 @@ table.historyTable tbody tr td
     	top: 178px;
     }
     */
-    
+    /*
     .badgeContent {
 	    left: calc(50% - 492px);
         position: absolute;
@@ -1187,7 +1226,7 @@ table.historyTable tbody tr td
 	
 /*  Will need to fix header and menus */
 
-    
+    /*
     #frame{
     	margin-top:0;
     }
@@ -1195,6 +1234,7 @@ table.historyTable tbody tr td
     .statusIndicator{
     	margin-top: 40px;
     }
+    */
 
 }
 

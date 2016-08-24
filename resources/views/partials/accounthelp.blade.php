@@ -39,7 +39,11 @@
 			
 			<li>Log on to Modobot.com</li>
 			
-			<li>In the Account panel, find your wallet address.
+			<li>
+				In the account panel, click on 'Activate Account', and enter your payment details.
+			</li>
+			
+			<!--li>In the Account panel, find your wallet address.
 			    <ul>
 			    	<li>ModoBot works on a pay-per-trade model.</li>
 			    	<li>Trades are .002 Btc</li>
@@ -64,7 +68,7 @@
 			    	<li>In order to keep operations as clean as possible, ModoBot will not query your wallet until it is told to do so.</li>
 			    	<li>This prevents unecessary network traffic, which might save a tree, or an endangered species.</li>
 			    </ul>
-		    </li>
+		    </li-->
 		    
 		    <li>In the Bot view, select 'Is Active'
 		        <ul>

@@ -68,6 +68,10 @@ class AuthenticateHandler extends Controller {
 			//special token just for this session, saved to session
 			Session::put('session', $encryptedSession);
 			
+			//update the database
+			$d = date('Y-m-d G:i:s');
+			DB::table("member")->where('id',$record->id)->update(['last_viewed'=>$d]);
+			
             //also return the special token to the client. That token will be returned by the user
             //with any request so that it can be compared to the token stored in the session. 
 			return json_encode( array('token'=>$this->token, 'session'=>Session::get('session') ) );
@@ -287,6 +291,10 @@ class AuthenticateHandler extends Controller {
 	
 	function activateAccount($request){
 		
+		//Don't think this is used any more.
+        Log::info("activateAccount should no longer be used.");
+        return;
+		
 		$token = $request -> token;
 		$session = $request -> session;
 		
@@ -348,7 +356,7 @@ class AuthenticateHandler extends Controller {
 			return json_encode(array('status'=>0, 'message'=> 'Email already exists') );
 		}
 		 */
-		$address = DB::table('wallet')->where('owner_id', 0)->take(1)->pluck('addr');
+		//$address = DB::table('wallet')->where('owner_id', 0)->take(1)->pluck('addr');
 		
 		//add user to the database.
 		$owner_id = DB::table('member')->insertGetId(
@@ -382,12 +390,6 @@ class AuthenticateHandler extends Controller {
 		DB::table('validation')->insert(
 		    ['owner_id'=>$owner_id, 'hash'=>$validationToken]
 		);
-		
-		//assign wallet
-		$address = DB::table('wallet')->where('owner_id', 0)->take(1)->pluck('addr');
-		DB::table('wallet')->where('addr', $address)->update(array(
-		   'owner_id'=>$owner_id
-		));
 		
 		$t = json_encode( array('umail'=>$umail, 'token'=>$token, 'id'=>$owner_id) );
 		$message = Crypt::encrypt($t);

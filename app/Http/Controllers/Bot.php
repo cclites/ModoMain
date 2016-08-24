@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\Bitstamp;
+use App\Libraries\bitstamp;
 use App\Libraries\AuthenticateHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\History;
@@ -30,7 +30,10 @@ class Bot extends Controller{
 			Session::get('authenticated') ){  //valid. Get the associated bot.
 			
 			$id = DB::table('member')->where('token', $this->token)->pluck("id");
+			$stripe_id = DB::table('member')->where('token', $this->token)->pluck("stripe_id");
 			$bot = DB::table('bot')->where('owner_id', $id)->get();
+			
+			$bot[0]->stripe_id = $stripe_id[0];
 			
 			$botId = $bot[0]->id;
 			
@@ -57,19 +60,26 @@ class Bot extends Controller{
 			}
 			
 			//get the wallet for this bot
-			$wallet = DB::table('wallet')->where('owner_id', $id)->pluck('addr');
-			$bot[0]->wallet = $wallet[0];
+			//$wallet = DB::table('wallet')->where('owner_id', $id)->pluck('addr');
+			//$bot[0]->wallet = $wallet[0];
 			
 			
 			$ring = DB::table('member')->where('id', $id)->pluck('ring');
 			$activated = DB::table('member')->where('id', $id)->pluck('activated');
 			$userConfigs = DB::table('userconfigs')->where('owner_id', $id)->get();
 			
+			/*
+			$messages = array();
+			$messages = DB::table('message')->where('owner_id', $id)->pluck("message");
+			 * */
+			
+			//DB::table('message')->where('owner_id', $id)->delete();
+			//$s = print_r($messages, true);
+			//Log::info($s);
 			$paid = DB::table('member')->where('id', $id)->pluck('paid');
 			$paid = $paid[0];
 			
 			return json_encode( array("bot"=>$bot, "ring"=>$ring, "activated"=>$activated, "userConfigs"=>$userConfigs, "paid"=>$paid) );
-
 					
 		}else{
 
@@ -215,15 +225,18 @@ class Bot extends Controller{
 	
 	public function getBitstampBalance($bot){
 		
-		LOG::info("Get Bitstamp balance");
+		//LOG::info("Get Bitstamp balance");
+		//Log::info("Bot id is " . $bot->id);
 		
 		//I need to get the bot api_token first.
 		$api_token = DB::table('user')->where('owner_id', $bot->id)->pluck('api_key');	
 		$temp = $api_token[0];	
 		$ah = new AuthenticateHandler();
 		$decrypted_token = json_decode( $ah->dCrypt($temp) );
-		$bs = new Bitstamp( $decrypted_token->utoken, $decrypted_token->usecret, $decrypted_token->uid );		
+		$bs = new Bitstamp( $decrypted_token->utoken, $decrypted_token->usecret, $decrypted_token->uid );	
 		$balanceResult = $bs->bitstamp_query("balance");
+		
+		//Log::info( json_encode($balanceResult) );
 		
 		//update the bot.
 		$response = DB::table('bot')

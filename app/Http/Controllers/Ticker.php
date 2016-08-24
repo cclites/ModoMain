@@ -21,6 +21,13 @@ class Ticker extends Controller{
 		
 	}
 	
+	//gets ticker by exchange id
+	function getNewTickerById($currency, $exchangeId){
+		
+		$record = DB::table('ticker')->where('currency', $currency)->where('exchange_id', $exchangeId)->get();
+		return $record[0];
+	}
+	
 	function getTickerById($id){
 		
 		$record = DB::table('ticker')->where('id', $id)->get();
@@ -29,8 +36,11 @@ class Ticker extends Controller{
 	
 	function setTicker($newTicker){
 		
+		return;
+		
 		$id = 1;
 		$oldTicker = $this->getTickerById($id);
+		
 		$newTicker = $this->updateTrend($newTicker, $oldTicker);
 		
 		//$s = print_r($newTicker, true);
@@ -53,6 +63,49 @@ class Ticker extends Controller{
 					
 		return json_encode(array('status'=>$response));
 		
+	}
+	
+	//The ticker function needs an exchange id and currency type.
+	
+	function setNewTicker($newTicker, $currency, $exchangeId){
+		
+		//Log
+		Log::info("**********************");
+		Log::info(json_encode($newTicker));
+		Log::info($currency);
+		Log::info($exchangeId);
+		Log::info("***********************");
+		
+		
+		
+		
+		$oldTicker = $this->getNewTickerById($currency, $exchangeId);
+		$newTicker = $this->updateTrend($newTicker, $oldTicker);
+		
+		//$s = print_r($newTicker, true);
+		//LOG::error("NEW TICKER " . $s);
+		
+		$response = DB::table('ticker')
+            ->where('exchange_id', $exchangeId)
+			->where('currency', $currency)
+            ->update(array(
+                        'high'=>$newTicker->high,
+                        'last'=>$newTicker->last,
+                        'bid'=>$newTicker->bid,
+                        'volume'=>$newTicker->volume,
+                        'low'=>$newTicker->low,
+                        'ask'=>$newTicker->ask,
+                        'previous'=>$oldTicker->last,
+                        'direction'=>$newTicker->direction
+					));
+					
+		//LOG::error($response);
+		
+		//This needs an error check on the response in order to properly
+		//return a pass/fail flag.
+					
+		return json_encode(array('status'=>$response));
+		 
 	}
 	
 	/********************************************************************

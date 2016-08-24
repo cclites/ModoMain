@@ -3,7 +3,9 @@
 	//Config::get('core.BASEPATH');
 	return [
 	    'SEED' => '636861646c6f7665737374616379',
-	    "BITSTAMP_GET_TICKER"=>"https://www.bitstamp.net/api/ticker/",
+	    "BITSTAMP_GET_TICKER"=>"https://www.bitstamp.net/api/v2/ticker/btcusd/",
+	    "BITSTAMP_GET_TICKER_USD"=>"https://www.bitstamp.net/api/v2/ticker/btcusd/",
+	    "BITSTAMP_GET_TICKER_EUR"=>"https://www.bitstamp.net/api/v2/ticker/btceur/",
 	    "BITSTAMP_GET_BALANCE"=> "https://www.bitstamp.net/api/balance/",
 	    "BITSTAMP_BUY_LIMIT"=>"https://www.bitstamp.net/api/buy/",
 	    "BITSTAMP_SELL_LIMIT"=> "https://www.bitstamp.net/api/sell/",
