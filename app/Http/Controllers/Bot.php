@@ -20,7 +20,7 @@ class Bot extends Controller{
 	
 	public function getBotState(Request $request){
 		
-		LOG::info("Get bot state");
+		//LOG::info("Get bot state");
 		
 		$this -> token = $request -> token;
 		$this -> session = $request -> session;
@@ -180,7 +180,7 @@ class Bot extends Controller{
 	//Main entry point for updating bots via daemon
 	public function processBotRules($bots){
 
-        LOG::info("Processing bot rules");
+        //LOG::info("Processing bot rules");
 
         $id = 1;
 
@@ -234,17 +234,65 @@ class Bot extends Controller{
 		$ah = new AuthenticateHandler();
 		$decrypted_token = json_decode( $ah->dCrypt($temp) );
 		$bs = new Bitstamp( $decrypted_token->utoken, $decrypted_token->usecret, $decrypted_token->uid );	
-		$balanceResult = $bs->bitstamp_query("balance");
+		$balanceResult = $bs->bitstamp_query("balance", array(), $bot->currency);
 		
+		//Log::info("Bot id is " . $bot->id);
+		//Log::info("Getting the new balance");
 		//Log::info( json_encode($balanceResult) );
+		
+		$balance = "";
+		
+		if($bot->currency === 'eur'){
+			$balance = $balanceResult["eur_available"];
+		}else if($bot->currency === 'usd'){
+			$balance = $balanceResult["usd_available"];
+		}
+		
+		
+		
+		
 		
 		//update the bot.
 		$response = DB::table('bot')
             ->where('id', $bot->id)
             ->update(array(
                         'btc' => $balanceResult["btc_available"],
-                        'usd' => $balanceResult["usd_available"]
+                        'usd' => $balance
 					));
+		return;		
+			/*		
+		Log::info("Getting the new balance");
+		Log::info( json_encode($balanceResult) );
+		
+		//Whay is my currency type?
+		$currency = $bot->currency;
+		
+		Log::info($currency);
+		
+		$balance = "";
+		
+		if($currency === 'eur'){
+			$balance = $balanceResult["eur_available"];
+		}else if($currency === 'usd'){
+			$balance = $balanceResult["usd_available"];
+		}
+		
+		//need to calculate the available btc on the fly, so I need to get the correct 'last'
+		$last = DB::table("ticker")->where('currency', $currency)->where('id', 1)->pluck("last");
+		//$last = $last[0];
+		
+		//presumably I have the last balance in the correct currency, so last*balance should give me
+		//the btc_available.
+		$finalBalance = intval($balance) * intval($last);
+		
+		
+		//update the bot.
+		$response = DB::table('bot')
+	            ->where('id', $bot->id)
+	            ->update(array(
+	                        'btc' => $finalBalance,
+	                        'usd' => $balance  //Balance can reflect any currency...bad column name
+						));*/
 	}
 
     public function getAllActiveBots(){
@@ -280,7 +328,7 @@ class Bot extends Controller{
 
 	function calculatePricePoints($bot){
 		
-		LOG::info("Calculating price points");
+		//LOG::info("Calculating price points");
 		
 		$base = $bot->base;
 		$increase = $bot->increase;

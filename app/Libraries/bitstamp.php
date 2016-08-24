@@ -1,6 +1,16 @@
 <?php
 
+
+
+//use DB;
+//use Log;
+
+
 namespace App\Libraries;
+
+//use \App\Http\Controllers\Controller;
+
+
 /**
  * @package Bitstamp API
  * @author https://bxmediaus.com - BX MEDIA - PHP + Bitcoin. We are ready to work on your next bitcoin project. Only high quality coding. https://bxmediaus.com
@@ -43,7 +53,7 @@ class Bitstamp
      * @param POST Data $req
      * @return Array containing data returned from the API path
      */
-    public function bitstamp_query($path, array $req = array())
+    public function bitstamp_query($path, array $req = array(), $currency)
     {
         // API settings
         $key = $this->key;
@@ -73,7 +83,25 @@ class Bitstamp
         }
 		curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0); 
-        curl_setopt($ch, CURLOPT_URL, 'https://www.bitstamp.net/api/' . $path .'/');
+		
+		//Illuminate\Log\Writer::info("Querying for Bitstamp");
+		//need to use a different url
+	//Log::info("Logging");
+	
+	$newUrl = "";
+	
+	$newUrl = "https://www.bitstamp.net/api/v2/$path/btcusd/";
+	
+	if($currency == 'eur'){
+	  $newUrl = "https://www.bitstamp.net/api/v2/$path/btceur/";
+	}
+
+	
+	curl_setopt($ch, CURLOPT_URL, $newUrl);
+	
+       // curl_setopt($ch, CURLOPT_URL, 'https://www.bitstamp.net/api/' . $path .'/');
+		
+		
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 

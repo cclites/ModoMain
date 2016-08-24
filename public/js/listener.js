@@ -30,7 +30,8 @@ var li = {
 				fixed_sell : document.getElementById("fixed_sell").checked,
 				fixed_buy : document.getElementById("fixed_buy").checked,
 				fixed_sell_amount : document.getElementById("fixed_sell_amount").value,
-				fixed_buy_amount : document.getElementById("fixed_buy_amount").value
+				fixed_buy_amount : document.getElementById("fixed_buy_amount").value,
+				currency: model.currency
 			},
 	        request = new mo.requestObject(url, "POST", ca.updateConfigsSuccess, ca.updateConfigsFailure, data);
 	

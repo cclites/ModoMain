@@ -347,12 +347,18 @@ html body div#frame div#botContainer div#tickerContainer table.tickerTable tbody
 }
 .tickerDescription
 {
-	/*background-color: #004976;*/
-	background-image: linear-gradient(to top, #004976 77%, #FFFFFF 110%);
-	color: white;
-	border-top-left-radius: 12px;
-	border-bottom-left-radius: 12px;
-	width: 100px;
+	background-image: linear-gradient(to top, #004976 77%, #ffffff 110%);
+    border-bottom-left-radius: 12px;
+    border-top-left-radius: 12px;
+    color: white;
+    height: 68px;
+    width: 100px;
+}
+
+.tickerDescription select{
+	margin-top: 4px;
+    position: relative;
+    top: 2px;
 }
 
 .tickerHeader

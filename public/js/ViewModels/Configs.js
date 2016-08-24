@@ -4,12 +4,17 @@ function buildConfigView(){
 	//console.log( ko_models.bot.bot[0].live  );
 	
 	// manually handle which bot gets processed.
-	  var b = ko_models.bot.bot[0],
+	var b = ko_models.bot.bot[0],
           myB = b,
           id = myB.id,
           str = "",
           temp = "",
-          live = myB.live;
+          live = myB.live,
+          ds = "$";
+          
+    if(model.currency == 'eur'){
+  		ds = "&euro;";	
+    }
 
 	
 	//(myB.exchange_fee())
@@ -50,14 +55,14 @@ function buildConfigView(){
 		str += "                     <td><input id='isTesting' type='checkbox'></td>\n";
 	}
 	
-	str += "                     <td class='configLabel'>Base $</td>\n"; 
+	str += "                     <td class='configLabel'>Base " + ds + "</td>\n"; 
 	
 	temp = myB.base;
 	
 	str += "                     <td><input id='base' onkeyup='mo.updateMargins()' value='" + temp +"' size='8' type='text'></td>\n";
 
 	str += "                      <td class='configLabel' colspan='2'>Margin Sale Price</td>\n";
-	str += "                      <td id='marginSalePrice'>$0</td>\n";
+	str += "                      <td id='marginSalePrice'>" + ds + "0</td>\n";
 	
 	str += "                 </tr>\n"; 
 	str += "                <tr>\n";
@@ -81,7 +86,7 @@ function buildConfigView(){
 	
 	 str +=      "                     <td><input id='increase' onkeyup='mo.updateMargins()' size='8' value='" + parseFloat(temp).toFixed(2) + "'  type='text'></td>\n" +
 	 "                      <td class='configLabel' colspan='2'>Margin Buy Price</td>\n" +
-	       "                      <td id='marginPurchasePrice'>$0</td>\n" +
+	       "                      <td id='marginPurchasePrice'>" + ds + "0</td>\n" +
 	       "                     <td>&nbsp;</td>\n" +
 	       "                     <td id='sellLimitUsd'>&nbsp;</td>\n" + 
 	       "                     <td>&nbsp;</td>\n" + 
@@ -130,7 +135,7 @@ function buildConfigView(){
 	}
 	
 	temp = myB.fixed_sell_amount;
-	str += "                     <td class='configLabel'>Sell Price $</td><td><input id='fixed_sell_amount' onkeyup='li.fixed_sell_amount_keyup()' size='8' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
+	str += "                     <td class='configLabel'>Sell Price " + ds + " </td><td><input id='fixed_sell_amount' onkeyup='li.fixed_sell_amount_keyup()' size='8' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
 	
 	str += "                     <td class='configLabel' colspan='2'>Buy Limit Btc</td>\n";
 	temp = myB.buy_limit_btc;
@@ -152,7 +157,7 @@ function buildConfigView(){
 	     str += "                     <td><input id='fixed_buy' type='checkbox'></td>\n"; 	
 	}
 	temp = myB.fixed_buy_amount;
-	str += "                     <td class='configLabel'>Buy Price $</td><td><input id='fixed_buy_amount' onkeyup='li.fixed_buy_amount_keyup()' size='8' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
+	str += "                     <td class='configLabel'>Buy Price " + ds + " </td><td><input id='fixed_buy_amount' onkeyup='li.fixed_buy_amount_keyup()' size='8' value='" +  parseFloat(temp).toFixed(2) + "' type='text'></td>\n";
 	str += "                 </tr>\n";
 	 
 	

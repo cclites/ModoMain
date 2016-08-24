@@ -10,7 +10,9 @@ var view = {
 		view.addAuthMenuItems();
 		
 		$("#actionButtonContainer").html( buildActionView() );
+		
 		$("#tickerContainer").html( buildTickerView() );
+		
 		$("#ledgerContainer").html( buildLedgerView() );
 		
 		

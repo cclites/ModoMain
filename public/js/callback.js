@@ -9,7 +9,7 @@ var ca = {
 			$("#waitModal").hide("fade");  //Just in case modal is open
 		}else{
 			
-			console.log("Log in succeeded");
+			//all of this code should be elsewhere.
 			
 			model.token = data.token;
 			model.session = data.session;
@@ -21,10 +21,20 @@ var ca = {
 			mo.getBotState();
 			mo.pollDirty();   //poll the dirty flag.
 			mo.log("Ready....");
-						
+			
+			var cookie = mo.getCookie("modoData");
+
+			//make sure to set cookie if it doesnt exist
+			if( cookie === "" ){
+		        mo.setCookie("modoData", JSON.stringify({'currency':'usd'}), 365);
+		        model.currency = 'usd';
+			}else{
+
+				var cur = JSON.parse(cookie);
+				model.currency = cur.currency;
+			}				
 		}
-		
-		
+	
 	},
 	
 	loginFailure: function(xhr, type, exception){},
@@ -57,6 +67,7 @@ var ca = {
 	getTickerSuccess: function(data){
 		//ko_models.ticker = ko.mapping.fromJS(data);
 		ko_models.ticker = data;
+		
 	},
 	
 	getTickerFailure: function(xhr, type, exception){},

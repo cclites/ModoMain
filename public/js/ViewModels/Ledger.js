@@ -6,14 +6,23 @@ var buildLedgerView = function()
   // manually handle which bot gets processed.
   var b = ko_models.bot.bot[0],
       myB = b,
-      id = myB.id;
+      id = myB.id,
+      ds = "$",
+      label = "USD";
+      
+  if(model.currency == 'eur'){
+  	ds = "&euro;";
+  	
+  }
+      
+  //need to use amount of BTC to calculate USD or EUR
 
   
   str = "";
   str += "  <div class='sectionHeader'>Balances:</div>\n" +
          "  <table class='balanceTable'>" +
          "    <tr>" +
-         "      <th>USD: </th><td id='availableUsd" + id + "'>$" + myB.usd + "</td>" + 
+         "      <th></th><td id='availableUsd" + id + "'>" + ds + myB.usd + "</td>" +
          "      <th>BTC: </th><td id='availableBtc" + id + "'>" + myB.btc + "</td>";
          
   if(model.paid == 1){

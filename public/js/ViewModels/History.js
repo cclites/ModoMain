@@ -8,7 +8,12 @@ function buildHistoryView()
 	var b = ko_models.history.history[0],
 	    myB = b,
 	    id = ko_models.bot.bot[0].id,
-	    str = "";
+	    str = "",
+	    ds = "$";
+	    
+	if(model.currency == 'eur'){
+  		ds = "&euro;";
+    }
 	
 	
 	history["currency"] = "BTC";
@@ -20,7 +25,7 @@ function buildHistoryView()
 	str += "                       <th class='historylabel'>LOW</th>\n";
 	str += "                       <th class='historylabel'>DATE HIGH</th>\n";
 	str += "                       <th class='historylabel'>DATE LOW</th>\n";
-	str += "                       <th class='historylabel'>START USD</th>\n";
+	str += "                       <th class='historylabel'>START " + ds + "</th>\n";
 	str += "                       <th class='historylabel'>START BTC</th>\n";
 	str += "                       <th class='historylabel'>CURRENCY</th>\n";
 	str += "                  </tr>\n"; 
@@ -29,11 +34,11 @@ function buildHistoryView()
 	//var h = parseFloat(myB.high());
 	//var l = parseFloat(myB.low());
 	
-	str += "                    <td>$"+ parseFloat(myB.high).toFixed(2) +"</td>\n"; 
-	str += "                    <td>$"+ parseFloat(myB.low).toFixed(2) +"</td>\n"; 
+	str += "                    <td>" + ds + parseFloat(myB.high).toFixed(2) +"</td>\n"; 
+	str += "                    <td>" + ds + parseFloat(myB.low).toFixed(2) +"</td>\n"; 
 	str += "                    <td>"+ (myB.date_high) +"</td>\n"; 
 	str += "                    <td>"+ (myB.date_low) +"</td>\n"; 
-	str += "                    <td>$"+ parseFloat(myB.start_usd).toFixed(2) +"</td>\n"; 
+	str += "                    <td>" + ds + parseFloat(myB.start_usd).toFixed(2) +"</td>\n"; 
 	str += "                    <td>"+ (myB.start_btc) +"</td>\n";
 	str += "                    <td>"+ history["currency"] +"</td>\n";
 	

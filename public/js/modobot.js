@@ -110,7 +110,12 @@ var mo = {
     	
     	var base = $("#base").val().replace(/[^\d.]/g,""),
     	    increase = $("#increase").val().replace(/[^\d.]/g,""),
-    	    decrease = $("#decrease").val().replace(/[^\d.]/g,"");
+    	    decrease = $("#decrease").val().replace(/[^\d.]/g,""),
+    	    ds = "$";
+    	    
+    	if(model.currency == "eur"){
+    		ds = "&euro;";
+    	}
     	    
     	$("#base").val(base);
     	$("#increase").val(increase);
@@ -123,12 +128,12 @@ var mo = {
 
    		
     	
-    	$("#marginSalePrice").html( "$" + ( base * (1 + increase) ).toFixed(2) );
-    	$("#marginPurchasePrice").html( "$" + ( base * (1 - decrease) ).toFixed(2) );
+    	$("#marginSalePrice").html( ds + ( base * (1 + increase) ).toFixed(2) );
+    	$("#marginPurchasePrice").html( ds + ( base * (1 - decrease) ).toFixed(2) );
     },
     
     log: function(message){
-    	$("#statusLogContent").append(message + "\n");
+    	$("#statusLogContent").append(message + "<br>");
     	
     	console.log(message);
     },
@@ -243,6 +248,41 @@ var mo = {
 	    model.paid = false;
 	    
 	},
+	
+	setCookie:function(cname, cvalue, exdays) {
+	    var d = new Date();
+	    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	    var expires = "expires="+ d.toUTCString();
+	    document.cookie = cname + "=" + cvalue + "; " + expires;
+	},
+	
+	getCookie: function(cname) {
+	    var name = cname + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i = 0; i < ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	            c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	            return c.substring(name.length, c.length);
+	        }
+	    }
+	    return "";
+	},
+	
+	setCurrency: function(){
+		
+		var currency = $(".currencyToggle option:selected").val(),
+		    tickerHmtl = "";
+		
+		mo.setCookie("modoData", JSON.stringify({'currency':currency}), 365);
+		model.currency = currency;
+		
+		$("#tickerContainer").html(buildTickerView());
+		
+		mo.dirtyFlag = true;
+	},
 };
 
 /* Ready, go */
@@ -260,8 +300,8 @@ $(function() {
     li.reviewshandle();
     li.privacyhandle();
     
-
-    
+    //only setting cookies here for testing purposes.s
+    //mo.setCookie("modoData", JSON.stringify({'currency':'eur'}), 365);
 });
 
 

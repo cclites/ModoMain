@@ -1,25 +1,47 @@
 function buildTickerView()
 {
-
-    //console.log( JSON.stringify(ko_models.bot) );
+    //Selected ticker depends on the cookie value
+    //var tickerCurrency = '';
+    var useTicker = '',
+        usdSelected = "",
+        eurSelected = "",   
+        ds = "$";
     
-    console.log(Object.keys(ko_models.ticker.ticker[0]));
-    console.log(ko_models.ticker.ticker[0].direction);
+    if(model.currency === 'usd'){
+    	useTicker = ko_models.ticker.ticker[0];
+    	usdSelected = "selected";
+    	
+    }else if(model.currency === 'eur'){
+    	useTicker = ko_models.ticker.ticker[1];
+    	eurSelected = "selected";
+    	ds = "&euro;";
+    }
     
-    //return;
-
+    
     //addMessage(model);
 
-    var b = ko_models.ticker.ticker[0],
+    var b = useTicker, //This defaults to USD. Eur will be in ticker[1]
 	    myB = b,
 	    id = myB.id;  //not actually used
 	
 
-
 	str = "";
 	str += "              <table class='tickerTable'>\n";
 	str += "                <tr>\n";
-	str += "                  <th rowspan='2' id='exchangeTh" + id + "' class='tickerDescription'>Bitstamp</th>\n";
+	
+	
+	str += "                  <th rowspan='2' id='exchangeTh" + id + "' class='tickerDescription'>Bitstamp<br>\n" +
+	       "                    <select onchange='mo.setCurrency()' class='currencyToggle' id='currencyToggle'>"+
+	       
+	       
+	       "                      <option value='usd' " + usdSelected + ">USD</option>" +
+	       "                      <option value='eur' " + eurSelected + ">EUR</option>" +
+	       
+	       
+	       "                    </select>" +
+	       "                  </th>";
+	       
+	       
 	str += "                  <th class='tickerHeader'>Last</th>\n";
 	str += "                  <th class='tickerHeader'>Previous</th>\n";
 	str += "                  <th class='tickerHeader'>Volume</th>\n";
@@ -30,13 +52,13 @@ function buildTickerView()
 	str += "                  <th class='tickerHeader'>Trend</th>\n";
 	str += "                </tr>\n";
 	str += "                <tr>\n";
-	str += "                  <td>$" + myB.last + "</td>\n";
-	str += "                  <td>$" + myB.previous + "</td>\n";
+	str += "                  <td>" + ds + myB.last + "</td>\n";
+	str += "                  <td>" + ds + myB.previous + "</td>\n";
 	str += "                  <td>" + myB.volume + "</td>\n";
-	str += "                  <td>$" + myB.high + "</td>\n";
-	str += "                  <td>$" + myB.low + "</td>\n";
-	str += "                  <td>$" + myB.bid + "</td>\n";
-	str += "                  <td>$" + myB.ask + "</td>\n";
+	str += "                  <td>" + ds + myB.high + "</td>\n";
+	str += "                  <td>" + ds  + myB.low + "</td>\n";
+	str += "                  <td>" + ds  + myB.bid + "</td>\n";
+	str += "                  <td>" + ds  + myB.ask + "</td>\n";
 	
 	var trend = "Rising";
 	if(myB.trend < 0) trend = "Falling";
