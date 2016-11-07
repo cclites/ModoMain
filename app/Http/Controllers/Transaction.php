@@ -425,7 +425,7 @@ class Transaction extends Controller{
 		$this->bot->usd = $this->bot->usd - $cost;
 		$this->bot->btc += $this->bot->total_btc_can_purchase;
 
-		if($this->bot->testing_mode == 1  || $this->bot->paid == 0){
+		if($this->bot->testing_mode == 1  || $this->bot->is_active == 0){
 			
 			$response = DB::table('test_ledger')
             ->where('owner_id', $this->bot->owner_id)

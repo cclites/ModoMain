@@ -4,7 +4,9 @@
   
 ?>
 
-<template id="stripeOrder">
+
+
+<div class="template" id="stripeOrder">
 
     <div class="stripeOrderForm"> 
     
@@ -64,13 +66,13 @@
     
     </div>
     
-</template>
+</div>
 
-<template id="cancelSubscriptionTemplate">
+<div id="cancelSubscriptionTemplate" class="template">
 	
 	<div class="cancelSubscription">
 		<button onclick="mo.cancelSubscription()">Cancel Subscription</button>
 	</div>
 	
-</template>
+</div>
 

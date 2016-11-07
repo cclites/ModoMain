@@ -1170,6 +1170,10 @@ table.historyTable tbody tr td
 	padding: 4px;
 }
 
+.template{
+	display: none;
+}
+
 @media screen and (max-width: 1650px) {
     
     /*
