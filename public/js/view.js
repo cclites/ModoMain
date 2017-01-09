@@ -1,5 +1,6 @@
 var view = {
 	
+	//Main functio nthat builds the bot view. Gets called each time
 	buildBotView: function(){
 		
 		//remove all of the splash screen stuff.
@@ -9,13 +10,13 @@ var view = {
 		//add the logout and account menu items
 		view.addAuthMenuItems();
 		
+		//Build some parts
 		$("#actionButtonContainer").html( buildActionView() );
-		
 		$("#tickerContainer").html( buildTickerView() );
-		
 		$("#ledgerContainer").html( buildLedgerView() );
 		
-		
+		//We do not want to overwrite the configs if we have config
+		//data waiting to be written to the server.
 		if(!mo.dirtyFlag){
 			$("#configsContainer").html( buildConfigView() );
 		}
@@ -37,8 +38,7 @@ var view = {
 		li.initDirtyFlag();
 		
 		mo.updateMargins();
-		
-		
+
 	},
 	
 	addAuthMenuItems: function(){

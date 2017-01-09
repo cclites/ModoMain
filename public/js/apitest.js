@@ -122,6 +122,7 @@ function testInvalidLogin() {
 
 }
 
+/* Of course, this only works if there is a valid test user in the database.*/
 function testValidLogin() {
 
     var data = {uname : "ModoBot", upass : "modobot_demo"},

@@ -1,4 +1,4 @@
-
+//DEPRECATED
 //There is no model when this is first loaded. Binding has to happen once the bot configuration is loaded.
 //var configs = new ko.observableArray(model[0].configs);
 

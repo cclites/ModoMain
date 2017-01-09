@@ -20,5 +20,5 @@
 	    "BITSTAMP_CLOSE_ORDER"=>"https://www.bitstamp.net/api/cancel_order/",
 	    "BITSTAMP_TRANSACTIONS"=>"https://www.bitstamp.net/api/user_transactions/",
 	    "SWEEP_ONCE"=>true,
-	    "BASEPATH"=>"localhost/ModoMain/public",
+	    "BASEPATH"=>"https://modobot.com/ModoMain/public",
 	];

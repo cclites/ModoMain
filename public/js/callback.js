@@ -1,3 +1,7 @@
+/*
+ * Closure to hold all of the various callbacks/
+ */
+
 var ca = {
 	
 	loginSuccess: function(data){
@@ -8,8 +12,6 @@ var ca = {
 			li.alertModal("Unable to find a user with those credentials.");
 			$("#waitModal").hide("fade");  //Just in case modal is open
 		}else{
-			
-			//all of this code should be elsewhere.
 			
 			model.token = data.token;
 			model.session = data.session;
@@ -25,11 +27,11 @@ var ca = {
 			var cookie = mo.getCookie("modoData");
 
 			//make sure to set cookie if it doesnt exist
+			//Forgotten I had done this
 			if( cookie === "" ){
 		        mo.setCookie("modoData", JSON.stringify({'currency':'usd'}), 365);
 		        model.currency = 'usd';
 			}else{
-
 				var cur = JSON.parse(cookie);
 				model.currency = cur.currency;
 			}				

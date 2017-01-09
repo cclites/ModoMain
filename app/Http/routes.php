@@ -15,20 +15,17 @@ use Illuminate\Support\Facades\Session;
 */
 
 Route::get('/', function () {
-    //load splash
     return view("main");
 });
 
-/*
-Route::get('/routetest', function(){
-	return view('routetest');
-});
- */
 
+/* get the current ticker */
 Route::get('/ticker', 'Ticker@getTicker');
 Route::get('/validateaccount', 'Auth\ModoAuth@validateAccount');
 Route::get('/resetaccountpass', 'Auth\ModoAuth@resendAccountPass');
 Route::post('/resetpassupdate', 'Auth\ModoAuth@resetPassUpdate');
+
+/* Currently unused route. USed by daemon to sweep wallets */
 Route::get('/sweep', 'Sweeper@sweep');
 Route::get('/submitcontact', 'General@submitContact');
 Route::get('/getEmails', 'AdminView@getEmails');

@@ -40,7 +40,7 @@ var buildAccountView = function()
 	str += '</div>';
 	
 	return str;
-}
+};
 
 
 var buildRestPasswordView = function()
@@ -61,7 +61,7 @@ var buildRestPasswordView = function()
 	str +='  </table>';
 	
 	return str;
-}
+};
 
 var buildResetEmail = function()
 {
@@ -77,7 +77,7 @@ var buildResetEmail = function()
 	str +='  </table>';	
 
     return str;
-}
+};
 
 var buildBitstampCfg = function()
 {
@@ -101,7 +101,7 @@ var buildBitstampCfg = function()
 	str +='  </table>';	
 
     return str;
-}
+};
 
 var buildAccountActivate = function()
 {
@@ -128,6 +128,6 @@ var buildAccountActivate = function()
 	//str += "<button id='sendActivation' class='action' onclick='activate()'>Send Activation Notice</button>";
 	
 	return str;
-}
+};
 
  

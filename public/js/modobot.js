@@ -1,46 +1,49 @@
+/*
+ * Modobot Main function
+ */
+
 var mo = {
 	
 	botTimer: null,
 	tickerTimer: null,
 	
+	
+	//Single asynch function call for everything. Takes a request object.
 	asynch: function(request) {
 	
 		var typeFlag = request.type;
 
-		$.ajax({
-			type : typeFlag,
-			url : request.url,
-			success : request.success,
-			error : request.failure,
-			data : request.data,
-			dataType : "json",
-			statusCode : {
-				404 : function(xhr, type, exception) {
-					console.log("404 error");
-				},
-				400 : function(xhr, type, exception) {
-					console.log("400 error");
-				},
-				410 : function(xhr, type, exception) {
-					console.log("410 error");
-				},
-				500 : function(xhr, type, exception) {
-					console.log("500 error");
-				}
-			}
-		}).always(function() {
-		})/*.error(function(xhr, type, exception) {
-			console.log("Asynch error\n");
-			console.log(xhr);
-		})*/;
+            $.ajax({
+                    type : typeFlag,
+                    url : request.url,
+                    success : request.success,
+                    error : request.failure,
+                    data : request.data,
+                    dataType : "json",
+                    statusCode : {
+                            404 : function(xhr, type, exception) {
+                                    console.log("404 error");
+                            },
+                            400 : function(xhr, type, exception) {
+                                    console.log("400 error");
+                            },
+                            410 : function(xhr, type, exception) {
+                                    console.log("410 error");
+                            },
+                            500 : function(xhr, type, exception) {
+                                    console.log("500 error");
+                            }
+                    }
+            }).always(function() {
+            });
 	},
 	
 	requestObject: function(url, type, success, failure, data) {
 		this.url = url;
-		this.type = type;
-		this.success = success;
-		this.failure = failure;
-		this.data = data;
+		this.type = type; //"GET" or "POST"
+		this.success = success; //success callback
+		this.failure = failure;  //success failure
+		this.data = data; //data or NULL
 	},
 	
 	
@@ -132,12 +135,13 @@ var mo = {
     	$("#marginPurchasePrice").html( ds + ( base * (1 - decrease) ).toFixed(2) );
     },
     
+    //log to status window in main view
     log: function(message){
     	$("#statusLogContent").append(message + "<br>");
-    	
-    	console.log(message);
     },
     
+    //Polls configuration form to determine if data needs to be saved. Dirty
+    //flag gets set when a config is changed.
     pollDirty: function(){
     	
     	setInterval(function(){
@@ -173,11 +177,9 @@ var mo = {
     stripeResponseHandler: function(status, response) {
         // Grab the form:
 	    var $form = $('#payment-form'),
-	        owner = model.token; //do not believe that I have an email here, do I?
-	                                    //Should be able to embed it on the backside, right?
-	                                    //Clearly I have some info that is important
+	        owner = model.token; 
 	
-	    if (response.error) { // Problem!
+	    if (response.error) { 
 	
 	      // Show the errors on the form:
 	      $form.find('.payment-errors').text(response.error.message);
@@ -188,10 +190,6 @@ var mo = {
 	      // Get the token ID:
 	      var stripeToken = response.id;
 	
-	      // Insert the token ID into the form so it gets submitted to the server:
-	      //$form.append($('<input type="hidden" name="stripeToken">').val(token));
-	      
-	      //console.log("Token is " + token);
 	      var data = {
 	          stripeToken: stripeToken,
 	          owner: owner
@@ -207,7 +205,7 @@ var mo = {
 	    
 	    //delete the record
 	    var record = new su.requestObject('billable', 'POST', mo.billableSuccess, mo.billableFailure, data);
-	    su.asynch(record);
+	    mo.asynch(record);
 	},
 	
 	billableSuccess: function(data){
@@ -216,13 +214,10 @@ var mo = {
 	        alert("Account has been upgraded.");
 	        
 	        //change out the content
-	        
 	        $("#activateAccount").html( $("#cancelSubscriptionTemplate").html() );
-	        
-	        //location.reload();
+
 	    }else{
 	        alert("Unable to complete your subscription.");
-	        //location.reload();
 	    }
 	
 	},
@@ -237,7 +232,7 @@ var mo = {
 	        };
 	        
 	    var record = new su.requestObject('cancelSubscription', 'POST', mo.cancelSubscriptionSuccess, mo.cancelSubscriptionFailure, data);
-	    su.asynch(record);
+	    mo.asynch(record);
 	},
 	
 	cancelSubscriptionSuccess: function(data){
@@ -305,6 +300,10 @@ $(function() {
 });
 
 /* POLYFILL */
+/*
+ * This was added because some browsers didn't recognize the template tag
+ */
+
 (function templatePolyfill(d) {
     if('content' in d.createElement('template')) {
         return false;

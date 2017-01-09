@@ -68,7 +68,6 @@ var li = {
 	},
 	
 	logOut: function(){
-		//TODO: Put into .env
 		location.reload();
 	},
 	
@@ -94,25 +93,11 @@ var li = {
 		
 		li.checkUserConfigs();
 		
-		//TODO: This is where I would like to check things
-		
-		/*
-		    var elExample = document.getElementById('example'),
-            elTarget = document.getElementById('target');
-
-            elTarget.appendChild(elExample.content.cloneNode(true));
-		 */
-		
 		if(model.paid == 1){
 			$("#activateAccount").html(  $("#cancelSubscriptionTemplate").html() );
-			//stripeOrderForm
-			
 		}else{
-			//$("#activateAccount").html(  $("#stripeOrder").html() );
-			
 			$("#activateAccount").html(  $("#stripeOrder").html() );
 		}
-		
 
 	},
 	

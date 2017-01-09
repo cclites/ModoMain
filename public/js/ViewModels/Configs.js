@@ -1,8 +1,5 @@
 function buildConfigView(){
 	
-	//console.log(Object.keys(ko_models.bot.bot[0]));
-	//console.log( ko_models.bot.bot[0].live  );
-	
 	// manually handle which bot gets processed.
 	var b = ko_models.bot.bot[0],
           myB = b,
