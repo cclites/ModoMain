@@ -1,5 +1,19 @@
 <?php
 
+/*
+ * This bot runs once a minute to grab new pricing information from BitStamp, and to 
+ * process each bot to determine if anything needs to be done. BitStamp rate-limits
+ * to one request per-minute, per-user. OVer that, and they will put a temp-ban on 
+ * the daemon's ip.
+ * 
+ * This is currently how the daemon is scheduled:
+ * wget http://modobot.com/ModoMain/public/daemon
+ * 
+ * Simply calls the api - it should really be passing a security parameter in the URL
+ * to prevent shenanigans, because anyone can hit this api point. For example:
+ * wget http://modobot.com/ModoMain/public/daemon?MYSECRETPARAM=123456
+ */
+
 namespace App\Http\Controllers\Daemon;
 
 use App\Http\Controllers\Controller;
@@ -18,6 +32,8 @@ class Daemon extends Controller{
 	
 	function main(){
 		
+		//This calls an emergency stop file to kill the daemon. This is handy
+		//in case the daemon gets away from you.
 		$key = file_get_contents("scripts/run.txt");
 
 		if ($key != "1"){
@@ -29,6 +45,7 @@ class Daemon extends Controller{
 		
 		$this->updatetTicker(1);
    
+        //hard work starts here
         $bots = app('App\Http\Controllers\Bot')->getAllActiveBots();
 		$result = app('App\Http\Controllers\Bot')->processBotRules($bots);
         return $result;
@@ -36,18 +53,6 @@ class Daemon extends Controller{
 	
 	function updatetTicker($id){
 		
-		/*
-		if($id == 1)  //Bitstamp
-		{
-			$url = config('core.BITSTAMP_GET_TICKER');
-		}
-		
-	
-		$result = $this->_get($url);
-		//LOG::INFO(JSON_ENCODE($result));		
-
-		$result = (array)app('App\Http\Controllers\Ticker')->setTicker($result);
-		 */
 		
 		/****************************************************/
 		

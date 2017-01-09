@@ -99,22 +99,9 @@ class Bot extends Controller{
 		if( Session::get('session') == $session &&
 		    Session::get('token') == $token &&
 			Session::get('authenticated') ){
-				
-			//LOG::info(">" . $token . "<");
-				
+	
 			$id = DB::table('member')->where('token', $request -> token )->pluck("id");
-			//LOG::info("ID IS $id[0]\n\n\n");
-			//$id = $id[0];
-			
-			//return;
-			
-			//LOG::info($request->is_active);
-			//LOG::info($request->testing_mode);
-			//LOG::info($request->buying);
-			//LOG::info($request->selling);
-			//LOG::info($request->fixed_sell);
-			//LOG::info($request->fixed_buy);
-				
+	
             $configs = array();
 
 			$configs["is_active"] = ($request->is_active == "true") ? 1 : 0;
@@ -139,15 +126,6 @@ class Bot extends Controller{
 			$live = DB::table('bot')->where('owner_id', $id)->pluck('live');
 			
 			$live = $live[0];
-			
-			//No matter what, these conditions have to be true.
-			
-			
-			/*
-			if( $member->balance < 1 || $live < 1){
-				$configs["is_active"] = 0;
-			}
-			 * */
 			
 			if( $live < 1 ){
 				$configs["testing_mode"] = 1;
@@ -260,39 +238,7 @@ class Bot extends Controller{
                         'usd' => $balance
 					));
 		return;		
-			/*		
-		Log::info("Getting the new balance");
-		Log::info( json_encode($balanceResult) );
-		
-		//Whay is my currency type?
-		$currency = $bot->currency;
-		
-		Log::info($currency);
-		
-		$balance = "";
-		
-		if($currency === 'eur'){
-			$balance = $balanceResult["eur_available"];
-		}else if($currency === 'usd'){
-			$balance = $balanceResult["usd_available"];
-		}
-		
-		//need to calculate the available btc on the fly, so I need to get the correct 'last'
-		$last = DB::table("ticker")->where('currency', $currency)->where('id', 1)->pluck("last");
-		//$last = $last[0];
-		
-		//presumably I have the last balance in the correct currency, so last*balance should give me
-		//the btc_available.
-		$finalBalance = intval($balance) * intval($last);
-		
-		
-		//update the bot.
-		$response = DB::table('bot')
-	            ->where('id', $bot->id)
-	            ->update(array(
-	                        'btc' => $finalBalance,
-	                        'usd' => $balance  //Balance can reflect any currency...bad column name
-						));*/
+			
 	}
 
     public function getAllActiveBots(){
@@ -321,14 +267,11 @@ class Bot extends Controller{
 			
 		}
 		
-		//$bots = DB::table('bot')->where('is_active', 1)->get(); 
         return $bots;
     }
 	
 
 	function calculatePricePoints($bot){
-		
-		//LOG::info("Calculating price points");
 		
 		$base = $bot->base;
 		$increase = $bot->increase;
@@ -336,12 +279,6 @@ class Bot extends Controller{
 		
 		$bot->spp = $base * (1 + $increase);
 		$bot->ppp = $base * (1 - $decrease);
-		
-		/*
-		$bot->spp = ( $base + ($base * ($increase/10) ) );
-		$bot->ppp = ( $base - ($base * ($increase/10) ) );
-		 * 
-		 */
 		
 		return $bot;
 	}

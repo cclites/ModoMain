@@ -9,6 +9,8 @@ class Curl{
 *  $result			- represents the ticker object
 *  $url				- represents the REST request
 *********************************************************************/
+
+//NOTE: Clearly not a curl. Don't recall why the change.
 function _get($url)
 {
 	$file = file_get_contents($url);

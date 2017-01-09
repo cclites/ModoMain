@@ -27,15 +27,7 @@ class StripeController extends Controller{
 		//need to look up the user
 		$email = DB::table("member")->where("token", $owner_id)->pluck("email");
 		
-		/*
-        $customer = \Stripe\Customer::create(array(
-            "source" => $stripetoken,
-            "plan" => "modo_tier_1",
-            "email" => $email[0])
-        );
-		*/
-		
-		
+
 		$customer = \Stripe\Customer::create(array(
             "source" => $stripetoken,
             "plan" => "modo_freemie",
@@ -81,14 +73,7 @@ class StripeController extends Controller{
 		
 		
 		$member = DB::table("member")->where("token", $owner_id)->get();
-		
-		//Log::info(json_encode($member[0]) );
-		//Log::info(gettype($member[0]));
-		//Log::info($member[0]->id);
-		//Log::info($member[0]->subscription);
-		
-		//return;
-		
+
 		$id = $member[0]->id;
 		$subscription = $member[0]->subscription;
 		
@@ -102,25 +87,7 @@ class StripeController extends Controller{
             'subscription'=>"",
             'paid'=>false
         ]);
-		/*
-        $salt = Request::input("salt");
-        
-        //get the subscription id
-        $result = DB::table("member")->where("salt", urldecode($salt) )->get();
-        $subscription = $result[0]->subscription;
-        
-        //return json_encode( array("subscription"=>$result[0]->subscription) );
-        $subscription = \Stripe\Subscription::retrieve($subscription);
-        $result = $subscription->cancel();
-        
-        DB::table("users")->where("salt", urldecode($salt) )->update([
-            
-            'tier'=>0,
-            'subscription'=>null
-        ]);
-		 * 
-		 */
-        
+
         return json_encode( array("result"=>$result) );
         
     }

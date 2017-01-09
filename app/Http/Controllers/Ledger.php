@@ -55,7 +55,7 @@ class Ledger extends Controller{
 	
 	function resetTestBalance(Request $request)
 	{
-		//TODO: Put hard coded values in a config somewhere
+		//TODO: Put hard coded values in a config somewhere. the .env file would be a good place.
 	    $usd = 500;
 		$btc = 5;
 		

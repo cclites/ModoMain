@@ -34,37 +34,6 @@ class Ticker extends Controller{
 		return $record[0];
 	}
 	
-	function setTicker($newTicker){
-		
-		return;
-		
-		$id = 1;
-		$oldTicker = $this->getTickerById($id);
-		
-		$newTicker = $this->updateTrend($newTicker, $oldTicker);
-		
-		//$s = print_r($newTicker, true);
-		//LOG::error("NEW TICKER " . $s);
-		
-		$response = DB::table('ticker')
-            ->where('id', $id)
-            ->update(array(
-                        'high'=>$newTicker->high,
-                        'last'=>$newTicker->last,
-                        'bid'=>$newTicker->bid,
-                        'volume'=>$newTicker->volume,
-                        'low'=>$newTicker->low,
-                        'ask'=>$newTicker->ask,
-                        'previous'=>$oldTicker->last,
-                        'direction'=>$newTicker->direction
-					));
-					
-		//LOG::error($response);
-					
-		return json_encode(array('status'=>$response));
-		
-	}
-	
 	//The ticker function needs an exchange id and currency type.
 	
 	function setNewTicker($newTicker, $currency, $exchangeId){
@@ -101,9 +70,8 @@ class Ticker extends Controller{
 					
 		//LOG::error($response);
 		
-		//This needs an error check on the response in order to properly
-		//return a pass/fail flag.
-					
+		//TODO: This needs an error check on the response in order to properly
+		//return a pass/fail flag.				
 		return json_encode(array('status'=>$response));
 		 
 	}
@@ -119,6 +87,12 @@ class Ticker extends Controller{
 	*  $direction		- representing market direction as an int.
 	*  $trend				- representing trend as an int.
 	*********************************************************************/
+	
+	/*
+	 * Point of clarificatoin. Direction indicates the direction in price,
+	 * plus or minus, from last price. Trend indicates averages of the
+	 * directions.
+	 */
 	function updateTrend($currentMarket, $previousMarket)
 	{
 		if($currentMarket->last < $previousMarket->last){

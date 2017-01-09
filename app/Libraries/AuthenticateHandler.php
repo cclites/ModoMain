@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Most of the following code couold be re-written using Laravel's built
+ * in authentication. This was ported directly over from vanilla php 
+ */
+
 namespace App\Libraries;
 
 use App\Http\Controllers\Controller;
@@ -40,11 +45,9 @@ class AuthenticateHandler extends Controller {
 		$token = $this -> createToken();
 		$this -> token = $token;
 		
-		//LOG::info("Token in auth is " . $token);
 
-		//The $record was used in another check that has since been removed. I may
-		//still need the member record for authentication, so I am leaving this here.
 		$member = new Member();
+		
 		$record = $member -> getMemberInfo($token);
 	
 
@@ -82,11 +85,14 @@ class AuthenticateHandler extends Controller {
 		}
 	}
 
+    /*
+	 * createToken creates a hash using the users user name, password, and seed.
+	 * No passwords are saved in the database, but the token is, and so can be 
+	 * used as a database index.
+	 * 
+	 * This loops a bunch of times to make it computationally expensive to brute force
+	 */
 	function createToken(){
-	
-		//LOG::info("CREATE TOKEN");
-		//LOG::info($this->uName);
-		//LOG::info($this->uPass);
 		
 		$token = $this -> uName . config('core.SEED') . $this -> uPass;
 
@@ -98,20 +104,15 @@ class AuthenticateHandler extends Controller {
 
 	}
 
-	function eCrypt($toEncrypt) {
-		//LOG::error("ENCRYPT SEED IS " . config('core.SEED'));
-		
+  
+	function eCrypt($toEncrypt) {	
 		$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC), MCRYPT_DEV_URANDOM);
-
 		return base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_256, hash('sha256', config('core.SEED'), true), $toEncrypt, MCRYPT_MODE_CBC, $iv));
 	}
 
 	function dCrypt($toDecrypt) {
 		$data = base64_decode($toDecrypt);
 		$iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
-		
-		//LOG::error("DECRYPT SEED IS " . config('core.SEED'));
-
 		return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, hash('sha256', config('core.SEED'), true), substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)), MCRYPT_MODE_CBC, $iv), "\0");
 
 	}
@@ -124,9 +125,7 @@ class AuthenticateHandler extends Controller {
 		$token = $request -> token;
 		$session = $request -> session;
 		
-		//LOG::info("upass1: " . $pass1);
-		
-		
+
 		if( Session::get('session') == $session &&
 		    Session::get('token') == $token &&
 			Session::get('authenticated') ){
@@ -146,30 +145,20 @@ class AuthenticateHandler extends Controller {
 				$this->uPass = $pass1;
 				$this->uName = $member[0]->display_name;
 				
-				$newToken = $this->createToken();  //this is where I am having a problem. I do not have the uname to encrypt with the
-				                                   //token, 
+				$newToken = $this->createToken();   
 				                                   
 				//need to recreate session
 				$this->userId = $member[0]->id;
 				
-				LOG::info("This user id is " . $this->userId);
-				
+				//This is the sneaky part. To prevent session hijacking, and encrypted key is generated
+				//containing member id, token, and timestamp for noise. This session token gets
+				//sent with each reauest, and is then decrypted to make sure the token encrypted in the
+				//session matches the actual user token that also gets sent along with each request.
 				$toEncrypt = $member[0]->id . "|" . $newToken . "|" . time();
 				
-				LOG::info("To encrypt = " . $toEncrypt);
 				$encryptedSession = $this->eCrypt($toEncrypt );
 				$this->session = $encryptedSession;                                   
 				                                   
-				  
-				
-				//LOG::info("New token: $newToken");
-				//LOG::info("uName = " . $this->uName );
-				//LOG::info("uPass = " . $this->uPass);
-				LOG::info("Encrypted session = $encryptedSession");
-				LOG::info("session = " . $this->session);
-				
-				//return;
-				
 				//now update the database
 				$result = DB::table('member')->where('id', $owner_id)
 				          ->update(array(
@@ -190,16 +179,12 @@ class AuthenticateHandler extends Controller {
 			
 			$this->uName = $result[0]->display_name;
 			$this->uPass = $pass1;
-			
-
-			
+				
 		}
 
 	}
 	
 	function updateEmail($request){
-		
-		LOG::info("Updating email");
 		
 		$token = $request -> token;
 		$session = $request -> session;
@@ -226,6 +211,7 @@ class AuthenticateHandler extends Controller {
 		}	
 	}
 	
+	//bs = BitStamp
 	function updateBsConfigs($request){
 		
 		$token = $request -> token;
@@ -236,16 +222,6 @@ class AuthenticateHandler extends Controller {
 		$uSecret = $request -> usecret;
 		$uToken = $request -> utoken;
 		
-		//LOG::info("uID = $uId");
-		//LOG::info("uSecret = $uSecret");
-		//LOG::info("uToken = $uToken");
-		
-		//LOG::info("session = " . $session = $request -> session);
-		//LOG::info("token = " . $session = $request -> token);
-		
-		//LOG::info(Session::get('session'));
-		//LOG::info(Session::get('token'));
-		//LOG::info(Session::get('authenticated'));
 		
 		if( Session::get('session') == $session &&
 		    Session::get('token') == $token &&
@@ -325,6 +301,7 @@ class AuthenticateHandler extends Controller {
 		}
 	}
 	
+	
 	function addNewUser($request){
 		
 		$umail = $request->umail;
@@ -344,19 +321,7 @@ class AuthenticateHandler extends Controller {
 		if ($request->umail == "" || $request->uname == "" || $request->upass == ""){
 			return json_encode(array('status'=>0, 'message'=> 'Please make sure to fill all fields') );
 		}
-		/*
-		$checkName = DB::table('member')->where('display_name',$this->uName)->pluck('id');
-		
-		if($checkName!=null){
-			return json_encode(array('status'=>0, 'message'=> 'Username already exists') );
-		}
-		
-		$checkEmail = DB::table('member')->where('email',$umail)->pluck('id');
-		if($checkEmail!=null){
-			return json_encode(array('status'=>0, 'message'=> 'Email already exists') );
-		}
-		 */
-		//$address = DB::table('wallet')->where('owner_id', 0)->take(1)->pluck('addr');
+
 		
 		//add user to the database.
 		$owner_id = DB::table('member')->insertGetId(
@@ -431,6 +396,9 @@ class AuthenticateHandler extends Controller {
 		return $this->sendValidationEmail( $umail, $validationToken[0] );
 	}
 	
+	/*
+	 * Generates a temp password for user.
+	 */
 	function generatePassword($len)
 	{
 		$result = "";

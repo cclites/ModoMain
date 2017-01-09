@@ -23,24 +23,10 @@ class Transaction extends Controller{
 		$this->bot = $bot;
 		$this->ticker = $ticker;
 		
-
-		//echo "1<br>";
 		$this->setTransactionLimits();
-		//echo "<pre>";
-		//print_r($this->bot);
-		
-		
-		//$this->bot->triggers = $this->setTriggers();
-		//echo "2<br>";
-		//print_r($this->bot);
-		
-		
+
 		$this->checkTransactionRules();
-		//echo "3<br>";
-		//print_r($this->bot);
-		
-		//return;
-    	//return $this->bot;
+
     }
 	
 	public function setTransactionLimits(){
@@ -142,11 +128,9 @@ class Transaction extends Controller{
 	/**
 	 * This is a really long and verbose function that simply
 	 * checks business rules for transactions. Also includes 
-	 * a butt-ton of comments.
+	 * verbose logging.
 	 */
 	public function checkTransactionRules(){
-		
-		//print_r($this->bot);
 		
 		LOG::info("\n\n*****************************************************\n");
 		Log::info("Current bot id is " . $this->bot->id);
@@ -339,10 +323,7 @@ class Transaction extends Controller{
 
 			
 		}else{
-			
-			//I actually need to know what the result contains because I am going to get a result
-			//regardless.
-			
+
 			$result = $this->sellBitstampTransaction();
 			
 			LOG::info("**************************************************************");
@@ -405,12 +386,8 @@ class Transaction extends Controller{
 		
 		$cost = $this->bot->total_usd_can_purchase;
 		
-		//echo("COST: " . $cost . "\n");
-		
 		LOG::info("usd can buy = " . $cost . "\n");
 		LOG::info("#btc to buy = " . $this->bot->total_btc_can_purchase);
-	   // echo("btc before = " . $this->bot->btc . "\n");
-	   
 
 	   if($this->bot->total_btc_can_purchase > $this->bot->buy_limit_btc){
 	   	  $this->bot->total_btc_can_purchase = $this->bot->buy_limit_btc;
@@ -433,20 +410,9 @@ class Transaction extends Controller{
                         'usd' => $this->bot->usd,
                         'btc' => $this->bot->btc
 					));
-					
-			
-			
 		}else{
 			
 			$result = $this->buyBitstampTransaction();
-			
-			//LOG::info("Result from BuyBitstampTransaction");
-			//$s = print_r($result);
-			//LOG::info($result);
-			
-			//LOG::info($result["error"]);
-
-			//$result = json_decode($result);
 			
 			if(  !isset($result["error"])  ){
 				
@@ -462,7 +428,6 @@ class Transaction extends Controller{
 					
 					
 			    //THIS CODE HANDLES THE BALANCE
-		
 				$balance = DB::table('member')->where('id', $this->bot->owner_id)->pluck("balance");
 				$balance = $balance[0];
 				
@@ -518,8 +483,6 @@ class Transaction extends Controller{
 		
 		$result = $bs->bitstamp_query("sell", array('amount'=>($this->bot->total_btc_can_sell),'price'=>$this->ticker->last), $this->bot->currency);
 		
-		//$result = $bs->bitstamp_query("sell", array('amount'=>10,'price'=>$this->ticker->last));  //this should cause an error message
-		
 		return $result;
 	}
 	
@@ -543,14 +506,13 @@ class Transaction extends Controller{
 		
 		$purchaseAmnt = number_format($purchaseAmnt, 8);
 		
-		//$result = $bs->bitstamp_query("buy", array('amount'=>5,'price'=>$this->ticker->last));  //this should cause an error message
 		$result = $bs->bitstamp_query("buy", array('amount'=>($purchaseAmnt),'price'=>$this->ticker->last), $this->bot->currency);
 		
 		return $result;
 		
 	}
 	
-	//doesnt belong here, but don't want to create a separate class yet.
+	//Function belongs in History.php controller. 
 	public function updateHistory(){
 					
         $usd = $this->bot->btc * $this->ticker->previous + $this->bot->usd;

@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Code used to sweep wallets. Not currently used as app is rigged to use Stripe.
+ */
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
